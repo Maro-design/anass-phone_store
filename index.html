@@ -34,7 +34,7 @@ body{background:#12121f;color:#e3e0f3;font-family:'Inter',sans-serif;overflow-x:
 
 /* Background & Canvas */
 #canvas-bg{position:absolute !important;inset:0;z-index:0 !important;pointer-events:none !important}
-.main-wrapper{position:relative !important;z-index:10 !important;padding-top:80px}
+.main-wrapper{position:relative !important;z-index:10 !important;padding-top:0 !important}
 
 /* Hamburger */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:600}
@@ -141,7 +141,7 @@ body{background:#12121f;color:#e3e0f3;font-family:'Inter',sans-serif;overflow-x:
 
 
 <!-- TopNavBar -->
-<nav class="bg-slate-900/40 backdrop-blur-xl rounded-full mt-4 mx-auto w-[95%] max-w-7xl sticky top-4 z-50 flex justify-between items-center px-6 md:px-8 py-4 shadow-[0_0_40px_-15px_rgba(173,198,255,0.2)] font-['Manrope'] tracking-tight">
+<nav class="bg-slate-900/60 backdrop-blur-2xl border-b border-white/5 w-full sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 shadow-[0_4px_30px_rgba(0,0,0,0.3)] font-['Manrope'] tracking-tight">
 <div class="text-xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 cursor-pointer" onclick="navigateTo('accueil')">ANASS PHONE</div>
 <div class="desktop-nav hidden md:flex items-center gap-8">
 <a class="nav-link active-link transition-all duration-300" data-page="accueil" onclick="navigateTo('accueil')">Accueil</a>
@@ -304,12 +304,12 @@ body{background:#12121f;color:#e3e0f3;font-family:'Inter',sans-serif;overflow-x:
 <!-- ==================== ACCUEIL PAGE ==================== -->
 <div id="page-accueil" class="page active">
 <!-- Hero -->
-<section class="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
+<section id="hero" class="relative min-h-screen flex items-center justify-center pt-32 lg:pt-40">
 <!-- Video Background -->
-<video autoplay loop muted playsinline class="pointer-events-none opacity-60 mix-blend-screen" style="position: absolute !important; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0 !important; pointer-events: none !important;">
+<video id="hero-bg" autoplay loop muted playsinline class="pointer-events-none opacity-60 mix-blend-screen" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; z-index: 0 !important; pointer-events: none !important;">
   <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_105406_16f4600d-7a92-4292-b96e-b19156c7830a.mp4" type="video/mp4" />
 </video>
-<div class="absolute inset-0 bg-black/40 pointer-events-none" style="z-index: 0 !important;"></div>
+<div class="absolute inset-0 bg-black/40 pointer-events-none" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 0 !important;"></div>
 <div class="max-w-4xl mx-auto px-8 w-full flex flex-col items-center text-center">
 <div class="z-30 text-white relative mt-12 md:mt-24">
 <h1 class="font-headline font-extrabold text-4xl md:text-6xl lg:text-7xl tracking-tighter leading-[1.1] mb-6 drop-shadow-2xl">Découvrez la <span class="text-gradient">nouvelle</span> génération.</h1>
