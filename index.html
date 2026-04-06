@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ANASS PHONE | High-End Celestial Gallery</title>
+<meta name="description" content="ANASS PHONE - Spécialiste de la tech haut de gamme au Maroc. iPhone, Samsung, Laptops aux meilleurs prix à Casablanca.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed-dim":"#e9b3ff","surface-container-highest":"#343341","surface":"#12121f","error-container":"#93000a","on-tertiary-fixed":"#1a1a27","outline-variant":"#414755","on-secondary":"#510074","surface-container":"#1f1e2b","primary-fixed-dim":"#adc6ff","secondary":"#e9b3ff","surface-dim":"#12121f","on-tertiary-container":"#292836","secondary-container":"#7d01b1","on-error":"#690005","on-surface-variant":"#c1c6d7","tertiary":"#c7c4d6","surface-container-high":"#292936","on-background":"#e3e0f3","inverse-surface":"#e3e0f3","on-surface":"#e3e0f3","surface-container-low":"#1a1a27","surface-tint":"#adc6ff","error":"#ffb4ab","primary":"#adc6ff","inverse-primary":"#005bc1","on-primary":"#002e69","primary-container":"#4b8eff","on-primary-container":"#00285c","on-error-container":"#ffdad6","secondary-fixed":"#f6d9ff","on-secondary-container":"#e5a9ff","primary-fixed":"#d8e2ff","surface-bright":"#383846","on-tertiary":"#2f2f3d","surface-variant":"#343341","outline":"#8b90a0","tertiary-container":"#918fa0","surface-container-lowest":"#0d0d19","background":"#12121f","tertiary-fixed":"#e3e0f3"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},fontFamily:{headline:["Manrope"],body:["Inter"],label:["Inter"]}}}}
+</script>
+<style>
+body{background:#12121f;color:#e3e0f3;font-family:'Inter',sans-serif;overflow-x:hidden}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.glass-panel{background:rgba(52,51,65,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.text-gradient{background:linear-gradient(to right,#adc6ff,#e9b3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-glow{background:radial-gradient(circle at center,rgba(173,198,255,.15) 0%,transparent 70%)}
+.glow-blue{box-shadow:0 0 40px -10px rgba(173,198,255,.3)}
+.glow-purple{box-shadow:0 0 40px -10px rgba(233,179,255,.3)}
+.liquid-glass{background:rgba(52,51,65,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.glass-card{background:rgba(52,51,65,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.levitation-card:hover{transform:translateY(-12px);box-shadow:0 20px 40px -15px rgba(173,198,255,.15),0 0 20px -5px rgba(233,179,255,.1)}
+.image-glow:hover img{transform:scale(1.08);filter:drop-shadow(0 0 15px rgba(173,198,255,.3))}
+.page{display:none;animation:fadeIn .5s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.pulse-badge{animation:pulse-badge 1.5s ease-in-out infinite}
+.nav-link{cursor:pointer}
+.nav-link.active-link{color:#60a5fa;font-weight:700;border-bottom:2px solid #60a5fa;padding-bottom:4px}
+.mobile-nav-btn.active-mobile{color:#60a5fa}
+
+/* Background & Canvas */
+#canvas-bg{position:absolute !important;inset:0;z-index:0 !important;pointer-events:none !important}
+.main-wrapper{position:relative !important;z-index:10 !important;padding-top:80px}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:600}
+.hamburger span{display:block;width:24px;height:2px;background:#c1c6d7;transition:.3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:768px){.hamburger{display:flex}.desktop-nav{display:none!important}}
+
+/* Mobile Menu */
+.mobile-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(13,13,25,.98);backdrop-filter:blur(30px);z-index:900;flex-direction:column;align-items:center;justify-content:center;gap:3rem}
+.mobile-menu.show{display:flex !important;pointer-events:all !important;visibility:visible !important}
+
+/* Overlays & Sidebars Base */
+.cart-overlay {position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:2000;opacity:0;pointer-events:none;transition:opacity 0.3s ease;visibility:hidden}
+.cart-overlay.show {opacity:1 !important;pointer-events:all !important;visibility:visible !important;display:block !important}
+
+.cart-sidebar {position:fixed;top:0;right:0;height:100vh;width:100%;max-width:400px;background:rgba(13,13,25,0.98);backdrop-filter:blur(20px);z-index:2001;transform:translateX(103%);transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,0.05);pointer-events:none;visibility:hidden}
+.cart-sidebar.show {transform:translateX(0) !important;pointer-events:all !important;visibility:visible !important;display:flex !important}
+
+.search-overlay {position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:1900;opacity:0;pointer-events:none;transition:opacity 0.3s ease;visibility:hidden}
+.search-overlay.show {opacity:1 !important;pointer-events:all !important;visibility:visible !important;display:block !important}
+
+.search-container {position:fixed;top:0;left:0;right:0;background:rgba(13,13,25,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);z-index:1901;transform:translateY(-100%);transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.5);pointer-events:none;visibility:hidden}
+.search-container.show {transform:translateY(0) !important;pointer-events:all !important;visibility:visible !important;display:block !important}
+
+.modal-overlay {position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:3000;display:none;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s ease;visibility:hidden}
+.modal-overlay.show {display:flex !important;opacity:1 !important;pointer-events:all !important;visibility:visible !important}
+
+.auth-modal {display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:3000;align-items:center;justify-content:center;padding:1rem;pointer-events:none;visibility:hidden}
+.auth-modal.show {display:flex !important;pointer-events:all !important;visibility:visible !important}
+
+.profile-dropdown {position:absolute;top:calc(100% + 15px);right:0;width:240px;background:rgba(13,13,25,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:8px;opacity:0;pointer-events:none;transform:translateY(10px);transition:all 0.3s cubic-bezier(0.22, 1, 0.36, 1);z-index:200;box-shadow:0 10px 40px rgba(0,0,0,0.5);visibility:hidden}
+.profile-dropdown.show {opacity:1 !important;pointer-events:all !important;transform:translateY(0) !important;visibility:visible !important}
+
+/* Search results & items */
+.search-result-card {display:flex;gap:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);transition:all 0.2s;cursor:pointer;}
+.search-result-card:hover {background:rgba(255,255,255,0.08);transform:translateY(-2px);}
+.dropdown-item {display:flex;align-items:center;gap:12px;padding:12px 16px;color:#c1c6d7;border-radius:12px;transition:all 0.2s;cursor:pointer;font-weight:600;font-size:14px;}
+.dropdown-item:hover {background:rgba(255,255,255,0.05);color:#fff;}
+
+/* Favorites */
+.favorite-btn {position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(13,13,25,0.5);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;z-index:20;color:#e3e0f3;}
+.favorite-btn:hover {background:rgba(255,255,255,0.1);transform:scale(1.1);}
+.favorite-btn.is-favorite {color:#ef4444;background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);}
+.favorite-btn.is-favorite span {font-variation-settings: 'FILL' 1;}
+
+/* Product Details Extras */
+.thumb-btn{border:2px solid transparent;transition:all .3s ease}
+.thumb-btn.active-thumb{border-color:#adc6ff;box-shadow:0 0 15px rgba(173,198,255,.3)}
+.qty-btn{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;transition:all .2s;cursor:pointer}
+.qty-btn:hover{background:rgba(173,198,255,0.15)}
+.spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(65,71,85,0.2)}
+.spec-row:last-child{border-bottom:none}
+.cart-badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;border-radius:9999px;background:#e9b3ff;color:#1a1a27;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+/* Toast Notifications Stylings */
+.toast-container { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
+.toast { background:rgba(13,13,25,0.95); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:12px 24px; border-radius:100px; display:flex; align-items:center; gap:10px; font-weight:600; font-size:14px; box-shadow:0 10px 40px rgba(0,0,0,0.5); animation:toastSlideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.toast.hide { animation:toastFadeOut 0.3s ease forwards; }
+.toast.success { border-color:rgba(34,197,94,0.3); }
+.toast.success span { color:#4ade80; }
+.toast.info { border-color:rgba(173,198,255,0.3); }
+.toast.info span { color:#adc6ff; }
+@keyframes toastSlideUp { from {opacity:0; transform:translateY(20px) scale(0.9);} to {opacity:1; transform:translateY(0) scale(1);} }
+@keyframes toastFadeOut { from {opacity:1; transform:translateY(0) scale(1);} to {opacity:0; transform:translateY(10px) scale(0.9);} }
+
+/* GLOBAL HIDDEN STATE ENFORCEMENT */
+.cart-sidebar:not(.show),
+.search-container:not(.show),
+.auth-modal:not(.show),
+.modal-overlay:not(.show),
+.profile-dropdown:not(.show),
+.mobile-menu:not(.show),
+.cart-overlay:not(.show),
+.search-overlay:not(.show),
+[class*="sidebar"]:not(.show),
+[class*="overlay"]:not(.show),
+[class*="modal"]:not(.show),
+[class*="dropdown"]:not(.show) {
+  pointer-events: none !important;
+  visibility: hidden !important;
+  display: none !important;
+}
+</style>
+</head>
+<body class="selection:bg-primary/30">
+
+<!-- Toast Notifications -->
+<div id="toastContainer" class="toast-container"></div>
+
+
+<!-- ==================== OVERLAYS & MODALS (REBUILT) ==================== -->
+
+<!-- 1. Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu">
+  <div class="flex flex-col items-center justify-center h-full gap-8">
+    <a class="nav-link text-3xl font-headline font-bold text-slate-200 hover:text-primary transition-colors" onclick="navigateTo('accueil'); toggleMobileMenu()">Accueil</a>
+    <a class="nav-link text-3xl font-headline font-bold text-slate-200 hover:text-primary transition-colors" onclick="navigateTo('boutique'); toggleMobileMenu()">Boutique</a>
+    <a class="nav-link text-3xl font-headline font-bold text-slate-200 hover:text-primary transition-colors" onclick="navigateTo('promotions'); toggleMobileMenu()">Promotions</a>
+    <a class="nav-link text-3xl font-headline font-bold text-slate-200 hover:text-primary transition-colors" onclick="navigateTo('contact'); toggleMobileMenu()">Contact</a>
+  </div>
+</div>
+
+
+<!-- TopNavBar -->
+<nav class="bg-slate-900/40 backdrop-blur-xl rounded-full mt-4 mx-auto w-[95%] max-w-7xl sticky top-4 z-50 flex justify-between items-center px-6 md:px-8 py-4 shadow-[0_0_40px_-15px_rgba(173,198,255,0.2)] font-['Manrope'] tracking-tight">
+<div class="text-xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 cursor-pointer" onclick="navigateTo('accueil')">ANASS PHONE</div>
+<div class="desktop-nav hidden md:flex items-center gap-8">
+<a class="nav-link active-link transition-all duration-300" data-page="accueil" onclick="navigateTo('accueil')">Accueil</a>
+<a class="nav-link text-slate-300 hover:text-white transition-all duration-300" data-page="boutique" onclick="navigateTo('boutique')">Boutique</a>
+<a class="nav-link text-slate-300 hover:text-white transition-all duration-300" data-page="promotions" onclick="navigateTo('promotions')">Promotions</a>
+<a class="nav-link text-slate-300 hover:text-white transition-all duration-300" data-page="contact" onclick="navigateTo('contact')">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<button onclick="toggleSearch()" class="text-slate-300 hover:text-primary transition-colors"><span class="material-symbols-outlined">search</span></button>
+<div class="relative">
+  <button onclick="toggleProfileDropdown()" class="text-slate-300 hover:text-primary transition-colors"><span class="material-symbols-outlined">person</span></button>
+  <div id="profileDropdown" class="profile-dropdown">
+    <!-- Populated by JS -->
+  </div>
+</div>
+<button class="text-slate-300 hover:text-primary transition-colors relative" id="cartBtn" onclick="toggleCart()"><span class="material-symbols-outlined">shopping_cart</span><span id="cartBadge" class="cart-badge hidden">0</span></button>
+<div class="hamburger md:hidden" id="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
+</div>
+</nav>
+
+<!-- 2. Search System -->
+<div id="searchOverlay" class="search-overlay" onclick="toggleSearch()"></div>
+<div id="searchContainer" class="search-container">
+  <div class="max-w-3xl mx-auto">
+    <div class="relative mb-6">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+      <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Rechercher un produit..." class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-2xl py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:border-primary/50 transition-colors placeholder:text-slate-500 font-body text-lg"/>
+    </div>
+    <div id="searchResults" class="max-h-[60vh] overflow-y-auto flex flex-col gap-2"></div>
+  </div>
+</div>
+
+
+<!-- 3. Cart System -->
+<div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+<div id="cartSidebar" class="cart-sidebar">
+  <div class="flex justify-between items-center p-6 border-b border-white/5">
+    <h2 class="text-xl font-headline font-bold flex items-center gap-2">Mon Panier 🛒</h2>
+    <button onclick="toggleCart()" class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">close</span></button>
+  </div>
+  <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 flex flex-col gap-4"></div>
+  <div id="cartFooter" class="p-6 bg-surface-container-highest/30 border-t border-white/5 hidden flex-col">
+    <div class="flex justify-between items-center mb-6">
+      <span class="text-slate-300">TOTAL</span>
+      <span id="cartTotal" class="text-2xl font-black text-white">0 MAD</span>
+    </div>
+    <div class="flex flex-col gap-3">
+      <button onclick="checkoutWhatsApp()" class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold flex justify-center items-center gap-2 hover:shadow-[0_0_20px_rgba(173,198,255,0.3)] transition-all">
+        Commander via WhatsApp <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+      <button onclick="toggleCart()" class="w-full py-3 rounded-xl border border-white/10 text-slate-300 font-semibold hover:bg-white/5 transition-all">Continuer les achats</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- 5. Auth Modal -->
+<div id="authModal" class="auth-modal" onclick="if(event.target===this)closeAuth()">
+  <div class="auth-content">
+    <div class="flex justify-between items-center mb-6">
+      <h3 id="authTitle" class="text-2xl font-headline font-bold">Se connecter</h3>
+      <button onclick="closeAuth()" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10"><span class="material-symbols-outlined text-sm">close</span></button>
+    </div>
+    <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+      <div id="registerFields" class="hidden space-y-4">
+        <div>
+          <label class="text-xs font-label text-slate-400 uppercase tracking-widest pl-1 mb-1 block">Nom Complet</label>
+          <input type="text" id="authName" class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 text-white" placeholder="John Doe">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-label text-slate-400 uppercase tracking-widest pl-1 mb-1 block">Email</label>
+        <input type="email" id="authEmail" required class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 text-white" placeholder="john@example.com">
+      </div>
+      <div>
+        <label class="text-xs font-label text-slate-400 uppercase tracking-widest pl-1 mb-1 block">Mot de passe</label>
+        <div class="relative">
+          <input type="password" id="authPassword" required class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 text-white" placeholder="••••••••">
+          <button type="button" onclick="togglePasswordVisibility('authPassword')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+        </div>
+      </div>
+      <button type="submit" id="authSubmitBtn" class="w-full py-4 mt-6 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-lg hover:shadow-[0_0_20px_rgba(173,198,255,0.3)] transition-all">Se connecter</button>
+    </form>
+    <div class="mt-6 text-center text-sm text-slate-400">
+      <span id="authSwitchText">Pas encore de compte ?</span>
+      <button type="button" onclick="toggleAuthMode()" id="authSwitchBtn" class="text-primary font-bold hover:underline ml-1">Créer un compte</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== PRODUCT DETAIL PAGE ==================== -->
+<div id="page-product" class="page">
+<div class="slide-in max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-32">
+<!-- Back Button -->
+<button onclick="goBackFromProduct()" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors mb-10 group">
+<span class="material-symbols-outlined text-2xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="font-semibold">Retour</span>
+</button>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+<!-- LEFT: Images -->
+<div>
+<div class="aspect-square rounded-[2rem] bg-surface-container-lowest overflow-hidden mb-6 border border-outline-variant/10">
+<img id="detailMainImg" class="w-full h-full object-contain p-8 transition-all duration-500" alt=""/>
+</div>
+<div class="grid grid-cols-3 gap-4" id="detailThumbs"></div>
+</div>
+<!-- RIGHT: Info -->
+<div class="flex flex-col">
+<p id="detailBrand" class="text-secondary text-xs font-bold uppercase tracking-[.2em] mb-3"></p>
+<h1 id="detailName" class="font-headline text-3xl md:text-4xl font-extrabold mb-4 leading-tight"></h1>
+<!-- Rating -->
+<div class="flex items-center gap-3 mb-6">
+<div class="flex gap-0.5" id="detailStars"></div>
+<span class="text-on-surface font-bold text-sm" id="detailRating"></span>
+<span class="text-on-surface-variant text-sm" id="detailReviews"></span>
+</div>
+<p id="detailPrice" class="text-4xl font-headline font-black text-on-surface mb-6"></p>
+<div class="h-px bg-outline-variant/20 mb-6"></div>
+<!-- Description -->
+<p id="detailDesc" class="text-on-surface-variant font-body text-base leading-relaxed mb-6"></p>
+<div class="h-px bg-outline-variant/20 mb-6"></div>
+<!-- Specs -->
+<h3 class="font-headline text-lg font-bold mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">settings</span>Spécifications</h3>
+<div id="detailSpecs" class="mb-6 glass-panel rounded-2xl p-5"></div>
+<div class="h-px bg-outline-variant/20 mb-6"></div>
+<!-- Quantity -->
+<div class="flex items-center gap-4 mb-8">
+<span class="text-on-surface-variant font-semibold text-sm">Quantité</span>
+<div class="flex items-center gap-0 bg-surface-container-high rounded-2xl p-1">
+<button onclick="changeQty(-1)" class="qty-btn text-on-surface-variant">−</button>
+<span id="detailQty" class="w-12 text-center font-bold text-on-surface text-lg">1</span>
+<button onclick="changeQty(1)" class="qty-btn text-on-surface-variant">+</button>
+</div>
+</div>
+<!-- Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
+<button onclick="addToCartDetail()" class="flex-1 py-4 rounded-2xl border-2 border-primary/30 text-primary font-bold hover:bg-primary/10 transition-all flex items-center justify-center gap-3 text-base">
+<span class="material-symbols-outlined">add_shopping_cart</span>Ajouter au panier
+</button>
+<a id="detailWhatsApp" href="#" target="_blank" class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(173,198,255,0.4)] transition-all text-base">
+<span class="material-symbols-outlined">chat</span>Commander via WhatsApp
+</a>
+</div>
+<div class="h-px bg-outline-variant/20 mb-6"></div>
+<!-- Trust Badges -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<div class="trust-badge"><span class="material-symbols-outlined text-primary">local_shipping</span><span class="text-sm text-on-surface-variant">Livraison partout au Maroc</span></div>
+<div class="trust-badge"><span class="material-symbols-outlined text-primary">lock</span><span class="text-sm text-on-surface-variant">Paiement sécurisé</span></div>
+<div class="trust-badge"><span class="material-symbols-outlined text-primary">undo</span><span class="text-sm text-on-surface-variant">Retour sous 7 jours</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+<div class="main-wrapper" style="position: relative; z-index: 10;">
+<!-- ==================== ACCUEIL PAGE ==================== -->
+<div id="page-accueil" class="page active">
+<!-- Hero -->
+<section class="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
+<!-- Video Background -->
+<video autoplay loop muted playsinline class="pointer-events-none opacity-60 mix-blend-screen" style="position: absolute !important; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0 !important; pointer-events: none !important;">
+  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_105406_16f4600d-7a92-4292-b96e-b19156c7830a.mp4" type="video/mp4" />
+</video>
+<div class="absolute inset-0 bg-black/40 pointer-events-none" style="z-index: 0 !important;"></div>
+<div class="max-w-4xl mx-auto px-8 w-full flex flex-col items-center text-center">
+<div class="z-30 text-white relative mt-12 md:mt-24">
+<h1 class="font-headline font-extrabold text-4xl md:text-6xl lg:text-7xl tracking-tighter leading-[1.1] mb-6 drop-shadow-2xl">Découvrez la <span class="text-gradient">nouvelle</span> génération.</h1>
+<p class="font-body text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed opacity-90">iPhone, Samsung & Laptops aux meilleurs prix au Maroc. L'excellence technologique à votre portée.</p>
+<div class="flex flex-wrap justify-center gap-6">
+<button onclick="navigateTo('boutique')" class="px-10 py-5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(173,198,255,0.4)] hover:shadow-primary/50 cursor-pointer">Explorer la boutique</button>
+<button onclick="navigateTo('promotions')" class="px-10 py-5 rounded-full border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-all duration-300 backdrop-blur-xl cursor-pointer hover:border-white/40">Voir les promotions</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Bento -->
+<section class="max-w-7xl mx-auto px-8 py-24 md:py-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<div class="md:col-span-8 group relative overflow-hidden rounded-3xl glass-panel cursor-pointer" onclick="navigateTo('boutique')">
+<img class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000" alt="Smartphones premium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADzccvps8K42LMIHGrpKLmdcZzC-bnGZemzrSh1Xy8xBkhMklnzgtJ7pmA3AZVkS78CsORmyPtbIrzAzOr2028wBBzY7croLZ79H3rZVbdH3D_kZT0aGgJALeKYriH-AXtIAyNiEEQ3Fb8vN9JKEr2RlWovSOkcpwjqP-daaGyQzyUrYJUNI3C2kfYPO_SklCsye1vroeEQ2GgJWHkn2mfXRUYvGChAsLrxKq7cGgh7L5GhOHlOpAfh8_NMFtgJiC2ugclkz2Hik6v"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute bottom-10 left-10">
+<span class="text-primary font-bold tracking-widest text-xs uppercase mb-2 block">Premium Selection</span>
+<h3 class="font-headline text-4xl font-bold mb-4">iPhones & Galaxy</h3>
+<span class="text-on-surface hover:text-primary transition-colors flex items-center gap-2">Découvrir <span class="material-symbols-outlined">arrow_forward</span></span>
+</div>
+</div>
+<div class="md:col-span-4 group relative overflow-hidden rounded-3xl bg-surface-container-high cursor-pointer" onclick="navigateTo('boutique')">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-1000" alt="Laptops" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQKgXJp-q0Z8o-sRhIyIg6vdWUej8iU8fr_tQ9QnG_NFuZYmUnyWtap1NXU2x2grryGZJhYRgeLem9XrWa-K8zyLzWOdgYPvghhJYm7HHDuC5AjXcW468IF259-VomOMJciMLIifOu8w9EEorAQ77SVCQKfWCnVIiDQu_l6mXdJPj80IRqhdAaxri6--BLzYGIvWBOVw1nXCj8CWXRyP3vF64SuFcqzBpkdYleBL6gidbBjbIX-N1f8T2Qe4Myv_2x3Ae8UREvGbFD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute bottom-10 left-10">
+<h3 class="font-headline text-3xl font-bold mb-2">Laptops</h3>
+<p class="text-on-surface-variant text-sm">Puissance & Mobilité</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Products -->
+<section class="bg-surface-container-lowest py-24 md:py-32">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex justify-between items-end mb-16">
+<div><h2 class="font-headline text-4xl md:text-5xl font-extrabold mb-4">Nouveautés</h2><p class="text-on-surface-variant text-lg">Les fleurons de la technologie actuelle.</p></div>
+<button onclick="navigateTo('boutique')" class="text-primary font-bold flex items-center gap-2 hover:translate-x-2 transition-transform">Tout voir <span class="material-symbols-outlined">east</span></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="group relative bg-surface-variant/40 backdrop-blur-xl rounded-[2rem] p-6 hover:translate-y-[-8px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(173,198,255,0.15)] flex flex-col">
+<div class="relative aspect-square mb-8 overflow-hidden rounded-2xl"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="iPhone 15 Pro Max" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrynJn_VS9yPffSG1FlinpEfGBY6sizDlwBx_k8oPjUwhSPp2wjJE0MA1Tsrm8pufeR5d0jSLwkgIMEhnito9n1uTS7Th907eIWjczIOUsJr2KQoKx7hVpN-DjO2ZlnOWVHAlix6jTkRpygx-2QqiAoRGrKNQOvPZX_oDe1EwtSwyYfIk6EhYe7nBcngYxuuhlLcAR7uj6zikUiD7ZpJGk6tKxYBnwRc5oCnl7U-C0V3b1gqp5Lk3vUWHhhR9dOmgt_Vi8lX5euoB3"/></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest mb-2 block">Apple</span>
+<h4 class="font-headline text-xl font-bold mb-2">iPhone 15 Pro Max</h4>
+<div class="mb-6"><span class="text-2xl font-black text-on-surface">14,999 MAD</span></div>
+<div class="flex gap-3 mt-auto"><button onclick="addToCart(0)" class="flex-1 py-3 rounded-xl border border-primary/30 text-primary font-bold text-sm hover:bg-primary/10 transition-all">Ajouter</button><button onclick="openModal(0)" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(173,198,255,0.3)]">Détails</button></div>
+</div>
+<div class="group relative bg-surface-variant/40 backdrop-blur-xl rounded-[2rem] p-6 hover:translate-y-[-8px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(233,179,255,0.15)] flex flex-col">
+<div class="relative aspect-square mb-8 overflow-hidden rounded-2xl"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Samsung Galaxy S24 Ultra" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNBgtEV5caRasTLjpI2VKFQo40EU9GyG92QrUcBR4jJi21MTBE6YdkKkHM79cU5kci0mZujrx0HWwM1dIzahbjkBDRHLAPqgRmNy8mXxjIxa8dL2_HvrsXUAfQTI6-vDldHtghQzBt_CRseWokmlh9TFByNE5rTubz7bpV_wRoKL3J85dfwqZcb_Pg_8gh4CgGCC1FNqiBwV4OHxyeaCTetbhijsh-qZP2_pe1SSNdNVonPAKfmuMCdS_qSR0UVKdzGGWLgrnlD6MY"/></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest mb-2 block">Samsung</span>
+<h4 class="font-headline text-xl font-bold mb-2">Galaxy S24 Ultra</h4>
+<div class="mb-6"><span class="text-2xl font-black text-on-surface">12,499 MAD</span></div>
+<div class="flex gap-3 mt-auto"><button onclick="addToCart(1)" class="flex-1 py-3 rounded-xl border border-primary/30 text-primary font-bold text-sm hover:bg-primary/10 transition-all">Ajouter</button><button onclick="openModal(1)" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(173,198,255,0.3)]">Détails</button></div>
+</div>
+<div class="group relative bg-surface-variant/40 backdrop-blur-xl rounded-[2rem] p-6 hover:translate-y-[-8px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(173,198,255,0.15)] flex flex-col">
+<div class="relative aspect-square mb-8 overflow-hidden rounded-2xl"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="MacBook Pro M3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAJC7JYvXDy5gxpkSc_BGad6BIL7nI8Es0uN0GTjoD5z_OFgcqCQBaIRJWRTdGtAjbVZJDfe6nNGS-CscEEipS5bsueub8i-dyY2tud774fsKhFdSBb-9MS38OzppQ-y21GZNYc3DlJBKq0WwJnfd1mda1uXqK00FEwVG3fyU80RvJJK99Y_xY8f4Q9PCSacPe5wF8cqtVyieuogBkfzyBuRTo-3_EZPE4S8T_jSsNRzz8kEv1iukkG5NywMneV8zd31QGnLTEsolp"/></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest mb-2 block">Apple</span>
+<h4 class="font-headline text-xl font-bold mb-2">MacBook Pro M3</h4>
+<div class="mb-6"><span class="text-2xl font-black text-on-surface">18,999 MAD</span></div>
+<div class="flex gap-3 mt-auto"><button onclick="addToCart(5)" class="flex-1 py-3 rounded-xl border border-primary/30 text-primary font-bold text-sm hover:bg-primary/10 transition-all">Ajouter</button><button onclick="openModal(5)" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(173,198,255,0.3)]">Détails</button></div>
+</div>
+<div class="group relative bg-surface-variant/40 backdrop-blur-xl rounded-[2rem] p-6 hover:translate-y-[-8px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(233,179,255,0.15)] flex flex-col">
+<div class="relative aspect-square mb-8 overflow-hidden rounded-2xl"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Xiaomi 14 Pro" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIuUYR3h59pdn_1tGpN_a5rEYHWnCjM1WzuGzZKlWGxeoT4u0FzDAxeiHZmtJgpAUUFs3c53GgM67mFxzYwaIduJ4jnNYLj0C4kFfdlQUzmYd0ITDvGU8l5BlJnzeafomHM19ZNjzwebJOL7hVvIRtnW8iW7oc_4TUy_adSOgBOpbp4AIOCa6Avnap8Y3Ausp6WdbusAQLAIV0irrp0sd-yuYb34mACcP7q8bqvrNVpK5PNRd048wxmXk5BITH3B-PCUW2sHYQl22b"/></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest mb-2 block">Xiaomi</span>
+<h4 class="font-headline text-xl font-bold mb-2">Xiaomi 14 Pro</h4>
+<div class="mb-6"><span class="text-2xl font-black text-on-surface">6,999 MAD</span></div>
+<div class="flex gap-3 mt-auto"><button onclick="addToCart(3)" class="flex-1 py-3 rounded-xl border border-primary/30 text-primary font-bold text-sm hover:bg-primary/10 transition-all">Ajouter</button><button onclick="openModal(3)" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(173,198,255,0.3)]">Détails</button></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Us -->
+<section class="max-w-7xl mx-auto px-8 py-24 md:py-32">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<div class="flex flex-col gap-6 p-8 rounded-3xl bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings:'wght' 200">verified_user</span>
+<h3 class="font-headline text-2xl font-bold">Garantie Officielle</h3>
+<p class="text-on-surface-variant leading-relaxed">Tous nos produits sont certifiés et bénéficient d'une garantie complète pour votre tranquillité d'esprit.</p>
+</div>
+<div class="flex flex-col gap-6 p-8 rounded-3xl bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-secondary text-5xl" style="font-variation-settings:'wght' 200">local_shipping</span>
+<h3 class="font-headline text-2xl font-bold">Livraison Rapide</h3>
+<p class="text-on-surface-variant leading-relaxed">Expédition sécurisée partout au Maroc en 24/48h. Suivez votre commande en temps réel.</p>
+</div>
+<div class="flex flex-col gap-6 p-8 rounded-3xl bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings:'wght' 200">support_agent</span>
+<h3 class="font-headline text-2xl font-bold">SAV Expert</h3>
+<p class="text-on-surface-variant leading-relaxed">Une équipe de spécialistes à votre écoute via WhatsApp pour tout conseil ou assistance technique.</p>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-24 md:py-32 bg-surface-container-low overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<h2 class="font-headline text-4xl font-extrabold text-center mb-20">Ce que disent nos clients</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-8 rounded-3xl glass-panel">
+<div class="flex gap-1 text-primary mb-6"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span></div>
+<p class="italic text-on-surface-variant mb-8">"Service impeccable. J'ai reçu mon iPhone 15 Pro le lendemain de la commande à Casablanca. Produit authentique et scellé."</p>
+<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-highest"></div><div><p class="font-bold text-sm">Amine B.</p><p class="text-xs text-on-surface-variant">Casablanca</p></div></div>
+</div>
+<div class="p-8 rounded-3xl glass-panel transform md:translate-y-12">
+<div class="flex gap-1 text-primary mb-6"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span></div>
+<p class="italic text-on-surface-variant mb-8">"Meilleur prix que j'ai pu trouver au Maroc pour un MacBook Pro. Le support WhatsApp est très réactif et professionnel."</p>
+<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-highest"></div><div><p class="font-bold text-sm">Sara L.</p><p class="text-xs text-on-surface-variant">Marrakech</p></div></div>
+</div>
+<div class="p-8 rounded-3xl glass-panel">
+<div class="flex gap-1 text-primary mb-6"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">star</span></div>
+<p class="italic text-on-surface-variant mb-8">"Ravi de mon achat. Le Galaxy S24 est une merveille. Boutique sérieuse que je recommande vivement à tout le monde."</p>
+<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container-highest"></div><div><p class="font-bold text-sm">Youssef T.</p><p class="text-xs text-on-surface-variant">Rabat</p></div></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA -->
+<section class="max-w-7xl mx-auto px-8 py-24 md:py-32">
+<div class="relative overflow-hidden rounded-[3rem] p-12 md:p-24 bg-surface-container-high text-center">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[100px]"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]"></div>
+<h2 class="font-headline text-4xl md:text-7xl font-black mb-8 relative z-10 leading-tight">Prêt pour votre <span class="text-gradient">nouveau</span> smartphone ?</h2>
+<p class="text-on-surface-variant text-lg md:text-2xl max-w-2xl mx-auto mb-12 relative z-10">Rejoignez des milliers de clients satisfaits et profitez de nos offres exclusives aujourd'hui.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+<button onclick="navigateTo('boutique')" class="px-12 py-5 rounded-full bg-on-surface text-surface font-bold text-lg hover:scale-105 transition-transform duration-300">Débuter mon achat</button>
+<a href="https://wa.me/212631373114" target="_blank" class="px-12 py-5 rounded-full glass-panel border border-outline-variant/30 text-on-surface font-bold text-lg hover:bg-surface-variant/40 transition-all duration-300 flex items-center justify-center gap-2"><span class="material-symbols-outlined">chat</span> Contacter WhatsApp</a>
+</div>
+</div>
+</section>
+</div>
+<!-- ==================== PAGE ACCUEIL END ==================== -->
+
+<!-- ==================== BOUTIQUE PAGE ==================== -->
+<div id="page-boutique" class="page">
+<main class="max-w-7xl mx-auto px-6 py-16">
+<header class="mb-16 md:flex justify-between items-end gap-12">
+<div class="max-w-2xl">
+<h1 class="text-5xl md:text-7xl font-headline font-black tracking-tighter mb-6 text-on-surface">La Boutique <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Céleste</span></h1>
+<p class="text-on-surface-variant font-body text-lg leading-relaxed opacity-80">Découvrez une sélection rigoureuse des fleurons de la technologie mondiale.</p>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Filters -->
+<aside class="lg:col-span-3 space-y-10">
+<div>
+<h3 class="font-headline text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">Catégorie</h3>
+<div class="space-y-3">
+<button onclick="filterProducts('all')" class="filter-btn w-full flex items-center justify-between p-4 rounded-xl liquid-glass border border-white/5 hover:border-primary/40 transition-all text-left"><span class="font-semibold text-primary">Tous</span><span class="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
+<button onclick="filterProducts('smartphone')" class="filter-btn w-full flex items-center justify-between p-4 rounded-xl bg-surface-container-low border border-white/5 hover:border-primary/40 transition-all text-left group"><span class="font-semibold text-on-surface-variant group-hover:text-on-surface">Smartphones</span><span class="material-symbols-outlined text-sm text-on-surface-variant">chevron_right</span></button>
+<button onclick="filterProducts('laptop')" class="filter-btn w-full flex items-center justify-between p-4 rounded-xl bg-surface-container-low border border-white/5 hover:border-primary/40 transition-all text-left group"><span class="font-semibold text-on-surface-variant group-hover:text-on-surface">Ordinateurs</span><span class="material-symbols-outlined text-sm text-on-surface-variant">chevron_right</span></button>
+</div>
+</div>
+<div class="pt-8">
+<div class="p-6 rounded-2xl glass-card border border-white/5 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline font-bold text-lg mb-2">Besoin d'aide ?</h4>
+<p class="text-sm text-on-surface-variant mb-4">Nos experts sont disponibles 24/7.</p>
+<a href="https://wa.me/212631373114" target="_blank" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all text-sm font-bold flex items-center justify-center gap-2"><span class="material-symbols-outlined text-sm">support_agent</span>WhatsApp</a>
+</div>
+<div class="absolute -bottom-8 -right-8 w-24 h-24 bg-primary/20 blur-3xl rounded-full"></div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<div class="lg:col-span-9">
+<div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<!-- Products injected by JS -->
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<!-- ==================== PROMOTIONS PAGE ==================== -->
+<div id="page-promotions" class="page">
+<main class="max-w-7xl mx-auto px-6 pt-16 pb-32">
+<!-- Hero Banner -->
+<section class="relative min-h-[500px] rounded-3xl overflow-hidden mb-24 flex flex-col justify-center items-start px-8 md:px-12 group">
+<div class="absolute inset-0 bg-surface-container-lowest z-0">
+<img alt="Promotions banner" class="w-full h-full object-cover opacity-40 scale-105 group-hover:scale-100 transition-transform duration-[2000ms]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCub7tdUFXrVYO3wWrL-nJj2oOfEWrO3_CLOeuyHLPCzu1fG04HzGM0yeK7MtfB7BY_iTnbSDN0lKiCGlQ-6n02hGjWlxJrLRlVJmDx5hej05R8qbRDyiF1Q7_ms_smLzIrOatycQwQyN_x8kK_BU5xatvGzZYSksPgBrauy5D8JIar82BLY0nZAqRW5YYX3YZM-I4aYSbH9zSJpkM02Y4MFTO6XLpA8WAsXdvTMpI-8BZLyNjbJGyFzSG1tC2PY8WBPfnsVfjViZmi"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-transparent to-transparent opacity-80"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+</div>
+<div class="relative z-10 max-w-2xl">
+<div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-primary-container/20 text-primary border border-primary/20 mb-6">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+<span class="text-xs font-bold tracking-widest uppercase pulse-badge">Offre Limitée!</span>
+</div>
+<h1 class="font-headline text-5xl md:text-8xl font-extrabold tracking-tighter mb-6 leading-none">Offres <span class="text-gradient">limitées.</span></h1>
+<!-- Countdown Timer -->
+<div class="flex gap-4 md:gap-8 mb-10">
+<div class="flex flex-col items-center"><span id="countdown-days" class="text-4xl font-headline font-black text-secondary">03</span><span class="text-[10px] uppercase tracking-widest text-on-surface-variant">Jours</span></div>
+<span class="text-4xl font-headline font-black text-on-surface-variant/30">:</span>
+<div class="flex flex-col items-center"><span id="countdown-hours" class="text-4xl font-headline font-black text-secondary">00</span><span class="text-[10px] uppercase tracking-widest text-on-surface-variant">Heures</span></div>
+<span class="text-4xl font-headline font-black text-on-surface-variant/30">:</span>
+<div class="flex flex-col items-center"><span id="countdown-mins" class="text-4xl font-headline font-black text-secondary">00</span><span class="text-[10px] uppercase tracking-widest text-on-surface-variant">Minutes</span></div>
+<span class="text-4xl font-headline font-black text-on-surface-variant/30">:</span>
+<div class="flex flex-col items-center"><span id="countdown-secs" class="text-4xl font-headline font-black text-secondary">00</span><span class="text-[10px] uppercase tracking-widest text-on-surface-variant">Secondes</span></div>
+</div>
+<button onclick="navigateTo('boutique')" class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold rounded-xl shadow-lg glow-blue hover:translate-y-[-4px] transition-all duration-300">Explorer la Galerie</button>
+</div>
+<div class="absolute top-1/2 right-10 -translate-y-1/2 w-64 h-64 bg-secondary/20 rounded-full blur-[100px] pointer-events-none"></div>
+</section>
+<!-- Promo Products (rendered by JS) -->
+<div id="promoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+</main>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div id="page-contact" class="page">
+<main class="max-w-7xl mx-auto px-8 py-20">
+<header class="mb-24 relative">
+<div class="grid grid-cols-1 md:grid-cols-2 items-end gap-8">
+<div>
+<span class="text-primary font-label text-sm tracking-widest uppercase mb-4 block">Connect with Excellence</span>
+<h1 class="text-5xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface leading-tight">Entrez dans <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">l'univers ANASS.</span></h1>
+</div>
+<div class="max-w-md ml-auto text-on-surface-variant font-body text-lg leading-relaxed text-right md:pb-4">Notre équipe est prête à répondre à toutes vos questions sur nos produits premium et services personnalisés.</div>
+</div>
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 blur-[120px] rounded-full -z-10"></div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left: Info + Map -->
+<div class="lg:col-span-5 space-y-12">
+<div class="grid grid-cols-1 gap-6">
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">location_on</span></div>
+<div><h3 class="text-xl font-headline font-bold mb-2">Adresse</h3><p class="text-on-surface-variant font-body">Derb Ghallef N 977,<br/>Casablanca, Maroc</p></div>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">call</span></div>
+<div><h3 class="text-xl font-headline font-bold mb-2">Téléphone</h3><p class="text-on-surface-variant font-body"><a href="tel:+212631373114" class="hover:text-primary transition-colors">06.31.37.31.14</a></p></div>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">photo_camera</span></div>
+<div><h3 class="text-xl font-headline font-bold mb-2">Instagram</h3><p class="text-on-surface-variant font-body"><a href="https://instagram.com/anassphone_" target="_blank" class="hover:text-primary transition-colors">@anassphone_</a></p></div>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">schedule</span></div>
+<div><h3 class="text-xl font-headline font-bold mb-2">Horaires</h3>
+<div class="grid grid-cols-2 gap-2 font-body text-on-surface-variant text-sm">
+<div>Lundi - Vendredi</div><div class="text-on-surface">09:00 - 20:00</div>
+<div>Samedi</div><div class="text-on-surface">10:00 - 18:00</div>
+</div></div>
+</div>
+</div>
+</div>
+<!-- Google Maps -->
+<div class="relative h-[350px] w-full rounded-3xl overflow-hidden shadow-[0_0_60px_-15px_rgba(173,198,255,0.15)]">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.8!2d-7.6!3d33.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2e9b0f!2sDerb+Ghallef!5e0!3m2!1sfr!2sma!4v1" width="100%" height="100%" style="border:0;filter:invert(90%) hue-rotate(180deg) brightness(0.6) contrast(1.2)" allowfullscreen="" loading="lazy"></iframe>
+</div>
+</div>
+<!-- Right: Contact Form -->
+<div class="lg:col-span-7">
+<div class="glass-panel p-10 md:p-16 rounded-[2.5rem] border border-outline-variant/20 relative overflow-hidden">
+<div class="mb-12">
+<h2 class="text-3xl font-headline font-bold mb-4">Envoyez un message</h2>
+<p class="text-on-surface-variant font-body">Remplissez le formulaire ci-dessous, notre équipe vous répondra dans les plus brefs délais.</p>
+</div>
+<form id="contactForm" class="space-y-8" onsubmit="handleContactForm(event)">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-xs font-label text-tertiary uppercase tracking-widest ml-1">Nom Complet</label>
+<input id="contactName" class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline/50 font-body" placeholder="Votre nom" type="text" required/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-label text-tertiary uppercase tracking-widest ml-1">Téléphone</label>
+<input id="contactPhone" class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline/50 font-body" placeholder="+212 6XX XXX XXX" type="tel" required/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-label text-tertiary uppercase tracking-widest ml-1">Votre Message</label>
+<textarea id="contactMessage" class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline/50 font-body resize-none" placeholder="Comment pouvons-nous vous aider ?" rows="5" required></textarea>
+</div>
+<button type="submit" class="w-full py-5 rounded-2xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold text-lg hover:shadow-[0_0_30px_rgba(173,198,255,0.4)] transition-all hover:scale-[1.01] active:scale-[0.98]">Envoyer le message</button>
+<div id="formSuccess" class="hidden text-center py-4 text-primary font-bold text-lg">✓ Message envoyé avec succès!</div>
+<div class="relative py-4 flex items-center gap-4">
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div><span class="text-on-surface-variant text-sm font-label">OU</span><div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<a href="https://wa.me/212631373114" target="_blank" class="group flex items-center justify-center gap-3 w-full py-5 rounded-2xl border-2 border-primary/20 hover:border-primary/50 transition-all hover:bg-primary/5 font-headline font-bold text-lg text-primary"><span class="material-symbols-outlined group-hover:scale-125 transition-transform">chat</span>Nous contacter sur WhatsApp</a>
+</form>
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/5 blur-3xl rounded-full -z-10"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<!-- ==================== MES COMMANDES PAGE ==================== -->
+<div id="page-orders" class="page">
+  <main class="max-w-7xl mx-auto px-6 py-16">
+    <header class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-headline font-black tracking-tighter mb-4 text-on-surface">Mes <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Commandes</span></h1>
+      <p class="text-on-surface-variant font-body text-lg">Historique de vos achats chez Anass Phone.</p>
+    </header>
+    <div id="ordersContainer" class="space-y-6">
+      <!-- Orders injected by JS -->
+    </div>
+  </main>
+</div>
+
+<!-- ==================== MES FAVORIS PAGE ==================== -->
+<div id="page-favorites" class="page">
+  <main class="max-w-7xl mx-auto px-6 py-16">
+    <header class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-headline font-black tracking-tighter mb-4 text-on-surface">Mes <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Favoris</span></h1>
+      <p class="text-on-surface-variant font-body text-lg">Les produits que vous avez sélectionnés.</p>
+    </header>
+    <div id="favoritesGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      <!-- Favorites injected by JS -->
+    </div>
+  </main>
+</div>
+</div><!-- End Main Content Wrapper -->
+
+<!-- ==================== FOOTER (Shared) ==================== -->
+<footer class="bg-slate-950 w-full pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+<div>
+<div class="text-lg font-bold text-slate-100 mb-6">ANASS PHONE</div>
+<p class="font-['Inter'] text-sm text-slate-400 mb-6 leading-relaxed">© 2024 ANASS PHONE Morocco. High-End Celestial Gallery. Spécialiste de la tech haut de gamme au meilleur prix.</p>
+<div class="flex gap-4">
+<a href="https://instagram.com/anassphone_" target="_blank" class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">photo_camera</span></a>
+<a href="https://wa.me/212631373114" target="_blank" class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">chat</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-slate-100">Explorer</h4>
+<ul class="font-['Inter'] text-sm text-slate-400 space-y-4">
+<li><a class="text-slate-500 hover:text-purple-400 transition-colors cursor-pointer" onclick="navigateTo('accueil')">Accueil</a></li>
+<li><a class="text-slate-500 hover:text-purple-400 transition-colors cursor-pointer" onclick="navigateTo('boutique')">Boutique</a></li>
+<li><a class="text-slate-500 hover:text-purple-400 transition-colors cursor-pointer" onclick="navigateTo('promotions')">Promotions</a></li>
+<li><a class="text-slate-500 hover:text-purple-400 transition-colors cursor-pointer" onclick="navigateTo('contact')">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-slate-100">Contact</h4>
+<ul class="font-['Inter'] text-sm text-slate-400 space-y-4">
+<li><a href="tel:+212631373114" class="text-slate-500 hover:text-purple-400 transition-colors">📞 06.31.37.31.14</a></li>
+<li><a href="https://instagram.com/anassphone_" target="_blank" class="text-slate-500 hover:text-purple-400 transition-colors">📸 @anassphone_</a></li>
+<li class="text-slate-500">📍 Derb Ghallef N 977, Casablanca</li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-outline-variant/10 text-center">
+<p class="font-['Inter'] text-xs text-slate-500">Conçu avec passion pour l'excellence numérique au Maroc.</p>
+</div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/212631373114" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
+<button class="w-16 h-16 rounded-full bg-[#25D366] text-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<svg viewBox="0 0 32 32" width="32" height="32" fill="white"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.132 6.738 3.052 9.372L1.056 31.2l6.076-1.952c2.518 1.68 5.52 2.66 8.748 2.66h.008C24.824 31.908 32 24.732 32 16.004S24.828 0 16.004 0zm9.508 22.612c-.396 1.116-2.316 2.076-3.232 2.208-.916.132-1.78.376-6.004-1.252-5.092-1.96-8.344-7.172-8.596-7.504-.248-.332-2.04-2.716-2.04-5.18s1.292-3.676 1.752-4.176c.46-.5 1.004-.624 1.34-.624.332 0 .668.004.96.016.308.016.72-.116 1.128.86.416.996 1.404 3.428 1.528 3.676.124.248.208.54.04.872-.164.332-.248.54-.496.832-.248.292-.52.652-.744.876-.248.248-.508.516-.216.016.288-.5 1.284-2.12 2.756-3.432 1.888-1.684 3.48-2.204 3.972-2.452.496-.248.784-.208 1.072.124.292.332 1.244 1.444 1.58 1.94.34.5.676.46 1.14.288.46-.168 2.948-1.152 3.456-1.4.508-.248.848-.372 0.972-.228.124.144.124.832-.272 1.632z"/></svg>
+</button>
+<span class="absolute right-20 top-1/2 -translate-y-1/2 px-4 py-2 bg-surface-container-highest rounded-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-outline-variant/20 text-on-surface">Besoin d'aide ?</span>
+</a>
+
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] bg-slate-900/80 backdrop-blur-2xl rounded-2xl flex justify-around items-center py-4 px-2 shadow-2xl z-40 border border-white/10">
+<button onclick="navigateTo('accueil')" class="mobile-nav-btn active-mobile flex flex-col items-center gap-1" data-page="accueil"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span><span class="text-[10px] font-bold">Accueil</span></button>
+<button onclick="navigateTo('boutique')" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="boutique"><span class="material-symbols-outlined">store</span><span class="text-[10px] font-bold">Boutique</span></button>
+<button onclick="navigateTo('promotions')" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="promotions"><span class="material-symbols-outlined">percent</span><span class="text-[10px] font-bold">Promo</span></button>
+<button onclick="navigateTo('contact')" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="contact"><span class="material-symbols-outlined">call</span><span class="text-[10px] font-bold">Contact</span></button>
+</nav>
+
+<script>
+// ===== PRODUCTS DATA =====
+const products = [
+  {name:"iPhone 15 Pro Max",brand:"Apple",price:"14,999 MAD",cat:"smartphone",desc:"Titanium naturel, puce A17 Pro ultra-puissante. Le smartphone le plus avancé d'Apple avec un système de caméra Pro révolutionnaire et un écran Super Retina XDR toujours actif.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuC1ra00SmUgRxtGL97UuTjxzSxbE9pTJpaW68ub6cn8TasNLeJiRB1cIFm4KCDwFAbjlMVR_aceZM3c2II7bCNeeZkPSMiEnqu3pna0M20uLl2aK4VF4OMRmJk9JTUKmDvObnp6r8Gi5uLaTrOF_ZpukyI1kWdCpBIXlyb3INE3eqJkjZ5U4WHL-C_HUODgZ3dLO9QEwqbXnS6OFLb85CnHyr6r9Wh8qTPk9QLI9UQV7VlpqLa5-FOc8mLaevy3y3swDXdF0db9Z614",badge:"NOUVEAU",badgeColor:"primary",rating:4.8,reviews:234,specs:{Écran:'6.7" Super Retina XDR',Processeur:'A17 Pro',RAM:'8GB',Stockage:'256GB',Batterie:'4422 mAh','Couleurs disponibles':'Titane Noir, Titane Blanc, Titane Bleu'}},
+  {name:"Samsung Galaxy S24 Ultra",brand:"Samsung",price:"12,499 MAD",cat:"smartphone",desc:"Zoom 100x et Galaxy AI intégré. L'appareil photo le plus intelligent avec un S Pen intégré et un écran Dynamic AMOLED 2X spectaculaire.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuCO1S9iuIOLcSGs1nqV-VW7hhrn9ER6twfQ6mWPTFaNZ0IPrIEJ_IN5WK6k9Nk3dvatQttRpnT6RJevrJxsm3IOaqUMU6xY3ZC2ot8A6M3mfTOE_ltKuTvJh4eBnqfIXp8bDqi_Oqv7IEeOiq33rQAkaOjkyHB-4oLZ1pzMx2QQmKbsqbwT0ynK9RlJXcgrQ1HgmDnIX6Er_5LgUbVyuO_otQAd1dM3yDMFVGGTc4yGu9FBqJpEd_baXpG8XulEoHl8O3h_Y7qu0p5A",badge:"PREMIUM",badgeColor:"secondary",rating:4.7,reviews:189,specs:{Écran:'6.8" Dynamic AMOLED',Processeur:'Snapdragon 8 Gen 3',RAM:'12GB',Stockage:'256GB',Batterie:'5000 mAh','Couleurs disponibles':'Noir, Gris, Violet'}},
+  {name:"iPhone 14",brand:"Apple",price:"8,999 MAD",cat:"smartphone",desc:"Une autonomie record et un écran Retina spectaculaire. Détection des accidents, mode Action pour des vidéos ultra-stables et la puce A15 Bionic ultra-rapide.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuAyv7z3FlFWNyAbmchZ8YdH5GiBILaORrE1eGasvwrbj9XsyMougc0oPgnGGFmi_QFVpDA0OxmoZo7UOAnWpnq2W_UIhqbhytCkklO9HcfMFHeoSDdSbvh8uGF4va7EW5F6v3pwnKdLmeWR1X-7IdEORT5Frf3ZFZRibWM-rTVuVg5FEJgUmHy4fC1x9H0Romge1Qwlsr0C7YcIY7nWGZZImAiZQ8Inxl6gAaKhds_evKqLBCgKpN1UFqpUM_j9NXmKeWvuec2GYbf",badge:"",badgeColor:"",rating:4.5,reviews:312,specs:{Écran:'6.1" Super Retina XDR',Processeur:'A15 Bionic',RAM:'6GB',Stockage:'128GB',Batterie:'3279 mAh','Couleurs disponibles':'Midnight, Starlight, Rouge'}},
+  {name:"Xiaomi 14 Pro",brand:"Xiaomi",price:"6,999 MAD",cat:"smartphone",desc:"Performance Leica et design premium. Double caméra co-développée avec Leica pour des photos d'une qualité exceptionnelle, écran AMOLED LTPO 120Hz.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBIuUYR3h59pdn_1tGpN_a5rEYHWnCjM1WzuGzZKlWGxeoT4u0FzDAxeiHZmtJgpAUUFs3c53GgM67mFxzYwaIduJ4jnNYLj0C4kFfdlQUzmYd0ITDvGU8l5BlJnzeafomHM19ZNjzwebJOL7hVvIRtnW8iW7oc_4TUy_adSOgBOpbp4AIOCa6Avnap8Y3Ausp6WdbusAQLAIV0irrp0sd-yuYb34mACcP7q8bqvrNVpK5PNRd048wxmXk5BITH3B-PCUW2sHYQl22b",badge:"",badgeColor:"",rating:4.6,reviews:156,specs:{Écran:'6.73" AMOLED 120Hz',Processeur:'Snapdragon 8 Gen 3',RAM:'12GB',Stockage:'256GB',Batterie:'4880 mAh','Couleurs disponibles':'Noir, Blanc, Vert'}},
+  {name:"Samsung A55",brand:"Samsung",price:"3,999 MAD",cat:"smartphone",desc:"Le meilleur rapport qualité-prix Samsung. Écran Super AMOLED immersif, résistance à l'eau IP67 et processeur Exynos 1480 fluide.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuA1KB_mFR7SrMqe_VGGkaaLUoJSbZ0elw-UeJNN7DC-5yCA5kqW9ITVWo04IcUN0cxu-huvN-MrcOH3PT1XPWhKlyoUgvVCQc7KEu6RA2vd3q1INEBw2d65Nc7A9nqpcL8bANsPQMETL31MnVse3Y0h7x8VtY1Bcl_WkJFf3NDMsFsftPh7zRreRjdU-WEvFtmw5KNHzgAplyDtoCxjiXZ9qVn1qdxzxTuHTDWGQ1cAFe4KiyRge5eJ8GiR4GXlMoZreB_qOaGtMq7V",badge:"HOT",badgeColor:"error",rating:4.3,reviews:278,specs:{Écran:'6.6" Super AMOLED',Processeur:'Exynos 1480',RAM:'8GB',Stockage:'128GB',Batterie:'5000 mAh','Couleurs disponibles':'Bleu, Noir, Lilas'}},
+  {name:"MacBook Pro M3",brand:"Apple",price:"18,999 MAD",cat:"laptop",desc:"L'ordinateur portable le plus puissant pour créateurs. Puce M3 Pro avec Neural Engine 16 cœurs, écran Liquid Retina XDR et autonomie record de 22 heures.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuCKsOGUY-wj8i7CHYRPSs_5zbCUFz_hgV3CusnqLqTaXZx4QdTa2og11DFEjAC1uUxUKep3sAOCNnzcKyK2CwtHrGJTTdFNQOo4w26-rjnlRuLfKhInIbKqm6XeauwOG6_jt-Xpu2w7L0Yzi7j9lQjuEUCwFzxb3AIw6HyjnAbuVoxaanCewsGwrQORWEqMIN5WXBYi8sQ4UzTMd6diDx84TlIFw33qpzoOZaZxNGyFVdGYuAuGlPrio5_RQovamMCyHpWsNwPt2fPi",badge:"NOUVEAU",badgeColor:"primary",rating:4.9,reviews:145,specs:{Écran:'14.2" Liquid Retina XDR',Processeur:'Apple M3 Pro',RAM:'18GB',Stockage:'512GB SSD',Batterie:'22 heures','Couleurs disponibles':'Argent, Gris Sidéral'}},
+  {name:"Dell XPS 15",brand:"Dell",price:"14,499 MAD",cat:"laptop",desc:"Écran OLED InfinityEdge, puissance Intel i7. Design ultra-fin avec un écran 3.5K tactile et un clavier rétroéclairé premium.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuCdHCGFctmPh4iNDjxb5W65bkJ1hrlDVvIP6jpbwz1j_q6geJWmGEikq4_xH5Uh5YGv02NB4pf0X3ah0SCUYqn1PgfKdXu8GfIJtfUHp3hC2ZNWSi3UYURadlOnGVOEG1Lr4jt-vcc6oYSx8ek722dW2YUXOnyREptBaE-fz6-jAc4G7NZojryypRr2rVekq1BiF7BDdKYyNEz3B3jl_wTMW8MGYiugP6dERK4TUqv9VFJMYmJtbvYQGpcEEZ_NaAW29ve687amOfNk",badge:"",badgeColor:"",rating:4.4,reviews:98,specs:{Écran:'15.6" OLED 3.5K',Processeur:'Intel Core i7-13700H',RAM:'16GB',Stockage:'512GB SSD',Batterie:'13 heures','Couleurs disponibles':'Platine, Graphite'}},
+  {name:"HP Pavilion Gaming",brand:"HP",price:"8,999 MAD",cat:"laptop",desc:"RTX 3050, parfait pour gaming et création. Écran 144Hz ultra-fluide, clavier rétroéclairé et système de refroidissement avancé.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuCrynJn_VS9yPffSG1FlinpEfGBY6sizDlwBx_k8oPjUwhSPp2wjJE0MA1Tsrm8pufeR5d0jSLwkgIMEhnito9n1uTS7Th907eIWjczIOUsJr2KQoKx7hVpN-DjO2ZlnOWVHAlix6jTkRpygx-2QqiAoRGrKNQOvPZX_oDe1EwtSwyYfIk6EhYe7nBcngYxuuhlLcAR7uj6zikUiD7ZpJGk6tKxYBnwRc5oCnl7U-C0V3b1gqp5Lk3vUWHhhR9dOmgt_Vi8lX5euoB3",badge:"",badgeColor:"",rating:4.2,reviews:167,specs:{Écran:'15.6" FHD 144Hz',Processeur:'Intel Core i5-12500H',RAM:'16GB',Stockage:'512GB SSD',GPU:'RTX 3050','Couleurs disponibles':'Mica Silver'}},
+  {name:"Lenovo IdeaPad",brand:"Lenovo",price:"5,499 MAD",cat:"laptop",desc:"Fin, léger et incroyablement polyvalent. Idéal pour le travail et les études avec son autonomie de 10 heures et son écran Full HD anti-reflets.",img:"https://lh3.googleusercontent.com/aida-public/AB6AXuBAJC7JYvXDy5gxpkSc_BGad6BIL7nI8Es0uN0GTjoD5z_OFgcqCQBaIRJWRTdGtAjbVZJDfe6nNGS-CscEEipS5bsueub8i-dyY2tud774fsKhFdSBb-9MS38OzppQ-y21GZNYc3DlJBKq0WwJnfd1mda1uXqK00FEwVG3fyU80RvJJK99Y_xY8f4Q9PCSacPe5wF8cqtVyieuogBkfzyBuRTo-3_EZPE4S8T_jSsNRzz8kEv1iukkG5NywMneV8zd31QGnLTEsolp",badge:"",badgeColor:"",rating:4.1,reviews:203,specs:{Écran:'15.6" FHD',Processeur:'AMD Ryzen 5 7520U',RAM:'8GB',Stockage:'512GB SSD',Batterie:'10 heures','Couleurs disponibles':'Gris, Bleu Abysse'}}
+];
+
+let currentCategory = 'all';
+// ===== STATE MANAGEMENT =====
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+function saveState() {
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+// ===== TOAST NOTIFICATIONS =====
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icon = type === 'success' ? 'check_circle' : 'info';
+  toast.innerHTML = `<span class="material-symbols-outlined text-[20px]">${icon}</span> ${message}`;
+  
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('hide');
+    setTimeout(() => {
+      if (toast.parentNode === container) container.removeChild(toast);
+    }, 300);
+  }, 3000);
+}
+
+// ===== PROFILE & AUTH =====
+function toggleProfileDropdown() {
+  const dropdown = document.getElementById('profileDropdown');
+  dropdown.classList.toggle('show');
+  renderProfileDropdown();
+}
+function renderProfileDropdown() {
+  const dropdown = document.getElementById('profileDropdown');
+  if(!currentUser) {
+    dropdown.innerHTML = `
+      <div class="p-3 border-b border-white/10 mb-2">
+        <div class="text-sm font-bold text-white mb-1"><span class="material-symbols-outlined align-middle mr-2 text-[18px]">person</span>Mon Compte</div>
+      </div>
+      <div class="dropdown-item" onclick="openAuth('login')">Se connecter</div>
+      <div class="dropdown-item" onclick="openAuth('register')">Créer un compte</div>
+    `;
+  } else {
+    dropdown.innerHTML = `
+      <div class="p-3 border-b border-white/10 mb-2">
+        <div class="text-xs text-slate-400 mb-1">Bonjour,</div>
+        <div class="text-sm font-bold text-white truncate">${currentUser.name}</div>
+      </div>
+      <div class="dropdown-item" onclick="navigateTo('orders')"><span class="material-symbols-outlined text-[18px]">list_alt</span>Mes Commandes</div>
+      <div class="dropdown-item" onclick="navigateTo('favorites')"><span class="material-symbols-outlined text-[18px]">favorite</span>Mes Favoris</div>
+      <div class="dropdown-item text-error hover:bg-error/10 hover:text-error" onclick="logout()"><span class="material-symbols-outlined text-[18px]">logout</span>Se déconnecter</div>
+    `;
+  }
+}
+
+let authMode = 'login';
+function openAuth(mode) {
+  document.getElementById('profileDropdown').classList.remove('show');
+  authMode = mode;
+  updateAuthUI();
+  document.getElementById('authModal').classList.add('show');
+}
+function closeAuth() {
+  document.getElementById('authModal').classList.remove('show');
+  document.getElementById('authForm').reset();
+}
+function toggleAuthMode() {
+  authMode = authMode === 'login' ? 'register' : 'login';
+  updateAuthUI();
+}
+function updateAuthUI() {
+  const title = document.getElementById('authTitle');
+  const submitBtn = document.getElementById('authSubmitBtn');
+  const switchText = document.getElementById('authSwitchText');
+  const switchBtn = document.getElementById('authSwitchBtn');
+  const regFields = document.getElementById('registerFields');
+  
+  if(authMode === 'login') {
+    title.textContent = 'Se connecter';
+    submitBtn.textContent = 'Se connecter';
+    switchText.textContent = 'Pas encore de compte ?';
+    switchBtn.textContent = 'Créer un compte';
+    regFields.classList.add('hidden');
+    document.getElementById('authName').removeAttribute('required');
+  } else {
+    title.textContent = 'Créer un compte';
+    submitBtn.textContent = "S'inscrire";
+    switchText.textContent = 'Déjà un compte ?';
+    switchBtn.textContent = 'Se connecter';
+    regFields.classList.remove('hidden');
+    document.getElementById('authName').setAttribute('required', 'true');
+  }
+}
+function togglePasswordVisibility(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+function handleAuthSubmit(e) {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value;
+  if(authMode === 'register') {
+    const name = document.getElementById('authName').value;
+    currentUser = { name, email };
+    showToast('Compte créé avec succès !', 'success');
+  } else {
+    currentUser = { name: email.split('@')[0], email };
+    showToast('Connexion réussie !', 'success');
+  }
+  saveState();
+  closeAuth();
+  renderProfileDropdown();
+}
+function logout() {
+  currentUser = null;
+  saveState();
+  showToast('Déconnexion réussie', 'info');
+  document.getElementById('profileDropdown').classList.remove('show');
+  if (document.getElementById('page-orders').classList.contains('active') || document.getElementById('page-favorites').classList.contains('active')) {
+    navigateTo('accueil');
+  }
+}
+
+// ===== FAVORITES & ORDERS =====
+function toggleFavorite(e, productName) {
+  e.stopPropagation();
+  if(!currentUser) {
+    showToast("Veuillez vous connecter pour ajouter aux favoris", "info");
+    openAuth('login');
+    return;
+  }
+  const idx = favorites.indexOf(productName);
+  if(idx === -1) {
+    favorites.push(productName);
+    e.currentTarget.classList.add('is-favorite');
+    showToast("Ajouté aux favoris", "success");
+  } else {
+    favorites.splice(idx, 1);
+    e.currentTarget.classList.remove('is-favorite');
+    showToast("Retiré des favoris", "info");
+  }
+  saveState();
+  if(document.getElementById('page-favorites').classList.contains('active')) {
+    renderFavoritesPage();
+  }
+}
+
+function renderFavoritesPage() {
+  const grid = document.getElementById('favoritesGrid');
+  if(!currentUser) {
+      grid.innerHTML = `<div class="col-span-full text-center py-20 text-on-surface-variant">Veuillez vous <button onclick="openAuth('login')" class="text-primary font-bold hover:underline">connecter</button> pour voir vos favoris.</div>`;
+      return;
+  }
+  const favProducts = products.filter(p => favorites.includes(p.name));
+  if(favProducts.length === 0) {
+    grid.innerHTML = `<div class="col-span-full text-center py-20 text-on-surface-variant flex flex-col items-center gap-4"><span class="material-symbols-outlined text-6xl opacity-50">favorite_border</span><p>Vous n'avez pas encore de favoris.</p><button onclick="navigateTo('boutique')" class="mt-2 px-6 py-3 bg-primary/10 text-primary rounded-xl font-bold hover:bg-primary/20 transition">Explorer la Boutique</button></div>`;
+    return;
+  }
+  
+  grid.innerHTML = favProducts.map((p, i) => {
+    const idx = products.indexOf(p);
+    return `
+    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative">
+      <div class="favorite-btn is-favorite" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
+        <span class="material-symbols-outlined">favorite</span>
+      </div>
+      <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
+        <img class="w-full h-full object-contain p-4" alt="${p.name}" src="${p.img}"/>
+      </div>
+      <div class="flex-1">
+        <h3 class="text-2xl font-headline font-bold mb-1 group-hover:text-primary transition-colors">${p.name}</h3>
+        <div class="mb-4"><span class="text-2xl font-headline font-extrabold text-on-surface">${p.price}</span></div>
+      </div>
+      <button onclick="openModal(${idx})" class="w-full py-4 rounded-2xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold hover:shadow-[0_0_20px_rgba(173,198,255,0.3)] transition-all">Détails</button>
+    </div>`;
+  }).join('');
+}
+
+function renderOrdersPage() {
+  const container = document.getElementById('ordersContainer');
+  if(!currentUser) {
+      container.innerHTML = `<div class="text-center py-20 text-on-surface-variant">Veuillez vous <button onclick="openAuth('login')" class="text-primary font-bold hover:underline">connecter</button> pour voir vos commandes.</div>`;
+      return;
+  }
+  if(orders.length === 0) {
+    container.innerHTML = `<div class="text-center py-20 text-on-surface-variant flex flex-col items-center gap-4"><span class="material-symbols-outlined text-6xl opacity-50">receipt_long</span><p>Vous n'avez passé aucune commande.</p></div>`;
+    return;
+  }
+  
+  container.innerHTML = orders.map(ord => `
+    <div class="glass-card rounded-2xl p-6 border border-white/5 flex flex-col md:flex-row justify-between md:items-center gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h3 class="font-bold text-xl">${ord.id}</h3>
+          <span class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full border border-secondary/20">${ord.status}</span>
+        </div>
+        <p class="text-sm text-slate-400 mb-4">Commandé le ${ord.date}</p>
+        <div class="text-sm text-slate-300">
+          ${ord.items.join('<br/>')}
+        </div>
+      </div>
+      <div class="md:text-right">
+        <p class="text-sm text-slate-400 mb-1">Total</p>
+        <p class="font-headline font-black text-2xl text-on-surface">${ord.total.toLocaleString('fr-FR')} MAD</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProducts(filter='all'){
+  currentCategory = filter;
+  const grid=document.getElementById('productGrid');
+  const filtered=filter==='all'?products:products.filter(p=>p.cat===filter);
+  grid.innerHTML=filtered.map((p,i)=>{
+    const idx=products.indexOf(p);
+    const isFav = favorites.includes(p.name);
+    return `
+    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative">
+      <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
+        <span class="material-symbols-outlined">favorite</span>
+      </div>
+      <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
+        <img class="w-full h-full object-contain p-4 transition-transform duration-700" alt="${p.name}" src="${p.img}"/>
+        ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor}/20 text-${p.badgeColor} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor}/20">${p.badge}</span></div>`:''}
+      </div>
+      <div class="flex-1">
+        <h3 class="text-2xl font-headline font-bold mb-1 group-hover:text-primary transition-colors">${p.name}</h3>
+        <p class="text-on-surface-variant text-sm mb-6 line-clamp-2">${p.desc}</p>
+        <div class="mb-8"><span class="text-3xl font-headline font-extrabold text-on-surface">${p.price}</span></div>
+      </div>
+      <div class="flex gap-3 mt-auto">
+        <button onclick="addToCart(${idx})" class="flex-1 py-4 rounded-2xl border border-primary/30 text-primary font-bold hover:bg-primary/10 transition-all text-sm">Ajouter</button>
+        <button onclick="openModal(${idx})" class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold transition-all hover:shadow-[0_0_20px_rgba(173,198,255,0.3)] text-sm">Détails</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProducts(cat){
+  renderProducts(cat);
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.className=b.className.replace(/liquid-glass/g,'bg-surface-container-low');
+    b.querySelector('span:first-child').className='font-semibold text-on-surface-variant group-hover:text-on-surface';
+  });
+  event.currentTarget.className=event.currentTarget.className.replace(/bg-surface-container-low/g,'liquid-glass');
+  event.currentTarget.querySelector('span:first-child').className='font-semibold text-primary';
+}
+
+// ===== SPA NAVIGATION =====
+function navigateTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  // Desktop nav
+  document.querySelectorAll('.nav-link[data-page]').forEach(l=>{l.classList.remove('active-link');l.classList.add('text-slate-300')});
+  const activeLink=document.querySelector(`.nav-link[data-page="${page}"]`);
+  if(activeLink){activeLink.classList.add('active-link');activeLink.classList.remove('text-slate-300')}
+  // Mobile nav
+  document.querySelectorAll('.mobile-nav-btn').forEach(b=>{b.classList.remove('active-mobile');b.classList.add('text-slate-500')});
+  const mobileBtn=document.querySelector(`.mobile-nav-btn[data-page="${page}"]`);
+  if(mobileBtn){mobileBtn.classList.add('active-mobile');mobileBtn.classList.remove('text-slate-500')}
+  // Close mobile menu
+  document.getElementById('mobileMenu').classList.remove('show');
+  document.getElementById('hamburger').classList.remove('open');
+  // Scroll top
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Render products
+  if(page==='boutique') renderProducts();
+  if(page==='promotions') renderPromos();
+  if(page==='favorites') renderFavoritesPage();
+  if(page==='orders') renderOrdersPage();
+}
+
+function toggleMobileMenu(){
+  document.getElementById('mobileMenu').classList.toggle('show');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+// ===== COUNTDOWN TIMER (3 days) =====
+const countdownEnd=new Date().getTime()+3*24*60*60*1000;
+function updateCountdown(){
+  const now=new Date().getTime();
+  const diff=countdownEnd-now;
+  if(diff<=0)return;
+  const d=Math.floor(diff/(1000*60*60*24));
+  const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m=Math.floor((diff%(1000*60*60))/(1000*60));
+  const s=Math.floor((diff%(1000*60))/1000);
+  document.getElementById('countdown-days').textContent=String(d).padStart(2,'0');
+  document.getElementById('countdown-hours').textContent=String(h).padStart(2,'0');
+  document.getElementById('countdown-mins').textContent=String(m).padStart(2,'0');
+  document.getElementById('countdown-secs').textContent=String(s).padStart(2,'0');
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// ===== CONTACT FORM =====
+function handleContactForm(e){
+  e.preventDefault();
+  const name=document.getElementById('contactName').value;
+  const phone=document.getElementById('contactPhone').value;
+  const msg=document.getElementById('contactMessage').value;
+  const waMsg=`Bonjour, je suis ${name} (${phone}). ${msg}`;
+  window.open(`https://wa.me/212631373114?text=${encodeURIComponent(waMsg)}`,'_blank');
+  document.getElementById('formSuccess').classList.remove('hidden');
+  document.getElementById('contactForm').reset();
+  setTimeout(()=>document.getElementById('formSuccess').classList.add('hidden'),4000);
+}
+
+// ===== PROMO PRODUCTS DATA =====
+const promos = [
+  {name:"iPhone 14",spec:"128GB • Midnight",old:"8,999 MAD",price:"7,199 MAD",disc:"-20%",rot:"rotate-[-12deg]",img:products[2].img},
+  {name:"Samsung Galaxy S24 Ultra",spec:"256GB • Titanium Gray",old:"12,499 MAD",price:"9,999 MAD",disc:"-20%",rot:"rotate-[8deg]",img:products[1].img},
+  {name:"MacBook Pro M3",spec:"16\" • 512GB SSD • M3 Pro",old:"18,999 MAD",price:"15,999 MAD",disc:"-16%",rot:"rotate-[-6deg]",img:products[5].img},
+  {name:"Xiaomi 14 Pro",spec:"256GB • Leica Optics",old:"6,999 MAD",price:"5,599 MAD",disc:"-20%",rot:"rotate-[10deg]",img:products[3].img},
+  {name:"HP Pavilion Gaming",spec:"RTX 3050 • 512GB SSD",old:"8,999 MAD",price:"7,649 MAD",disc:"-15%",rot:"",img:products[7].img}
+];
+function renderPromos(){
+  const g=document.getElementById('promoGrid');if(!g)return;
+  const gradients=['from-primary to-secondary','from-secondary to-primary','from-primary/50 to-secondary/50','from-secondary/50 to-primary/50','from-primary to-primary-container'];
+  const priceColors=['text-primary','text-secondary','text-primary','text-secondary','text-primary'];
+  g.innerHTML=promos.map((p,i)=>{
+    const isFav = favorites.includes(p.name);
+    return `
+  <div class="relative group">
+    <div class="absolute -inset-1 bg-gradient-to-r ${gradients[i]} rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+    <div class="relative liquid-glass rounded-3xl overflow-hidden p-6 h-full flex flex-col border border-white/10 hover:translate-y-[-8px] transition-all duration-500">
+      <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
+        <span class="material-symbols-outlined">favorite</span>
+      </div>
+      <div class="absolute top-6 left-6 z-20 px-4 py-2 bg-error text-on-error font-black rounded-lg shadow-[0_0_20px_rgba(255,180,171,0.5)] ${p.rot} pulse-badge">${p.disc}</div>
+      <div class="aspect-square w-full mb-8 overflow-hidden rounded-2xl bg-surface-container-lowest flex items-center justify-center">
+        <img alt="${p.name}" class="w-[75%] h-[75%] object-contain group-hover:scale-110 transition-transform duration-700" src="${p.img}"/>
+      </div>
+      <div class="mt-auto">
+        <div class="flex justify-between items-end mb-4">
+          <div><h3 class="font-headline text-xl font-bold mb-1 uppercase tracking-tight">${p.name}</h3><p class="text-on-surface-variant text-sm">${p.spec}</p></div>
+          <div class="text-right"><p class="text-on-surface-variant text-sm line-through opacity-50">${p.old}</p><p class="font-headline text-2xl font-black ${priceColors[i]}">${p.price}</p></div>
+        </div>
+        <a href="https://wa.me/212631373114?text=Bonjour, je suis intéressé par ${encodeURIComponent(p.name)} en promo (${p.disc})" target="_blank" class="flex items-center justify-center gap-2 w-full py-4 bg-surface-container-highest hover:bg-primary hover:text-on-primary rounded-xl transition-all duration-300 font-bold"><span class="material-symbols-outlined">chat</span>Acheter via WhatsApp</a>
+      </div>
+    </div>
+  </div>`;
+  }).join('');
+}
+
+// ===== CART =====
+let cart=[];
+function updateCartBadge(){
+  const badge=document.getElementById('cartBadge');
+  if(cart.length>0){badge.textContent=cart.length;badge.classList.remove('hidden')}
+  else badge.classList.add('hidden');
+}
+function addToCart(idx){
+  cart.push(products[idx]);updateCartBadge();
+  showToast("Produit ajouté au panier", "info");
+  const btn=event.currentTarget;btn.textContent='✓ Ajouté';btn.classList.add('bg-primary/20');
+  setTimeout(()=>{btn.textContent='Ajouter';btn.classList.remove('bg-primary/20')},1500);
+}
+function toggleCart(){
+  const cartSidebar = document.getElementById('cartSidebar');
+  const cartOverlay = document.getElementById('cartOverlay');
+  cartSidebar.classList.toggle('show');
+  cartOverlay.classList.toggle('show');
+  if(cartSidebar.classList.contains('show')) renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItemsContainer');
+  const footer = document.getElementById('cartFooter');
+  
+  if(cart.length === 0) {
+    container.innerHTML = `
+      <div class="flex flex-col items-center justify-center p-8 text-center gap-4 mt-10">
+        <span class="material-symbols-outlined text-6xl text-slate-600" style="font-variation-settings: 'FILL' 0">shopping_cart</span>
+        <p class="text-lg text-slate-400 font-semibold">Votre panier est vide</p>
+        <button onclick="toggleCart(); navigateTo('boutique')" class="mt-4 px-6 py-3 bg-primary/10 text-primary rounded-xl font-bold hover:bg-primary/20 transition">Voir la Boutique</button>
+      </div>`;
+    footer.classList.add('hidden');
+    footer.classList.remove('flex');
+    return;
+  }
+  
+  const grouped = {};
+  let total = 0;
+  cart.forEach(item => {
+    if(!grouped[item.name]) grouped[item.name] = { ...item, qty: 0 };
+    grouped[item.name].qty++;
+    total += parseInt(item.price.replace(/[^\d]/g, ''));
+  });
+  
+  container.innerHTML = Object.values(grouped).map(item => `
+    <div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-2xl border border-white/5">
+      <div class="w-16 h-16 rounded-xl bg-white/5 p-2 shrink-0">
+        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-contain" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-bold truncate text-white">${item.name}</h3>
+        <p class="text-primary font-bold text-sm leading-tight">${item.price}</p>
+        <div class="flex items-center gap-3 mt-2">
+          <div class="flex items-center bg-surface-container-highest rounded-lg px-1">
+            <button onclick="updateCartItemQty('${item.name}', -1)" class="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded-lg text-slate-300 font-bold">-</button>
+            <span class="w-6 text-center text-xs font-bold">${item.qty}</span>
+            <button onclick="updateCartItemQty('${item.name}', 1)" class="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded-lg text-slate-300 font-bold">+</button>
+          </div>
+          <button onclick="removeCartItem('${item.name}')" class="text-error/80 hover:text-error ml-auto p-1 transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  footer.classList.remove('hidden');
+  footer.classList.add('flex');
+  document.getElementById('cartTotal').textContent = total.toLocaleString('fr-FR') + ' MAD';
+}
+
+function updateCartItemQty(name, delta) {
+  if (delta > 0) {
+    const item = products.find(p => p.name === name);
+    cart.push(item);
+  } else {
+    const i = cart.findIndex(p => p.name === name);
+    if(i !== -1) cart.splice(i, 1);
+  }
+  updateCartBadge();
+  renderCart();
+}
+
+function removeCartItem(name) {
+  cart = cart.filter(p => p.name !== name);
+  updateCartBadge();
+  renderCart();
+}
+
+function checkoutWhatsApp() {
+  const grouped = {};
+  let total = 0;
+  cart.forEach(item => {
+    if(!grouped[item.name]) grouped[item.name] = { ...item, qty: 0 };
+    grouped[item.name].qty++;
+    total += parseInt(item.price.replace(/[^\d]/g, ''));
+  });
+  
+  let msg = "Bonjour ANASS PHONE 👋\nJe voudrais commander:\n";
+  const orderItems = [];
+  Object.values(grouped).forEach(item => {
+    msg += `- ${item.name} x${item.qty} → ${item.price}\n`;
+    orderItems.push(`- ${item.name} x${item.qty}`);
+  });
+  msg += `\nTOTAL: ${total.toLocaleString('fr-FR')} MAD\nMerci!`;
+  
+  if (currentUser) {
+    const newOrder = {
+      id: 'ORD-' + Math.floor(Math.random()*10000),
+      date: new Date().toLocaleDateString('fr-FR'),
+      total: total,
+      items: orderItems,
+      status: 'En attente'
+    };
+    orders.unshift(newOrder);
+    saveState();
+  }
+  
+  window.open(`https://wa.me/212631373114?text=${encodeURIComponent(msg)}`, '_blank');
+  
+  cart = [];
+  updateCartBadge();
+  toggleCart();
+  showToast('Commande validée !', 'success');
+}
+
+// ===== SEARCH BAR =====
+function toggleSearch() {
+  const container = document.getElementById('searchContainer');
+  const overlay = document.getElementById('searchOverlay');
+  container.classList.toggle('show');
+  overlay.classList.toggle('show');
+  if(container.classList.contains('show')) {
+    setTimeout(()=>document.getElementById('searchInput').focus(),100);
+    handleSearch();
+  } else {
+    document.getElementById('searchInput').value = '';
+  }
+}
+
+function handleSearch() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const resultsContainer = document.getElementById('searchResults');
+  
+  if (!query) {
+    resultsContainer.innerHTML = '';
+    return;
+  }
+  
+  const results = products.filter(p => 
+    p.name.toLowerCase().includes(query) || 
+    p.brand.toLowerCase().includes(query) ||
+    p.cat.toLowerCase().includes(query)
+  );
+  
+  if(results.length === 0) {
+    resultsContainer.innerHTML = `<div class="p-4 text-slate-400 text-center text-sm">Aucun produit trouvé pour "${query}"</div>`;
+    return;
+  }
+  
+  resultsContainer.innerHTML = results.map(item => {
+    const idx = products.findIndex(p => p.name === item.name);
+    return `
+      <div class="search-result-card" onclick="toggleSearch(); openModal(${idx})">
+        <div class="w-12 h-12 rounded-lg bg-surface-container-lowest p-1 shrink-0">
+          <img src="${item.img}" alt="${item.name}" class="w-full h-full object-contain" />
+        </div>
+        <div class="flex flex-col justify-center">
+          <h4 class="text-sm font-bold text-white">${item.name}</h4>
+          <span class="text-xs text-primary font-semibold">${item.price}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Close search on ESC
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && document.getElementById('searchContainer').classList.contains('show')) {
+    toggleSearch();
+  }
+});
+
+// ===== PRODUCT DETAIL PAGE =====
+let currentDetailIdx=-1;
+let detailQty=1;
+let previousPage='accueil';
+
+function openModal(idx){
+  currentDetailIdx=idx;detailQty=1;
+  const p=products[idx];
+  // Track which page we came from
+  const activePage=document.querySelector('.page.active');
+  if(activePage&&activePage.id!=='page-product') previousPage=activePage.id.replace('page-','');
+  // Show product page
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.getElementById('page-product').classList.add('active');
+  // Update URL
+  const slug=p.name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+  history.pushState({page:'product',idx:idx},p.name,'/product/'+slug);
+  // Populate
+  document.getElementById('detailMainImg').src=p.img;
+  document.getElementById('detailMainImg').alt=p.name;
+  document.getElementById('detailBrand').textContent=p.brand;
+  document.getElementById('detailName').textContent=p.name;
+  document.getElementById('detailPrice').textContent=p.price;
+  document.getElementById('detailDesc').textContent=p.desc;
+  document.getElementById('detailQty').textContent='1';
+  // Stars
+  const starsHtml=Array.from({length:5},(_, i)=>{
+    if(i<Math.floor(p.rating)) return '<span class="material-symbols-outlined text-amber-400" style="font-variation-settings:\'FILL\' 1;font-size:18px">star</span>';
+    if(i<p.rating) return '<span class="material-symbols-outlined text-amber-400" style="font-variation-settings:\'FILL\' 1;font-size:18px">star_half</span>';
+    return '<span class="material-symbols-outlined text-slate-600" style="font-size:18px">star</span>';
+  }).join('');
+  document.getElementById('detailStars').innerHTML=starsHtml;
+  document.getElementById('detailRating').textContent=p.rating+'/5';
+  document.getElementById('detailReviews').textContent='('+p.reviews+' avis)';
+  // Specs
+  document.getElementById('detailSpecs').innerHTML=Object.entries(p.specs).map(([k,v])=>
+    `<div class="spec-row"><span class="text-on-surface-variant text-sm">${k}</span><span class="text-on-surface font-semibold text-sm">${v}</span></div>`
+  ).join('');
+  // Thumbnails (3 views using same image with different transforms)
+  const thumbStyles=['','brightness(1.1) saturate(1.2)','brightness(0.9) contrast(1.1)'];
+  const thumbLabels=['Vue principale','Vue de côté','Vue arrière'];
+  document.getElementById('detailThumbs').innerHTML=thumbStyles.map((s,i)=>
+    `<button onclick="setDetailThumb(${i})" class="thumb-btn rounded-xl bg-surface-container-lowest aspect-square overflow-hidden ${i===0?'active-thumb':''}">
+      <img src="${p.img}" alt="${thumbLabels[i]}" class="w-full h-full object-contain p-3 transition-transform duration-300" style="filter:${s};${i===1?'transform:scaleX(-1)':''}${i===2?'transform:scale(0.85)':''}"/>
+    </button>`
+  ).join('');
+  // WhatsApp link
+  document.getElementById('detailWhatsApp').href=`https://wa.me/212631373114?text=${encodeURIComponent('Bonjour, je veux commander: '+p.name+' - '+p.price)}`;
+  // Scroll top
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Hide nav highlights
+  document.querySelectorAll('.nav-link[data-page]').forEach(l=>{l.classList.remove('active-link');l.classList.add('text-slate-300')});
+  document.querySelectorAll('.mobile-nav-btn').forEach(b=>{b.classList.remove('active-mobile');b.classList.add('text-slate-500')});
+}
+
+function setDetailThumb(i){
+  const thumbs=document.querySelectorAll('.thumb-btn');
+  thumbs.forEach(t=>t.classList.remove('active-thumb'));
+  thumbs[i].classList.add('active-thumb');
+  const img=thumbs[i].querySelector('img');
+  document.getElementById('detailMainImg').style.filter=img.style.filter;
+  document.getElementById('detailMainImg').style.transform=img.style.transform;
+}
+
+function changeQty(d){
+  detailQty=Math.max(1,detailQty+d);
+  document.getElementById('detailQty').textContent=detailQty;
+}
+
+function addToCartDetail(){
+  if(currentDetailIdx>=0){
+    for(let i=0;i<detailQty;i++) cart.push(products[currentDetailIdx]);
+    updateCartBadge();
+    showToast("Produit ajouté au panier !", "success");
+    const btn=event.currentTarget;
+    const orig=btn.innerHTML;
+    btn.innerHTML='<span class="material-symbols-outlined">check_circle</span>Ajouté au panier !';
+    btn.classList.add('bg-primary/20');
+    setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('bg-primary/20')},2000);
+  }
+}
+
+function goBackFromProduct(){
+  document.getElementById('detailMainImg').style.filter='';
+  document.getElementById('detailMainImg').style.transform='';
+  navigateTo(previousPage);
+  history.pushState({page:previousPage},null,'/');
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.page==='product'&&typeof e.state.idx==='number'){
+    openModal(e.state.idx);
+  } else {
+    document.getElementById('detailMainImg').style.filter='';
+    document.getElementById('detailMainImg').style.transform='';
+    navigateTo(previousPage);
+  }
+});
+
+// Keep old modal functions as no-ops for compatibility
+function closeModal(){}
+function addToCartFromModal(){}
+
+// Init
+renderProducts();
+renderPromos();
+</script>
+</body>
+</html>
