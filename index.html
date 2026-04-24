@@ -406,50 +406,819 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
     width: 100% !important;
   }
 
-  /* ---- USER FONT SIZES FIXES ---- */
-  h1 { font-size: 1.8rem !important; line-height: 1.2 !important; }
-  h2 { font-size: 1.4rem !important; }
-  h3 { font-size: 1.1rem !important; }
-
-  .boutique-title, [class*="boutique"] h1 { font-size: 1.8rem !important; }
-  .contact-title, [class*="contact"] h1 { font-size: 1.5rem !important; }
-
-  .product-name, [class*="product"] h2, [class*="product"] h3 { 
-    font-size: 1rem !important; 
+  /* ---- PRODUCT CARDS (MOBILE REDESIGN) ---- */
+  /* 1. GRID - 2 columns side by side: */
+  #productGrid, #favoritesGrid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    padding: 10px !important;
   }
 
-  [class*="price"], [class*="prix"] { font-size: 1.2rem !important; }
-
-  [class*="countdown"] span, [class*="timer"] { 
-    font-size: 1.8rem !important; 
+  /* 2. CARD - compact dark card: */
+  .levitation-card {
+    background: #111114 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important; /* override the p-6 */
   }
 
-  p { font-size: 0.85rem !important; line-height: 1.5 !important; }
-
-  button, a[class*="btn"], [class*="button"] { 
-    font-size: 0.9rem !important; 
-    padding: 10px 16px !important; 
+  /* 3. IMAGE - fill container completely: */
+  .levitation-card img,
+  #page-accueil .aspect-square img,
+  #page-boutique .aspect-square img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  
+  /* Reset aspect-square containers */
+  .levitation-card .aspect-square {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
   }
 
-  /* ---- USER SPACING FIXES ---- */
-  section, [class*="section"] { 
-    padding: 16px !important; 
+  /* 4. BRAND */
+  .mobile-brand {
+    display: block !important;
+    color: #00aaff !important;
+    font-size: 0.6rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    padding: 6px 8px 0 !important;
+    margin: 0 !important;
   }
 
-  [class*="hero"] { 
-    padding: 20px 16px !important; 
+  /* 5. PRODUCT NAME: */
+  .levitation-card h3 {
+    font-size: 0.78rem !important;
+    color: white !important;
+    padding: 4px 8px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
   }
 
-  [class*="card"] { 
-    padding: 12px !important; 
-    margin-bottom: 12px !important; 
+  /* 6. PRICE: */
+  .levitation-card .font-extrabold {
+    display: block !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: white !important;
+    padding: 4px 8px 8px !important;
+    margin: 0 !important;
   }
 
-  /* ---- PRODUCT IMAGE on cards ---- */
-  [class*="card"] img { 
-    max-height: 180px !important; 
-    object-fit: contain !important; 
+  /* 7. Hide description and flex-1 spacing */
+  .levitation-card p.line-clamp-2 {
+    display: none !important;
   }
+  .levitation-card .flex-1 {
+    display: block !important;
+    flex: none !important;
+  }
+  .levitation-card .mb-8 {
+    margin-bottom: 0 !important;
+  }
+
+  /* 8. BUTTONS - side by side small: */
+  .levitation-card .mt-auto {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    padding: 0 8px 8px !important;
+    margin: 0 !important;
+  }
+  
+  .levitation-card .mt-auto > *:first-child {
+    flex: 1 !important;
+    background: #1e1e22 !important;
+    border: 1px solid #333 !important;
+    color: white !important;
+    font-size: 0.65rem !important;
+    padding: 8px 0 !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  .levitation-card .mt-auto > *:last-child {
+    flex: 1 !important;
+    background: #00aaff !important;
+    border: none !important;
+    color: white !important;
+    font-size: 0.65rem !important;
+    padding: 8px 0 !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  /* ---- PRODUCT DETAIL PAGE (MOBILE REDESIGN) ---- */
+  /* Main layout - stack vertically */
+  #page-product .slide-in {
+    padding: 80px 12px 80px 12px !important;
+  }
+  #page-product .grid.grid-cols-1.lg\:grid-cols-2 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* LEFT SIDE - image section */
+  #page-product .aspect-square.rounded-\[2rem\] {
+    width: 100% !important;
+    height: 250px !important;
+    border-radius: 12px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    aspect-ratio: auto !important;
+  }
+
+  /* Main image */
+  #detailMainImg {
+    width: 100% !important;
+    height: 250px !important;
+    object-fit: contain !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+  }
+
+  /* Thumbnails row - horizontal scroll */
+  #detailThumbs {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 8px 0 !important;
+    margin-top: 8px !important;
+    grid-template-columns: none !important; /* override grid */
+  }
+  #detailThumbs button {
+    width: 70px !important;
+    height: 70px !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+  }
+
+  /* RIGHT SIDE - info section */
+  #page-product .flex.flex-col {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Typography */
+  #detailBrand {
+    font-size: 0.7rem !important;
+    color: #00aaff !important;
+    margin-bottom: 4px !important;
+  }
+  #detailName {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+  }
+  #detailPrice {
+    font-size: 1.5rem !important;
+    margin-bottom: 8px !important;
+  }
+  #detailDesc {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Specs table */
+  #detailSpecs {
+    width: 100% !important;
+    font-size: 0.8rem !important;
+    padding: 12px !important;
+  }
+  #detailSpecs .spec-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px solid #222 !important;
+  }
+  #detailSpecs .spec-row:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Quantity */
+  #page-product .flex.items-center.gap-4.mb-8 {
+    margin: 12px 0 !important;
+  }
+
+  /* Buttons - full width stacked */
+  #page-product .flex.flex-col.sm\:flex-row.gap-4.mb-8 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+  #page-product .flex.flex-col.sm\:flex-row.gap-4.mb-8 > button,
+  #page-product .flex.flex-col.sm\:flex-row.gap-4.mb-8 > a {
+    width: 100% !important;
+    padding: 14px !important;
+    font-size: 0.9rem !important;
+    border-radius: 12px !important;
+    flex: none !important;
+  }
+
+  /* Bottom badges */
+  #page-product .grid.grid-cols-1.sm\:grid-cols-3.gap-3 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 12px !important;
+  }
+  #page-product .trust-badge {
+    font-size: 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  /* ---- ACCESSOIRES PAGE (MOBILE REDESIGN) ---- */
+  /* 1. Hide Sidebar completely */
+  #page-accessoires .lg\:col-span-1 {
+    display: none !important;
+  }
+  
+  /* Make products grid full width, 1 column */
+  #page-accessoires .lg\:col-span-3 > .grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 0 !important;
+  }
+
+  /* 2. PRODUCT CARDS */
+  .acc-card {
+    background: #111114 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* 3. IMAGE inside card */
+  .acc-card .aspect-square {
+    width: 100% !important;
+    height: 200px !important;
+    background: #1a1a1f !important;
+    padding: 16px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .acc-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 4. CARD TEXT CONTENT */
+  .acc-card > div:nth-child(2) {
+    padding: 12px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .acc-card p.text-xs.uppercase {
+    font-size: 0.7rem !important;
+    color: #888 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 4px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: hidden !important;
+  }
+
+  .acc-card h3 {
+    font-size: 1rem !important;
+    color: white !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: hidden !important;
+  }
+
+  .acc-card .font-black {
+    font-size: 1.1rem !important;
+    color: white !important;
+    font-weight: 800 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .acc-card p.line-clamp-2 {
+    font-size: 0.85rem !important;
+    color: #888 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: hidden !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* 5. BUTTONS */
+  .acc-card .mt-auto {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 0 16px 16px !important;
+    margin-top: auto !important;
+  }
+
+  .acc-card .mt-auto > button:first-child {
+    width: 100% !important;
+    background: #00aaff !important;
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    font-size: 0.9rem !important;
+    border: none !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .acc-card .mt-auto > button:last-child {
+    width: 100% !important;
+    background: transparent !important;
+    border: 1px solid #25D366 !important;
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  /* ---- PROMOTIONS PAGE (MOBILE REDESIGN - 1 COLUMN) ---- */
+  /* Grid - 1 column full width */
+  .promo-page .promo-grid,
+  .promo-page .grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 12px !important;
+  }
+
+  /* Card - full width clean */
+  .promo-page .promo-card,
+  .promo-page .liquid-glass {
+    width: 100% !important;
+    background: #111114 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    padding: 0 !important;
+  }
+
+  /* Discount badge */
+  .promo-page .pulse-badge,
+  .promo-page .bg-error {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 3 !important;
+    font-size: 0.8rem !important;
+    padding: 4px 10px !important;
+    margin: 0 !important;
+  }
+
+  /* Image container */
+  .promo-page .aspect-square {
+    width: 100% !important;
+    height: 200px !important;
+    background: #1a1a1f !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Image itself */
+  .promo-page .promo-card img {
+    max-width: 80% !important;
+    height: 160px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Content wrapper */
+  .promo-page .mt-auto {
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  /* Text info - stack it! */
+  .promo-page .flex.justify-between.items-end {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Name */
+  .promo-page h3 {
+    color: white !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  /* Specs/Description */
+  .promo-page p.text-on-surface-variant {
+    color: #888 !important;
+    font-size: 0.85rem !important;
+    margin: 0 !important;
+  }
+
+  /* Price section */
+  .promo-page .text-right {
+    width: 100% !important;
+    text-align: left !important;
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  /* Old price */
+  .promo-page .line-through {
+    font-size: 0.9rem !important;
+    color: #ff4444 !important;
+    margin: 0 !important;
+  }
+
+  /* Promo price */
+  .promo-page .text-2xl {
+    font-size: 1.3rem !important;
+    color: #00aaff !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+  }
+
+  /* Buttons stack */
+  .promo-page .flex.flex-col.w-full.gap-3.mt-1 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 4px !important;
+  }
+
+  /* Blue button - Add to cart */
+  .promo-page button {
+    order: 1 !important; /* Top */
+    background: #00aaff !important;
+    color: white !important;
+    padding: 14px !important;
+    border-radius: 12px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* WhatsApp button */
+  .promo-page a.font-bold {
+    order: 2 !important; /* Bottom */
+    background: #1a1a1f !important;
+    border: 1px solid #333 !important;
+    color: white !important;
+    padding: 14px !important;
+    border-radius: 12px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Hide extra background blobs on mobile */
+  .promo-page .blur,
+  .promo-page .bg-gradient-to-r {
+    display: none !important;
+  }
+
+  /* ---- CONTACT PAGE (MOBILE ONLY) ---- */
+  @media (max-width: 768px) {
+
+  /* 1. HERO SECTION - reduce size */
+  [class*="contact"] [class*="hero"],
+  [class*="contact-hero"] {
+    padding: 20px 16px !important;
+    min-height: auto !important;
+  }
+
+  [class*="contact"] h1 {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 10px !important;
+  }
+
+  [class*="contact"] [class*="subtitle"],
+  [class*="contact"] > p {
+    font-size: 0.85rem !important;
+    color: #888 !important;
+  }
+
+  /* 2. MAIN LAYOUT - stack vertically */
+  [class*="contact"] [class*="content"],
+  [class*="contact"] [class*="grid"],
+  [class*="contact"] main > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+
+  /* 3. INFO CARDS (Adresse, Téléphone, Instagram) */
+  [class*="contact"] [class*="info-card"],
+  [class*="contact"] [class*="card"] {
+    width: 100% !important;
+    padding: 14px 16px !important;
+    border-radius: 14px !important;
+    background: #111114 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  [class*="contact"] [class*="card"] [class*="icon"] {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    border-radius: 12px !important;
+  }
+
+  [class*="contact"] [class*="card"] h4,
+  [class*="contact"] [class*="card"] [class*="title"] {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin: 0 0 2px 0 !important;
+  }
+
+  [class*="contact"] [class*="card"] p,
+  [class*="contact"] [class*="card"] span {
+    font-size: 0.8rem !important;
+    color: #888 !important;
+    margin: 0 !important;
+  }
+
+  /* 4. MAP */
+  [class*="map"],
+  [class*="contact"] iframe {
+    width: 100% !important;
+    height: 200px !important;
+    border-radius: 14px !important;
+  }
+
+  /* 5. FORM */
+  [class*="contact"] form,
+  [class*="contact"] [class*="form"] {
+    width: 100% !important;
+    padding: 16px !important;
+    background: #111114 !important;
+    border-radius: 16px !important;
+  }
+
+  [class*="contact"] [class*="form"] h2,
+  [class*="contact"] [class*="form"] h3 {
+    font-size: 1.2rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  [class*="contact"] [class*="form"] p {
+    font-size: 0.8rem !important;
+    color: #888 !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Form row - stack vertically */
+  [class*="form-row"],
+  [class*="input-row"],
+  [class*="form"] [class*="grid"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* Inputs */
+  [class*="contact"] input,
+  [class*="contact"] textarea,
+  [class*="contact"] select {
+    width: 100% !important;
+    padding: 12px 14px !important;
+    font-size: 0.9rem !important;
+    border-radius: 10px !important;
+    background: #1a1a1f !important;
+    border: 1px solid #2a2a2f !important;
+    color: white !important;
+    margin-bottom: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Textarea */
+  [class*="contact"] textarea {
+    min-height: 120px !important;
+    resize: none !important;
+  }
+
+  /* Submit button */
+  [class*="contact"] button[type="submit"],
+  [class*="contact"] [class*="submit"] {
+    width: 100% !important;
+    background: #00aaff !important;
+    color: white !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    border: none !important;
+  }
+
+  /* WhatsApp contact button */
+  [class*="whatsapp-btn"],
+  [class*="contact"] [class*="whatsapp"] {
+    width: 100% !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    margin-top: 8px !important;
+  }
+
+  /* Horaires */
+  [class*="horaires"],
+  [class*="hours"] {
+    font-size: 0.8rem !important;
+    padding: 8px 0 !important;
+  }
+
+  }
+
+  /* ---- ACCUEIL PAGE (MOBILE ONLY) ---- */
+  /* 1. HERO SECTION */
+  #page-accueil .hero-section {
+    min-height: 85vh !important;
+    padding: 70px 16px 90px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* Hero title */
+  #page-accueil .hero-section h1 {
+    font-size: 1.9rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Hero subtitle */
+  #page-accueil .hero-section p {
+    font-size: 0.85rem !important;
+    color: rgba(255,255,255,0.7) !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Hero buttons */
+  #page-accueil .hero-buttons {
+    width: 100% !important;
+  }
+  #page-accueil .hero-buttons button {
+    width: 100% !important;
+    max-width: 280px !important;
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+    margin: 6px auto !important;
+    display: block !important;
+  }
+
+  /* 2. FEATURED PRODUCTS SECTION */
+  #page-accueil .featured-products {
+    padding: 20px 12px !important;
+  }
+
+  #page-accueil .featured-products h2 {
+    font-size: 1.3rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Featured products - 2 columns */
+  #page-accueil .featured-cards {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  #page-accueil .featured-cards > div {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background: #111114 !important;
+  }
+
+  #page-accueil .featured-cards img {
+    width: 100% !important;
+    height: 110px !important;
+    object-fit: cover !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  #page-accueil .featured-cards h4 {
+    font-size: 0.75rem !important;
+    padding: 6px 8px 0 !important;
+    color: white !important;
+    margin-bottom: 0 !important;
+  }
+
+  #page-accueil .featured-cards span.text-2xl {
+    font-size: 0.85rem !important;
+    padding: 4px 8px 8px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    display: block !important;
+  }
+
+  #page-accueil .featured-cards button {
+    width: 100% !important;
+    font-size: 0.65rem !important;
+    padding: 7px !important;
+  }
+
+  /* 3. HERO IMAGE CARDS (iPhones & Galaxy / Laptops) */
+  #page-accueil .category-cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 12px !important;
+  }
+
+  #page-accueil .category-cards > div {
+    width: 100% !important;
+    height: 160px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  /* 4. ALL SECTIONS general */
+  #page-accueil section {
+    padding: 16px 12px !important;
+  }
+
+  #page-accueil section h2 {
+    font-size: 1.3rem !important;
+  }
+
+  /* 5. CANVAS ANIMATION - fit mobile */
+  #page-accueil canvas,
+  #page-accueil #canvas-bg {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* 6. Prevent overflow */
+  body, html {
+    overflow-x: hidden !important;
+  }
+
+  #page-accueil section:last-child {
+    padding-bottom: 80px !important;
+  }
+
 }
 
 
@@ -492,11 +1261,11 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-full max-sm:w-[95%] md:w-fit md:max-w-[800px] z-[2000] flex justify-between items-center px-6 py-2.5 rounded-full bg-[rgba(255,255,255,0.06)] backdrop-blur-[24px] border border-[rgba(255,255,255,0.15)] shadow-[0_8px_32px_rgba(0,0,0,0.4),_inset_0_1px_0_rgba(255,255,255,0.1)] font-['Manrope'] tracking-tight">
 <div class="text-lg font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400 cursor-pointer shrink-0 mr-6" onclick="navigateTo('accueil')">PhoneDr</div>
 <div class="desktop-nav hidden md:flex items-center gap-2 mr-6">
-<a class="nav-link active-link" data-page="accueil" onclick="navigateTo('accueil')">Accueil</a>
-<a class="nav-link text-slate-300" data-page="boutique" onclick="navigateTo('boutique')">Boutique</a>
-<a class="nav-link text-slate-300" data-page="accessoires" onclick="navigateTo('accessoires')">Accessoires</a>
-<a class="nav-link text-slate-300" data-page="promotions" onclick="navigateTo('promotions')">Promotions</a>
-<a class="nav-link text-slate-300" data-page="contact" onclick="navigateTo('contact')">Contact</a>
+<a class="nav-link active-link" data-page="accueil" href="#accueil" onclick="navigateTo('accueil')">Accueil</a>
+<a class="nav-link text-slate-300" data-page="boutique" href="#boutique" onclick="navigateTo('boutique')">Boutique</a>
+<a class="nav-link text-slate-300" data-page="accessoires" href="#accessoires" onclick="navigateTo('accessoires')">Accessoires</a>
+<a class="nav-link text-slate-300" data-page="promotions" href="#promotions" onclick="navigateTo('promotions')">Promotions</a>
+<a class="nav-link text-slate-300" data-page="contact" href="#contact" onclick="navigateTo('contact')">Contact</a>
 </div>
 <div class="flex items-center gap-3">
 <button onclick="toggleSearch()" class="text-slate-300 hover:text-primary transition-colors flex items-center"><span class="material-symbols-outlined text-[20px]">search</span></button>
@@ -650,7 +1419,7 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 <!-- ==================== ACCUEIL PAGE ==================== -->
 <div id="page-accueil" class="page active">
 <!-- Hero -->
-<section id="hero" class="relative min-h-[115vh] flex items-center justify-center pt-40 lg:pt-52 bg-black overflow-hidden" style="font-family: 'General Sans', sans-serif;">
+<section id="hero" class="hero-section relative min-h-[115vh] flex items-center justify-center pt-40 lg:pt-52 bg-black overflow-hidden" style="font-family: 'General Sans', sans-serif;">
   <canvas id="canvas-bg" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
   <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50">
     <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4" type="video/mp4" />
@@ -661,7 +1430,7 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
     <div class="mt-12 md:mt-24 text-white">
       <h1 class="font-headline font-extrabold text-4xl md:text-6xl lg:text-8xl tracking-tighter leading-[1.1] mb-6 drop-shadow-2xl">Découvrez la <span class="text-gradient">nouvelle</span> génération.</h1>
       <p class="font-body text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed opacity-90">Spécialiste Mobile & Accessoires · Livraison disponible · Qualité garantie – Prix imbattables · Vente | Achat</p>
-      <div class="flex flex-wrap justify-center gap-6">
+      <div class="flex flex-wrap justify-center gap-6 hero-buttons">
         <button onclick="navigateTo('boutique')" class="px-10 py-5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(0,170,255,0.4)] hover:shadow-primary/50 cursor-pointer">Explorer la boutique</button>
         <button onclick="navigateTo('promotions')" class="px-10 py-5 rounded-full border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-all duration-300 backdrop-blur-xl cursor-pointer hover:border-white/40">Voir les promotions</button>
       </div>
@@ -670,7 +1439,7 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </section>
 <!-- Categories Bento -->
 <section class="max-w-7xl mx-auto px-8 py-24 md:py-32">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px] category-cards">
 <div class="md:col-span-8 group relative overflow-hidden rounded-3xl glass-panel cursor-pointer" onclick="navigateTo('boutique')">
 <img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="Smartphones premium" src="assets/hero/hero-samsung.png"/>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
@@ -691,13 +1460,13 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </div>
 </section>
 <!-- Featured Products -->
-<section class="bg-surface-container-lowest py-24 md:py-32">
+<section class="bg-surface-container-lowest py-24 md:py-32 featured-products">
 <div class="max-w-7xl mx-auto px-8">
 <div class="flex justify-between items-end mb-16">
 <div><h2 class="font-headline text-4xl md:text-5xl font-extrabold mb-4">Nouveautés</h2><p class="text-on-surface-variant text-lg">Les fleurons de la technologie actuelle.</p></div>
 <button onclick="navigateTo('boutique')" class="text-primary font-bold flex items-center gap-2 hover:translate-x-2 transition-transform">Tout voir <span class="material-symbols-outlined">east</span></button>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 featured-cards">
 <div class="group relative bg-surface-variant/40 backdrop-blur-xl rounded-[2rem] p-6 hover:translate-y-[-8px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,170,255,0.15)] flex flex-col">
 <div class="relative aspect-square mb-8 overflow-hidden rounded-2xl"><img class="w-full h-full object-contain bg-[#0a0a0a] p-4 group-hover:scale-110 transition-transform duration-700" alt="iPhone 15 Pro Max" src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch-naturaltitanium?wid=800&hei=800&fmt=jpeg&qlt=90" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/></div>
 <span class="text-secondary text-xs font-bold uppercase tracking-widest mb-2 block">Apple</span>
@@ -892,6 +1661,14 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <!-- Mobile Filter Pills -->
+    <div class="lg:hidden flex gap-3 overflow-x-auto pb-4 mb-4 hide-scrollbar relative z-50 pointer-events-auto">
+      <button onclick="filterAccessoires('all')" class="mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#00aaff] text-white text-sm font-bold transition-colors border border-transparent" data-cat="all">Tout</button>
+      <button onclick="filterAccessoires('coques')" class="mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-colors" data-cat="coques">Coques</button>
+      <button onclick="filterAccessoires('chargeurs')" class="mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-colors" data-cat="chargeurs">Chargeurs</button>
+      <button onclick="filterAccessoires('audio')" class="mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-colors" data-cat="audio">Audio</button>
+    </div>
+
     <!-- Filters Sidebar -->
     <div class="lg:col-span-1">
       <div class="sticky top-24 space-y-8">
@@ -1047,7 +1824,7 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </div>
 
 <!-- ==================== PROMOTIONS PAGE ==================== -->
-<div id="page-promotions" class="page">
+<div id="page-promotions" class="page promo-page">
 <main class="max-w-7xl mx-auto px-6 pt-16 pb-32">
 <!-- Hero Banner -->
 <section class="relative min-h-[600px] rounded-3xl overflow-hidden mb-24 flex flex-col justify-center items-start px-8 md:px-12 group bg-[#0a0a0c]">
@@ -1081,12 +1858,12 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </div>
 
 <!-- ==================== CONTACT PAGE ==================== -->
-<div id="page-contact" class="page">
+<div id="page-contact" class="page contact-page">
 <main class="max-w-7xl mx-auto px-8 py-20">
-<header class="mb-24 relative">
+<header class="mb-24 relative contact-hero">
 <div class="grid grid-cols-1 md:grid-cols-2 items-end gap-8">
 <div>
-<span class="text-primary font-label text-sm tracking-widest uppercase mb-4 block">Connect with Excellence</span>
+<span class="text-primary font-label text-sm tracking-widest uppercase mb-4 block contact-subtitle">Connect with Excellence</span>
 <h1 class="text-4xl md:text-6xl font-headline font-extrabold tracking-tighter text-on-surface leading-tight">Entrez dans <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">l'univers PhoneDr Shop.</span></h1>
 </div>
 <div class="max-w-md ml-auto text-on-surface-variant font-body text-lg leading-relaxed text-right md:pb-4">Notre équipe est prête à répondre à toutes vos questions sur nos produits premium et services personnalisés.</div>
@@ -1096,30 +1873,30 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 <!-- Left: Info + Map -->
 <div class="lg:col-span-5 space-y-12">
-<div class="grid grid-cols-1 gap-6">
-<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="grid grid-cols-1 gap-6 contact-info">
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300 contact-card">
 <div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">location_on</span></div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center contact-icon"><span class="material-symbols-outlined text-primary">location_on</span></div>
 <div><h3 class="text-xl font-headline font-bold mb-2">Adresse</h3><p class="text-on-surface-variant font-body">Taza Hay Rachad mahal 23 📍</p></div>
 </div>
 </div>
-<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300 contact-card">
 <div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">call</span></div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center contact-icon"><span class="material-symbols-outlined text-secondary">call</span></div>
 <div><h3 class="text-xl font-headline font-bold mb-2">Téléphone</h3><p class="text-on-surface-variant font-body"><a href="tel:+212775382765" class="hover:text-primary transition-colors">07.75.38.27.65</a></p></div>
 </div>
 </div>
-<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300 contact-card">
 <div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">photo_camera</span></div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center contact-icon"><span class="material-symbols-outlined text-primary">photo_camera</span></div>
 <div><h3 class="text-xl font-headline font-bold mb-2">Instagram</h3><p class="text-on-surface-variant font-body"><a href="https://www.instagram.com/phonedrshop" target="_blank" class="hover:text-primary transition-colors">@phonedrshop</a></p></div>
 </div>
 </div>
-<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300">
+<div class="glass-panel p-8 rounded-3xl border border-outline-variant/15 hover:translate-y-[-8px] transition-transform duration-300 contact-card">
 <div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">schedule</span></div>
-<div><h3 class="text-xl font-headline font-bold mb-2">Horaires</h3>
-<div class="grid grid-cols-2 gap-2 font-body text-on-surface-variant text-sm">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center contact-icon"><span class="material-symbols-outlined text-secondary">schedule</span></div>
+<div class="contact-hours-container"><h3 class="text-xl font-headline font-bold mb-2">Horaires</h3>
+<div class="grid grid-cols-2 gap-2 font-body text-on-surface-variant text-sm contact-horaires">
 <div>Lundi - Vendredi</div><div class="text-on-surface">09:00 - 20:00</div>
 <div>Samedi</div><div class="text-on-surface">10:00 - 18:00</div>
 </div></div>
@@ -1127,19 +1904,19 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </div>
 </div>
 <!-- Google Maps -->
-<div class="relative h-[350px] w-full rounded-3xl overflow-hidden shadow-[0_0_60px_-15px_rgba(0,170,255,0.15)]">
+<div class="relative h-[350px] w-full rounded-3xl overflow-hidden shadow-[0_0_60px_-15px_rgba(0,170,255,0.15)] contact-map">
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.8!2d-7.6!3d33.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2e9b0f!2sDerb+Ghallef!5e0!3m2!1sfr!2sma!4v1" width="100%" height="100%" style="border:0;filter:invert(90%) hue-rotate(180deg) brightness(0.6) contrast(1.2)" allowfullscreen="" loading="lazy"></iframe>
 </div>
 </div>
 <!-- Right: Contact Form -->
 <div class="lg:col-span-7">
-<div class="glass-panel p-10 md:p-16 rounded-[2.5rem] border border-outline-variant/20 relative overflow-hidden">
+<div class="glass-panel p-10 md:p-16 rounded-[2.5rem] border border-outline-variant/20 relative overflow-hidden contact-form">
 <div class="mb-12">
 <h2 class="text-3xl font-headline font-bold mb-4">Envoyez un message</h2>
 <p class="text-on-surface-variant font-body">Remplissez le formulaire ci-dessous, notre équipe vous répondra dans les plus brefs délais.</p>
 </div>
 <form id="contactForm" class="space-y-8" onsubmit="handleContactForm(event)">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 contact-fields">
 <div class="space-y-2">
 <label class="text-xs font-label text-tertiary uppercase tracking-widest ml-1">Nom Complet</label>
 <input id="contactName" class="w-full bg-surface-container-lowest border border-outline-variant/15 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline/50 font-body" placeholder="Votre nom" type="text" required/>
@@ -1547,6 +2324,16 @@ function filterAccessoires(cat) {
       check.className = 'w-2.5 h-2.5 bg-[#00aaff] rounded-sm hidden';
       box.nextElementSibling.className = 'text-sm font-medium text-slate-400 group-hover:text-white transition-colors';
     }
+    }
+  });
+
+  // Highlight active mobile pill
+  document.querySelectorAll('.mobile-acc-btn').forEach(btn => {
+    if (btn.dataset.cat === cat) {
+      btn.className = 'mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#00aaff] text-white text-sm font-bold transition-colors border border-transparent';
+    } else {
+      btn.className = 'mobile-acc-btn whitespace-nowrap px-5 py-2 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-colors';
+    }
   });
 }
 
@@ -1578,6 +2365,7 @@ function renderProducts(){
         ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor}/20 text-${p.badgeColor} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor}/20">${p.badge}</span></div>`:''}
       </div>
       <div class="flex-1">
+        <div class="mobile-brand hidden">${p.brand}</div>
         <h3 class="text-2xl font-headline font-bold mb-1 group-hover:text-primary transition-colors">${p.name}</h3>
         <p class="text-on-surface-variant text-sm mb-6 line-clamp-2">${p.desc}</p>
         <div class="mb-8"><span class="text-3xl font-headline font-extrabold text-on-surface">${p.price}</span></div>
@@ -1607,7 +2395,11 @@ function filterProducts(cat){
 
 // ===== SPA NAVIGATION (Hash-based for Localhost/SPA Compatibility) =====
 function navigateTo(page) {
-  window.location.hash = page;
+  if (window.location.hash === '#' + page) {
+    handleRouting();
+  } else {
+    window.location.hash = page;
+  }
 }
 
 function updatePageUI(page) {
@@ -1620,11 +2412,11 @@ function updatePageUI(page) {
     l.classList.remove('active-link');
     l.classList.add('text-slate-300');
   });
-  const activeLink = document.querySelector(`.nav-link[data-page="${page}"]`);
-  if (activeLink) {
-    activeLink.classList.add('active-link');
-    activeLink.classList.remove('text-slate-300');
-  }
+  // Update all matching links (desktop and mobile)
+  document.querySelectorAll(`.nav-link[data-page="${page}"]`).forEach(link => {
+    link.classList.add('active-link');
+    link.classList.remove('text-slate-300', 'text-slate-200');
+  });
   
   // Mobile nav
   document.querySelectorAll('.mobile-nav-btn').forEach(b => {
@@ -1651,6 +2443,7 @@ function updatePageUI(page) {
   if (page === 'promotions') renderPromos();
   if (page === 'favorites') renderFavoritesPage();
   if (page === 'orders') renderOrdersPage();
+  if (page === 'accessoires') if (typeof filterAccessoires === 'function') filterAccessoires('all');
 }
 
 function toggleMobileMenu(){
@@ -1706,7 +2499,7 @@ function renderPromos(){
     return `
   <div class="relative group">
     <div class="absolute -inset-1 bg-gradient-to-r ${gradients[i]} rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-    <div class="relative liquid-glass rounded-3xl overflow-hidden p-6 h-full flex flex-col border border-white/10 hover:translate-y-[-8px] transition-all duration-500">
+    <div class="relative liquid-glass promo-card rounded-3xl overflow-hidden p-6 h-full flex flex-col border border-white/10 hover:translate-y-[-8px] transition-all duration-500">
       <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
         <span class="material-symbols-outlined">favorite</span>
       </div>
