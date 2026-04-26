@@ -2510,7 +2510,7 @@ function renderPromos(){
           <div class="text-right"><p class="text-on-surface-variant text-sm line-through opacity-50">${p.old}</p><p class="font-headline text-2xl font-black ${priceColors[i]}">${p.price}</p></div>
         </div>
         <div class="flex flex-col w-full gap-3 mt-1">
-          <a href="https://wa.me/212775382765?text=Bonjour, je suis intéressé par ${encodeURIComponent(p.name)} en promo (${p.disc})" target="_blank" class="flex items-center justify-center gap-2 w-full py-4 bg-surface-container-highest hover:bg-primary hover:text-on-primary rounded-xl transition-all duration-300 font-bold"><span class="material-symbols-outlined">chat</span>Acheter via WhatsApp</a>
+          <a href="#/boutique" class="flex items-center justify-center gap-2 w-full py-4 bg-surface-container-highest hover:bg-primary hover:text-on-primary rounded-xl transition-all duration-300 font-bold"><span class="material-symbols-outlined">visibility</span>Détails</a>
           <button onclick="cart.push(promos[${i}]); saveState(); updateCartBadge(); showToast('Produit ajouté au panier', 'success'); event.target.textContent='✓ Ajouté'; setTimeout(() => event.target.textContent='🛒 Ajouter au panier', 1500);" class="flex items-center justify-center gap-2 w-full py-4 bg-[#00aaff] text-white hover:opacity-90 rounded-xl transition-all duration-300 font-bold">🛒 Ajouter au panier</button>
         </div>
       </div>
