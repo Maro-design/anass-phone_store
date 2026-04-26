@@ -2322,7 +2322,6 @@ function filterAccessoires(cat) {
       check.className = 'w-2.5 h-2.5 bg-[#00aaff] rounded-sm hidden';
       box.nextElementSibling.className = 'text-sm font-medium text-slate-400 group-hover:text-white transition-colors';
     }
-    }
   });
 
   // Highlight active mobile pill
@@ -2335,8 +2334,8 @@ function filterAccessoires(cat) {
   });
 }
 
-function renderProducts(){
-  const grid=document.getElementById('productGrid');
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
   if (!grid) return;
   const catFilter = document.querySelector('input[name="boutiqueCat"]:checked')?.value || 'all';
   const brandCheckboxes = Array.from(document.querySelectorAll('#boutiqueBrandFilters input[type="checkbox"]:checked')).map(cb => cb.value);
