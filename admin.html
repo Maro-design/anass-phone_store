@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneDr Admin - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #00aaff;
+            --secondary: #7bd0ff;
+            --background: #000000;
+            --surface: #111114;
+            --border: rgba(0, 170, 255, 0.2);
+        }
+        body {
+            background-color: var(--background);
+            color: white;
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-headline { font-family: 'Space+Grotesk', sans-serif; }
+        .glass-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 170, 255, 0.1);
+            color: var(--primary);
+            border-right: 4px solid var(--primary);
+        }
+        .login-card {
+            box-shadow: 0 0 40px rgba(0, 170, 255, 0.1);
+        }
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary) !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.2) !important;
+        }
+        .hidden { display: none !important; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center p-6">
+    <div class="login-card glass-card rounded-[2rem] p-10 w-full max-w-md text-center">
+        <div class="mb-8">
+            <h1 class="text-3xl font-headline font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">PhoneDr Admin</h1>
+            <p class="text-slate-400 mt-2 text-sm">Gestion de boutique sécurisée</p>
+        </div>
+        <form id="login-form" class="space-y-6">
+            <div class="text-left">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Mot de passe</label>
+                <input type="password" id="admin-password" required class="w-full px-5 py-4 rounded-2xl transition-all" placeholder="••••••••">
+            </div>
+            <p id="login-error" class="text-red-500 text-sm hidden">Mot de passe incorrect</p>
+            <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold rounded-2xl shadow-lg hover:shadow-blue-500/20 transition-all active:scale-[0.98]">
+                Se connecter
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div id="dashboard-page" class="flex min-h-screen hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#0a0a0c] border-r border-white/5 flex flex-col fixed inset-y-0 z-50">
+        <div class="p-8">
+            <h2 class="text-xl font-headline font-black tracking-tighter text-blue-400">PhoneDr Admin</h2>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+            <button onclick="switchTab('list')" id="nav-list" class="sidebar-link active w-full flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-bold transition-all text-slate-400 hover:bg-white/5">
+                <span class="material-symbols-outlined">inventory_2</span> Produits
+            </button>
+            <button onclick="openAddModal()" class="w-full flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-bold transition-all text-slate-400 hover:bg-white/5">
+                <span class="material-symbols-outlined">add_circle</span> Ajouter produit
+            </button>
+        </nav>
+        <div class="p-4 mt-auto">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-bold transition-all text-red-400 hover:bg-red-500/10">
+                <span class="material-symbols-outlined">logout</span> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64 p-10">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 id="page-title" class="text-3xl font-headline font-bold">📦 Liste des Produits</h1>
+                <p class="text-slate-400 text-sm mt-1">Gérez vos articles en temps réel</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">🔍</span>
+                    <input type="text" id="product-search" oninput="renderTable()" placeholder="Rechercher..." class="pl-12 pr-6 py-3 rounded-xl bg-white/5 border border-white/10 w-64 text-sm">
+                </div>
+                <button onclick="openAddModal()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20">
+                    <span class="material-symbols-outlined text-sm">add</span> Nouveau
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div class="glass-card p-6 rounded-2xl">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Produits</p>
+                <p id="stat-total" class="text-3xl font-headline font-black">0</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-500">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Smartphones</p>
+                <p id="stat-phones" class="text-3xl font-headline font-black">0</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-purple-500">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Accessoires</p>
+                <p id="stat-acc" class="text-3xl font-headline font-black">0</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-red-500">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">En Promo</p>
+                <p id="stat-promo" class="text-3xl font-headline font-black">0</p>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="glass-card rounded-2xl overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-white/5 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4">Image</th>
+                        <th class="px-6 py-4">Nom</th>
+                        <th class="px-6 py-4">Catégorie</th>
+                        <th class="px-6 py-4">Prix</th>
+                        <th class="px-6 py-4">Statut</th>
+                        <th class="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-tbody" class="divide-y divide-white/5 text-sm">
+                    <!-- Rows here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div id="product-modal" class="fixed inset-0 z-[1000] modal-overlay hidden flex items-center justify-center p-6">
+    <div class="glass-card rounded-[2.5rem] w-full max-w-4xl max-h-[90vh] overflow-y-auto p-10 relative">
+        <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        
+        <h2 id="modal-title" class="text-3xl font-headline font-bold mb-8">Ajouter un produit</h2>
+        
+        <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <input type="hidden" id="edit-id">
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Nom du produit</label>
+                    <input type="text" id="p-name" required class="w-full px-5 py-3 rounded-xl" placeholder="ex: iPhone 15 Pro">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Marque</label>
+                        <input type="text" id="p-brand" required class="w-full px-5 py-3 rounded-xl" placeholder="ex: Apple">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Catégorie</label>
+                        <select id="p-cat" required class="w-full px-5 py-3 rounded-xl appearance-none bg-surface">
+                            <option value="iphones">iPhone</option>
+                            <option value="samsung">Samsung</option>
+                            <option value="xiaomi">Xiaomi</option>
+                            <option value="google">Google</option>
+                            <option value="accessoires">Accessoires</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="acc-cat-container" class="hidden">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Type d'accessoire</label>
+                    <select id="p-acc-cat" class="w-full px-5 py-3 rounded-xl appearance-none bg-surface">
+                        <option value="coques">Coques & Protections</option>
+                        <option value="chargeurs">Chargeurs & Câbles</option>
+                        <option value="audio">Casques & Audio</option>
+                        <option value="montres">Montres Connectées</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Prix (MAD)</label>
+                        <input type="number" id="p-price" required class="w-full px-5 py-3 rounded-xl" placeholder="ex: 12499">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Prix Barré (Optionnel)</label>
+                        <input type="number" id="p-old-price" class="w-full px-5 py-3 rounded-xl" placeholder="ex: 13999">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">URL de l'image</label>
+                    <input type="text" id="p-img" required class="w-full px-5 py-3 rounded-xl" placeholder="https://...">
+                    <div id="img-preview" class="mt-4 aspect-square rounded-2xl bg-black border border-white/5 flex items-center justify-center overflow-hidden">
+                        <p class="text-slate-600 text-xs">Aperçu de l'image</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Badge / Étiquette</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="p-badge" class="flex-1 px-5 py-3 rounded-xl" placeholder="ex: PROMO">
+                        <select id="p-badge-color" class="px-5 py-3 rounded-xl">
+                            <option value="primary">Bleu</option>
+                            <option value="error">Rouge</option>
+                            <option value="secondary">Cyan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Description courte</label>
+                <textarea id="p-desc" required rows="3" class="w-full px-5 py-3 rounded-xl resize-none" placeholder="Description attractive du produit..."></textarea>
+            </div>
+
+            <div class="md:col-span-2 flex justify-end gap-4 pt-4">
+                <button type="button" onclick="closeModal()" class="px-8 py-4 rounded-xl border border-white/10 font-bold hover:bg-white/5 transition-all">Annuler</button>
+                <button type="submit" class="px-10 py-4 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/30 hover:bg-blue-500 transition-all">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // --- AUTH LOGIC ---
+    const loginForm = document.getElementById('login-form');
+    const loginPage = document.getElementById('login-page');
+    const dashboardPage = document.getElementById('dashboard-page');
+    
+    // Check session
+    if (localStorage.getItem('admin_auth') === 'true') {
+        showDashboard();
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pass = document.getElementById('admin-password').value;
+        if (pass === 'phonedr2024') {
+            localStorage.setItem('admin_auth', 'true');
+            showDashboard();
+        } else {
+            document.getElementById('login-error').classList.remove('hidden');
+        }
+    });
+
+    function showDashboard() {
+        loginPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+        loadProducts();
+        renderTable();
+    }
+
+    function logout() {
+        localStorage.removeItem('admin_auth');
+        location.reload();
+    }
+
+    // --- PRODUCT LOGIC ---
+    let products = [];
+    const DEFAULT_PRODUCTS = [
+      { id: 1, name: "iPhone 15 Pro", brand: "Apple", cat: "iphones", price: 12499, oldPrice: 13999, img: "https://m.media-amazon.com/images/I/81SigAnN7pL._AC_SL1500_.jpg", badge: "PREMIUM", badgeColor: "primary", desc: "Le titane arrive sur iPhone. Une puce A17 Pro révolutionnaire.", specs: { "Écran": "6.1\" Super Retina XDR", "Puce": "A17 Pro", "Caméra": "48MP Main", "Batterie": "23h lecture vidéo" } },
+      { id: 2, name: "Samsung S24 Ultra", brand: "Samsung", cat: "samsung", price: 11999, oldPrice: 12999, img: "https://m.media-amazon.com/images/I/71RZA9L78yL._AC_SL1500_.jpg", badge: "NOUVEAU", badgeColor: "secondary", desc: "L'ère de l'IA mobile est là. Un zoom optique incroyable.", specs: { "Écran": "6.8\" QHD+ Dynamic AMOLED", "Puce": "Snapdragon 8 Gen 3", "Caméra": "200MP Main", "Batterie": "5000mAh" } },
+      { id: 3, name: "AirPods Pro 2", brand: "Apple", cat: "accessoires", accCat: "casques", price: 2499, oldPrice: 2999, img: "https://m.media-amazon.com/images/I/61f1Yf71HeL._AC_SL1500_.jpg", badge: "PROMO", badgeColor: "error", desc: "Réduction active du bruit deux fois plus performante.", specs: { "Puce": "H2 Apple", "Audio": "Spatial personnalisé", "Autonomie": "6h / 30h avec boîtier", "Résistance": "IP54" } },
+      { id: 4, name: "Google Pixel 8 Pro", brand: "Google", cat: "google", price: 8999, oldPrice: 9999, img: "https://m.media-amazon.com/images/I/7190G98i3mL._AC_SL1500_.jpg", badge: "PREMIUM", badgeColor: "primary", desc: "Le meilleur de Google AI. Un appareil photo exceptionnel.", specs: { "Écran": "6.7\" LTPO OLED", "Puce": "Google Tensor G3", "Caméra": "50MP Triple", "Batterie": "5050mAh" } },
+      { id: 5, name: "MacBook Air M3", brand: "Apple", cat: "accessoires", accCat: "ordinateurs", price: 14499, oldPrice: 15999, img: "https://m.media-amazon.com/images/I/71ItMZBcNYL._AC_SL1500_.jpg", badge: "PROMO", badgeColor: "error", desc: "Superpuissant. Superfin. Puce M3 ultra-rapide.", specs: { "Puce": "Apple M3", "Écran": "13.6\" Liquid Retina", "RAM": "8GB/16GB Unified", "Stockage": "256GB/512GB SSD" } },
+      { id: 6, name: "Chargeur MagSafe", brand: "Apple", cat: "accessoires", accCat: "chargeurs", price: 499, oldPrice: 599, img: "https://m.media-amazon.com/images/I/51H7Mv8C47L._AC_SL1000_.jpg", badge: "ESSENTIEL", badgeColor: "primary", desc: "Recharge sans fil rapide et alignement magnétique parfait.", specs: { "Puissance": "Jusqu'à 15W", "Connecteur": "USB-C", "Compatibilité": "iPhone 12 et +" } }
+    ];
+
+    function loadProducts() {
+        const stored = localStorage.getItem('phonedrshop_products');
+        if (stored) {
+            products = JSON.parse(stored);
+        } else {
+            products = [...DEFAULT_PRODUCTS];
+            saveProducts();
+        }
+    }
+
+    function saveProducts() {
+        localStorage.setItem('phonedrshop_products', JSON.stringify(products));
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('products-tbody');
+        const query = document.getElementById('product-search').value.toLowerCase();
+        
+        const filtered = products.filter(p => 
+            p.name.toLowerCase().includes(query) || 
+            p.brand.toLowerCase().includes(query) ||
+            p.cat.toLowerCase().includes(query)
+        );
+
+        tbody.innerHTML = filtered.map(p => `
+            <tr class="hover:bg-white/[0.02] transition-colors group">
+                <td class="px-6 py-4">
+                    <div class="w-12 h-12 rounded-lg bg-black border border-white/5 p-2 overflow-hidden">
+                        <img src="${p.img}" class="w-full h-full object-contain" alt="">
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="font-bold text-white">${p.name}</div>
+                    <div class="text-xs text-slate-500">${p.brand}</div>
+                </td>
+                <td class="px-6 py-4">
+                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                        ${p.cat} ${p.accCat ? '• ' + p.accCat : ''}
+                    </span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="font-bold text-blue-400">${p.price.toLocaleString()} MAD</div>
+                    ${p.oldPrice ? `<div class="text-xs text-slate-500 line-through">${p.oldPrice.toLocaleString()}</div>` : ''}
+                </td>
+                <td class="px-6 py-4">
+                    ${p.badge ? `<span class="px-2 py-1 bg-${p.badgeColor === 'error' ? 'red-500/10 text-red-500 border-red-500/20' : 'blue-500/10 text-blue-400 border-blue-500/20'} border rounded text-[10px] font-bold uppercase tracking-widest">
+                        ${p.badge}
+                    </span>` : '<span class="text-slate-600 text-xs">—</span>'}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onclick="editProduct(${p.id})" class="p-2 hover:bg-blue-500/20 rounded-lg text-blue-400 transition-all">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                        <button onclick="deleteProduct(${p.id})" class="p-2 hover:bg-red-500/20 rounded-lg text-red-500 transition-all">
+                            <span class="material-symbols-outlined text-sm">delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+
+        updateStats();
+    }
+
+    function updateStats() {
+        document.getElementById('stat-total').textContent = products.length;
+        document.getElementById('stat-phones').textContent = products.filter(p => p.cat !== 'accessoires').length;
+        document.getElementById('stat-acc').textContent = products.filter(p => p.cat === 'accessoires').length;
+        document.getElementById('stat-promo').textContent = products.filter(p => p.badge === 'PROMO' || p.oldPrice).length;
+    }
+
+    // --- MODAL LOGIC ---
+    const modal = document.getElementById('product-modal');
+    const form = document.getElementById('product-form');
+    const catSelect = document.getElementById('p-cat');
+    const accCatContainer = document.getElementById('acc-cat-container');
+
+    catSelect.addEventListener('change', () => {
+        if (catSelect.value === 'accessoires') {
+            accCatContainer.classList.remove('hidden');
+        } else {
+            accCatContainer.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('p-img').addEventListener('input', (e) => {
+        const url = e.target.value;
+        const preview = document.getElementById('img-preview');
+        if (url) {
+            preview.innerHTML = `<img src="${url}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<p class=\'text-red-500 text-xs\'>URL invalide</p>'">`;
+        } else {
+            preview.innerHTML = `<p class="text-slate-600 text-xs">Aperçu de l'image</p>`;
+        }
+    });
+
+    function openAddModal() {
+        form.reset();
+        document.getElementById('edit-id').value = '';
+        document.getElementById('modal-title').textContent = 'Ajouter un produit';
+        document.getElementById('img-preview').innerHTML = `<p class="text-slate-600 text-xs">Aperçu de l'image</p>`;
+        accCatContainer.classList.add('hidden');
+        modal.classList.remove('hidden');
+    }
+
+    function editProduct(id) {
+        const p = products.find(p => p.id === id);
+        if (!p) return;
+
+        document.getElementById('edit-id').value = p.id;
+        document.getElementById('p-name').value = p.name;
+        document.getElementById('p-brand').value = p.brand;
+        document.getElementById('p-cat').value = p.cat;
+        document.getElementById('p-price').value = p.price;
+        document.getElementById('p-old-price').value = p.oldPrice || '';
+        document.getElementById('p-img').value = p.img;
+        document.getElementById('p-badge').value = p.badge || '';
+        document.getElementById('p-badge-color').value = p.badgeColor || 'primary';
+        document.getElementById('p-desc').value = p.desc;
+        
+        if (p.cat === 'accessoires') {
+            accCatContainer.classList.remove('hidden');
+            document.getElementById('p-acc-cat').value = p.accCat || 'coques';
+        } else {
+            accCatContainer.classList.add('hidden');
+        }
+
+        document.getElementById('img-preview').innerHTML = `<img src="${p.img}" class="w-full h-full object-contain">`;
+        document.getElementById('modal-title').textContent = 'Modifier le produit';
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        const productData = {
+            id: id ? parseInt(id) : Date.now(),
+            name: document.getElementById('p-name').value,
+            brand: document.getElementById('p-brand').value,
+            cat: document.getElementById('p-cat').value,
+            price: parseInt(document.getElementById('p-price').value),
+            oldPrice: document.getElementById('p-old-price').value ? parseInt(document.getElementById('p-old-price').value) : null,
+            img: document.getElementById('p-img').value,
+            badge: document.getElementById('p-badge').value || null,
+            badgeColor: document.getElementById('p-badge-color').value,
+            desc: document.getElementById('p-desc').value,
+            specs: id ? products.find(p => p.id == id).specs : { "Écran": "N/A", "Puce": "N/A", "Caméra": "N/A", "Batterie": "N/A" }
+        };
+
+        if (productData.cat === 'accessoires') {
+            productData.accCat = document.getElementById('p-acc-cat').value;
+        }
+
+        if (id) {
+            const index = products.findIndex(p => p.id == id);
+            products[index] = productData;
+        } else {
+            products.push(productData);
+        }
+
+        saveProducts();
+        renderTable();
+        closeModal();
+    });
+
+    function deleteProduct(id) {
+        if (confirm('Voulez-vous vraiment supprimer ce produit ?')) {
+            products = products.filter(p => p.id !== id);
+            saveProducts();
+            renderTable();
+        }
+    }
+
+    function switchTab(tab) {
+        // Simple for now as we only have one tab
+        document.getElementById('page-title').textContent = '📦 Liste des Produits';
+    }
+</script>
+
+</body>
+</html>
