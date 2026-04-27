@@ -245,9 +245,43 @@
                 </div>
             </div>
 
+            <!-- Locations -->
             <div class="md:col-span-2">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Description courte</label>
-                <textarea id="p-desc" required rows="3" class="w-full px-5 py-3 rounded-xl resize-none" placeholder="Description attractive du produit..."></textarea>
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Afficher ce produit dans (Emplacements)</label>
+                <div class="flex flex-wrap gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="loc-accueil" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <span class="text-sm">Page d'accueil</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="loc-boutique" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <span class="text-sm">Boutique (Téléphones)</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="loc-promotions" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <span class="text-sm">Promotions</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="loc-accessoires" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <span class="text-sm">Accessoires</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Specs -->
+            <div class="md:col-span-2">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Détails techniques (Optionnels)</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <input type="text" id="spec-ecran" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Écran (ex: 6.1 OLED)">
+                    <input type="text" id="spec-puce" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Puce (ex: A17 Pro)">
+                    <input type="text" id="spec-camera" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Caméra (ex: 48MP)">
+                    <input type="text" id="spec-batterie" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Batterie (ex: 5000mAh)">
+                </div>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Description courte (Optionnelle)</label>
+                <textarea id="p-desc" rows="3" class="w-full px-5 py-3 rounded-xl resize-none" placeholder="Description attractive du produit..."></textarea>
             </div>
 
             <div class="md:col-span-2 flex justify-end gap-4 pt-4">
@@ -442,6 +476,19 @@
         currentProductImages = [];
         document.getElementById('edit-id').value = '';
         document.getElementById('modal-title').textContent = 'Ajouter un produit';
+        
+        // Reset specs
+        document.getElementById('spec-ecran').value = '';
+        document.getElementById('spec-puce').value = '';
+        document.getElementById('spec-camera').value = '';
+        document.getElementById('spec-batterie').value = '';
+
+        // Reset locations to default category logic
+        document.getElementById('loc-accueil').checked = false;
+        document.getElementById('loc-boutique').checked = true;
+        document.getElementById('loc-promotions').checked = false;
+        document.getElementById('loc-accessoires').checked = false;
+
         renderImagePreviews();
         accCatContainer.classList.add('hidden');
         modal.classList.remove('hidden');
@@ -472,6 +519,18 @@
             accCatContainer.classList.add('hidden');
         }
 
+        // Specs
+        document.getElementById('spec-ecran').value = p.specs?.["Écran"] || '';
+        document.getElementById('spec-puce').value = p.specs?.["Puce"] || '';
+        document.getElementById('spec-camera').value = p.specs?.["Caméra"] || '';
+        document.getElementById('spec-batterie').value = p.specs?.["Batterie"] || '';
+
+        // Locations
+        document.getElementById('loc-accueil').checked = p.locations ? p.locations.includes('accueil') : (p.badge === 'NOUVEAU' || p.badge === 'PREMIUM');
+        document.getElementById('loc-boutique').checked = p.locations ? p.locations.includes('boutique') : (p.cat !== 'accessoires');
+        document.getElementById('loc-promotions').checked = p.locations ? p.locations.includes('promotions') : (p.badge === 'PROMO' || p.oldPrice > 0);
+        document.getElementById('loc-accessoires').checked = p.locations ? p.locations.includes('accessoires') : (p.cat === 'accessoires');
+
         renderImagePreviews();
         document.getElementById('modal-title').textContent = 'Modifier le produit';
         modal.classList.remove('hidden');
@@ -484,6 +543,18 @@
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('edit-id').value;
+        const locations = [];
+        if (document.getElementById('loc-accueil').checked) locations.push('accueil');
+        if (document.getElementById('loc-boutique').checked) locations.push('boutique');
+        if (document.getElementById('loc-promotions').checked) locations.push('promotions');
+        if (document.getElementById('loc-accessoires').checked) locations.push('accessoires');
+
+        const specs = {};
+        if (document.getElementById('spec-ecran').value) specs["Écran"] = document.getElementById('spec-ecran').value;
+        if (document.getElementById('spec-puce').value) specs["Puce"] = document.getElementById('spec-puce').value;
+        if (document.getElementById('spec-camera').value) specs["Caméra"] = document.getElementById('spec-camera').value;
+        if (document.getElementById('spec-batterie').value) specs["Batterie"] = document.getElementById('spec-batterie').value;
+
         const productData = {
             id: id ? parseInt(id) : Date.now(),
             name: document.getElementById('p-name').value,
@@ -496,7 +567,8 @@
             badge: document.getElementById('p-badge').value || null,
             badgeColor: document.getElementById('p-badge-color').value,
             desc: document.getElementById('p-desc').value,
-            specs: id ? products.find(p => p.id == id).specs : { "Écran": "N/A", "Puce": "N/A", "Caméra": "N/A", "Batterie": "N/A" }
+            locations: locations,
+            specs: Object.keys(specs).length > 0 ? specs : { "Écran": "N/A", "Puce": "N/A", "Caméra": "N/A", "Batterie": "N/A" }
         };
 
         if (productData.cat === 'accessoires') {

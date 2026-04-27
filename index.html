@@ -2172,7 +2172,7 @@ function renderAccessoires() {
   const grid = document.getElementById('accProductGrid');
   if (!grid) return;
   
-  const accItems = products.filter(p => p.cat === 'accessoires' && (currentAccCat === 'all' || p.accCat === currentAccCat));
+  const accItems = products.filter(p => (p.locations ? p.locations.includes('accessoires') : p.cat === 'accessoires') && (currentAccCat === 'all' || p.accCat === currentAccCat));
   
   grid.innerHTML = accItems.map(p => {
     const isFav = favorites.includes(p.name);
@@ -2180,7 +2180,7 @@ function renderAccessoires() {
     <div class="acc-card group bg-[#111111] border border-[#1e1e1e] rounded-2xl overflow-hidden hover:border-[#00aaff]/30 transition-all duration-300 flex flex-col">
       <div class="aspect-square bg-black overflow-hidden p-6 relative">
         ${p.badge ? `<span class="absolute top-4 left-4 ${p.badge === 'PROMO' ? 'bg-red-500/10 text-red-500' : 'bg-white/10 text-white'} backdrop-blur-md text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">${p.badge}</span>` : ''}
-        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'">
+        <img src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" alt="${p.name}" class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'">
       </div>
       <div class="p-6 flex flex-col flex-1">
         <div class="flex justify-between items-start mb-2">
@@ -2210,7 +2210,7 @@ function renderAccessoires() {
 function renderFeatured() {
   const grid = document.getElementById('featuredGrid');
   if (!grid) return;
-  const featuredItems = products.filter(p => p.badge === 'NOUVEAU' || p.badge === 'PREMIUM').slice(0, 3);
+  const featuredItems = products.filter(p => p.locations ? p.locations.includes('accueil') : (p.badge === 'NOUVEAU' || p.badge === 'PREMIUM')).slice(0, 3);
 
   grid.innerHTML = featuredItems.map((p, i) => {
     const idx = products.indexOf(p);
@@ -2246,7 +2246,7 @@ function renderProducts() {
   const maxPrice = parseInt(document.getElementById('boutiquePriceFilter')?.value || '25000', 10);
 
   const filtered = products.filter(p => {
-    if (p.cat === 'accessoires') return false;
+    if (p.locations ? !p.locations.includes('boutique') : p.cat === 'accessoires') return false;
     const matchesCat = catFilter === 'all' || p.cat === catFilter;
     const matchesBrand = brandCheckboxes.length === 0 || brandCheckboxes.includes(p.brand);
     const numericPrice = typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : p.price;
@@ -2388,7 +2388,7 @@ function handleContactForm(e){
 // ===== PROMO PRODUCTS DATA =====
 function renderPromos(){
   const g=document.getElementById('promoGrid');if(!g)return;
-  const promoItems = products.filter(p => p.badge === 'PROMO' || (p.discount && p.discount > 0));
+  const promoItems = products.filter(p => p.locations ? p.locations.includes('promotions') : (p.badge === 'PROMO' || (p.discount && p.discount > 0)));
   const gradients=['from-primary to-secondary','from-secondary to-primary','from-primary/50 to-secondary/50','from-secondary/50 to-primary/50','from-primary to-primary-container'];
   const priceColors=['text-primary','text-secondary','text-primary','text-secondary','text-primary'];
   
@@ -2405,7 +2405,7 @@ function renderPromos(){
       </div>
       <div class="absolute top-6 left-6 z-20 px-4 py-2 bg-error text-on-error font-black rounded-lg shadow-[0_0_20px_rgba(255,180,171,0.5)] pulse-badge">${discLabel}</div>
       <div class="aspect-square w-full mb-8 overflow-hidden rounded-2xl bg-surface-container-lowest flex items-center justify-center">
-        <img alt="${p.name}" class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl group-hover:scale-110 transition-transform duration-700" src="${p.img}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
+        <img alt="${p.name}" class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl group-hover:scale-110 transition-transform duration-700" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
       </div>
       <div class="mt-auto">
         <div class="flex justify-between items-end mb-4">
