@@ -366,11 +366,17 @@
                 saveProducts();
             }
             renderTable();
+        }, (error) => {
+            console.error(error);
+            alert("Erreur de connexion à Firebase. Assurez-vous d'avoir modifié les règles 'Rules' en .read: true et .write: true dans votre console Firebase.");
         });
     }
 
     function saveProducts() {
-        productsRef.set(products);
+        productsRef.set(products).catch(error => {
+            console.error(error);
+            alert("Erreur lors de la sauvegarde : Firebase a bloqué l'opération. Avez-vous mis à jour les Règles (Rules) ?");
+        });
     }
 
     function renderTable() {

@@ -1945,6 +1945,8 @@ productsRef.on('value', (snapshot) => {
     renderPromos();
     renderAccessoires();
     renderFavoritesPage();
+}, (error) => {
+    console.error("Firebase Read Error:", error);
 });
 
 function saveState() {
