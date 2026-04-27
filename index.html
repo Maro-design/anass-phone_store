@@ -408,7 +408,7 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 
   /* ---- PRODUCT CARDS (MOBILE REDESIGN) ---- */
   /* 1. GRID - 2 columns side by side: */
-  #productGrid, #favoritesGrid {
+  #featuredGrid, #productGrid, #favoritesGrid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 10px !important;
@@ -1638,7 +1638,8 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
     <button onclick="filterAccessoires('all')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#00aaff] text-white text-sm font-bold transition-all border border-transparent active:scale-95" data-cat="all">Tout</button>
     <button onclick="filterAccessoires('coques')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-all active:scale-95" data-cat="coques">Coques</button>
     <button onclick="filterAccessoires('chargeurs')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-all active:scale-95" data-cat="chargeurs">Chargeurs</button>
-    <button onclick="filterAccessoires('audio')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-all active:scale-95" data-cat="audio">Casques & Audio</button>
+    <button onclick="filterAccessoires('casques')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-all active:scale-95" data-cat="casques">Casques & Audio</button>
+    <button onclick="filterAccessoires('ordinateurs')" class="mobile-acc-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-[#111114] border border-[#333] text-gray-400 text-sm font-medium transition-all active:scale-95" data-cat="ordinateurs">Ordinateurs</button>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -1669,8 +1670,8 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
               </div>
               <span class="text-sm font-medium text-slate-400 group-hover:text-white transition-colors">Chargeurs & Câbles</span>
             </label>
-            <label class="flex items-center gap-3 cursor-pointer group" onclick="filterAccessoires('audio')">
-              <input type="radio" name="accCat" value="audio" class="hidden">
+            <label class="flex items-center gap-3 cursor-pointer group" onclick="filterAccessoires('casques')">
+              <input type="radio" name="accCat" value="casques" class="hidden">
               <div class="acc-radio-box w-5 h-5 rounded-md border border-[#1e1e1e] flex items-center justify-center bg-transparent group-hover:border-[#00aaff] transition-colors">
                 <div class="w-2.5 h-2.5 bg-[#00aaff] rounded-sm hidden"></div>
               </div>
@@ -1893,94 +1894,15 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 <a href="#/boutique" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="boutique" style="text-decoration:none;"><span class="material-symbols-outlined">store</span><span class="text-[10px] font-bold">Boutique</span></a>
 <a href="#/accessoires" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="accessoires" style="text-decoration:none;"><span class="material-symbols-outlined">headphones</span><span class="text-[10px] font-bold">Accessoires</span></a>
 <a href="#/promotions" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="promotions" style="text-decoration:none;"><span class="material-symbols-outlined">percent</span><span class="text-[10px] font-bold">Promo</span></a>
-<a href="#/contact" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="contac// ===== DATA & STATE MANAGEMENT =====
-const DEFAULT_PRODUCTS = [
-  {id:"p1",name:"iPhone 15 Pro Max",brand:"Apple",price:14999,cat:"smartphone",desc:"Titanium naturel, puce A17 Pro ultra-puissante. Le smartphone le plus avancé d'Apple.",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch-naturaltitanium?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"NOUVEAU",badgeColor:"primary",inStock:true},
-  {id:"p2",name:"Samsung Galaxy S24 Ultra",brand:"Samsung",price:12499,cat:"smartphone",desc:"Zoom 100x et Galaxy AI intégré. L'appareil photo le plus intelligent.",img:"https://images.samsung.com/is/image/samsung/p6pim/fr/2401/gallery/fr-galaxy-s24-s928-sm-s928bztpeub-thumb-539423616",badge:"PREMIUM",badgeColor:"secondary",inStock:true},
-  {id:"p3",name:"iPhone 14",brand:"Apple",price:8999,cat:"smartphone",desc:"Une autonomie record et un écran Retina spectaculaire. Détection des accidents.",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-midnight?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"",badgeColor:"",inStock:true},
-  {id:"p4",name:"Xiaomi 14 Pro",brand:"Xiaomi",price:6999,cat:"smartphone",desc:"Performance Leica et design premium. Double caméra Leica.",img:"https://m.media-amazon.com/images/I/71YmO4V6-AL._AC_SL1500_.jpg",badge:"",badgeColor:"",inStock:true},
-  {id:"p5",name:"Samsung A55",brand:"Samsung",price:3999,cat:"smartphone",desc:"Le meilleur rapport qualité-prix Samsung. Écran Super AMOLED.",img:"https://images.samsung.com/is/image/samsung/p6pim/levant/sm-a556bzkamea/gallery/levant-galaxy-a55-5g-sm-a556-sm-a556bzkamea-thumb-540191834?$344_344_PNG$",badge:"HOT",badgeColor:"error",inStock:true},
-  {id:"p6",name:"MacBook Pro M3",brand:"Apple",price:18999,cat:"laptop",desc:"L'ordinateur portable le plus puissant pour créateurs.",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"NOUVEAU",badgeColor:"primary",inStock:true},
-  {id:"p7",name:"Dell XPS 15",brand:"Dell",price:14499,cat:"laptop",desc:"Écran OLED InfinityEdge, puissance Intel i7.",img:"https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9530/media-gallery/black/xps-15-9530-t-black-8.psd?fmt=png-alpha&wid=1000&hei=1000",badge:"",badgeColor:"",inStock:true},
-  {id:"p8",name:"HP Pavilion Gaming",brand:"HP",price:8999,cat:"laptop",desc:"RTX 3050, parfait pour gaming et création.",img:"https://h20386.www2.hp.com/CanadaStore/Html/Merch/Images/c08139556_1750x1285.jpg",badge:"",badgeColor:"",inStock:true},
-  {id:"p9",name:"Lenovo IdeaPad",brand:"Lenovo",price:5499,cat:"laptop",desc:"Fin, léger et incroyablement polyvalent.",img:"https://p1-ofp.static.pub/medias/lenovo-laptop-ideapad-5-pro-gen-7-14-amd-hero.6601666e85570081.png",badge:"",badgeColor:"",inStock:true},
-  {id:"a1",name:"Coque Silicone MagSafe",brand:"Apple",price:599,cat:"accessoires",accCat:"coques",desc:"Coque en silicone avec MagSafe intégrée.",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT1A3?wid=2000&hei=2000&fmt=jpeg&qlt=95",badge:"NOUVEAU",inStock:true},
-  {id:"a2",name:"Chargeur Rapide 45W",brand:"Samsung",price:349,cat:"accessoires",accCat:"chargeurs",desc:"Adaptateur secteur USB-C 45W ultra-rapide.",img:"https://m.media-amazon.com/images/I/51IuN+Y4jRL._AC_SL1500_.jpg",badge:"",inStock:true},
-  {id:"a3",name:"AirPods Pro Gen 2",brand:"Apple",price:2549,oldPrice:2999,cat:"accessoires",accCat:"audio",desc:"Réduction active du bruit de niveau supérieur.",img:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=800&hei=800&fmt=jpeg&qlt=90",badge:"PROMO",inStock:true},
-  {id:"a4",name:"Câble Tressé USB-C 2M",brand:"Anker",price:149,cat:"accessoires",accCat:"chargeurs",desc:"Câble tressé en nylon ultra-résistant 100W.",img:"https://m.media-amazon.com/images/I/61m16rJ8LzL._AC_SL1500_.jpg",badge:"",inStock:true}
-];
+<a href="#/contact" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-500" data-page="contact" style="text-decoration:none;"><span class="material-symbols-outlined">mail</span><span class="text-[10px] font-bold">Contact</span></a>
+</nav>
 
-let products = JSON.parse(localStorage.getItem('phonedrshop_products')) || DEFAULT_PRODUCTS;
-const formatPrice = (price) => typeof price === 'number' ? price.toLocaleString() + ' MAD' : price;amd-hero.6601666e85570081.png",badge:"",badgeColor:"",rating:4.1,reviews:203,specs:{Écran:'15.6" FHD',Processeur:'AMD Ryzen 5 7520U',RAM:'8GB',Stockage:'512GB SSD',Batterie:'10 heures','Couleurs disponibles':'Gris, Bleu Abysse'}}
-];
-
-let currentCategory = 'all';
-// ===== STATE MANAGEMENT =====
-let currentUser = JSON.parse(localStorage.getItem('phonedrshop_user')) || null;
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-let orders = JSON.parse(localStorage.getItem('orders')) || [];
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from storage
-
-function saveState() {
-  localStorage.setItem('phonedrshop_user', JSON.stringify(currentUser));
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-  localStorage.setItem('orders', JSON.stringify(orders));
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// ===== TOAST NOTIFICATIONS =====
-function showToast(message, type = 'success', duration = 3000) {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  
-  if (type === 'custom-success') {
-    toast.style.backgroundColor = '#111111';
-    toast.style.borderColor = '#00aaff';
-    toast.style.color = '#ffffff';
-    toast.innerHTML = message;
-  } else {
-    const icon = type === 'success' ? 'check_circle' : 'info';
-    toast.innerHTML = `<span class="material-symbols-outlined text-[20px]">${icon}</span> ${message}`;
-  }
-  
-  container.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.classList.add('hide');
-    setTimeout(() => {
-      if (toast.parentNode === container) container.removeChild(toast);
-    }, 300);
-  }, duration);
-}
-
-// ===== PROFILE & AUTH =====
-function toggleProfileDropdown() {
-  const dropdown = document.getElementById('profileDropdown');
-  dropdown.classList.toggle('show');
-  renderProfileDropdown();
-}
-function renderProfileDropdown() {
-  const dropdown = document.getElementById('profileDropdown');
-  if(!currentUser) {
-    dropdown.innerHTML = `
-      <div class="dropdown-item" onclick="openAuth('login')">🔑 Se connecter</div>
-      <div class="dropdown-item" onclick="openAuth('register')">✨ S'inscrire</div>
-    `;
-  } else {
-    dropdown.innerHTML = `
-      <a href="#/" class="dropdown-item" onclick="document.getElementById('profileDropdown').classList.remove('show')" style="text-decoration:none; display:block;">👤 Mon Profil</a>
-      <a href="#/orders" class="dropdown-item" onclick="document.getElementById('profileDropdown').classList.remove('show')" style="text-decoration:none; display:block;">📦 Mes Commandes</a>
-      <div class="dropdown-item" onclick="logout()">🚪 Se déconnecter</div>
-    `;
-  }
-}
-
+<script>
 // Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
   const dropdown = document.getElementById('profileDropdown');
   const profileBtn = document.getElementById('profileBtn');
-  if (dropdown.classList.contains('show') && !dropdown.contains(e.target) && !profileBtn.contains(e.target)) {
+  if (dropdown && dropdown.classList.contains('show') && !dropdown.contains(e.target) && !profileBtn.contains(e.target)) {
     dropdown.classList.remove('show');
   }
 });
@@ -2503,7 +2425,7 @@ function renderPromos(){
           </div>
         </div>
         <div class="flex flex-col w-full gap-3 mt-1">
-          <button onclick="openModal(${idx})" class="flex items-center justify-center gap-2 w-full py-4 bg-surface-container-highest hover:bg-primary hover:text-on-primary rounded-xl transition-all duration-300 font-bold"><span class="material-symbols-outlined">visibility</span>Détails</button>
+          <button onclick="navigateTo('product/${p.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}')" class="flex items-center justify-center gap-2 w-full py-4 bg-surface-container-highest hover:bg-primary hover:text-on-primary rounded-xl transition-all duration-300 font-bold"><span class="material-symbols-outlined">visibility</span>Détails</button>
           <button onclick="addToCart(${idx})" class="flex items-center justify-center gap-2 w-full py-4 bg-[#00aaff] text-white hover:opacity-90 rounded-xl transition-all duration-300 font-bold">🛒 Ajouter au panier</button>
         </div>
       </div>
