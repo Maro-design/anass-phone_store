@@ -2837,7 +2837,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(dropdown);
 
   // Find profile icon and add click
-  const profileIcon = document.querySelector('[href*="compte"], [data-profile], .profile-btn, button:has(.person), a:has(.person)') 
+  const profileIcon = document.getElementById('profileBtn') || document.querySelector('.profile-btn') 
     || Array.from(document.querySelectorAll('button, a')).find(el => el.innerHTML.includes('person') || el.innerHTML.includes('account'));
 
   if (profileIcon) {
