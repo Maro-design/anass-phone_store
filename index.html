@@ -2521,17 +2521,18 @@ function renderCart() {
   cart.forEach(item => {
     if(!grouped[item.name]) grouped[item.name] = { ...item, qty: 0 };
     grouped[item.name].qty++;
-    total += parseInt(item.price.replace(/[^\d]/g, ''));
+    const priceStr = String(item.price);
+    total += parseInt(priceStr.replace(/[^\d]/g, ''));
   });
   
   container.innerHTML = Object.values(grouped).map(item => `
     <div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-2xl border border-white/5">
       <div class="w-16 h-16 rounded-xl bg-white/5 p-2 shrink-0">
-        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'" />
+        <img src="${(item.images && item.images[0]) ? item.images[0] : (item.img || '')}" alt="${item.name}" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'" />
       </div>
       <div class="flex-1 min-w-0">
         <h3 class="text-sm font-bold truncate text-white">${item.name}</h3>
-        <p class="text-primary font-bold text-sm leading-tight">${item.price}</p>
+        <p class="text-primary font-bold text-sm leading-tight">${formatPrice(item.price)}</p>
         <div class="flex items-center gap-3 mt-2">
           <div class="flex items-center bg-surface-container-highest rounded-lg px-1">
             <button onclick="updateCartItemQty('${item.name}', -1)" class="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded-lg text-slate-300 font-bold">-</button>
@@ -2575,13 +2576,14 @@ function checkoutWhatsApp() {
   cart.forEach(item => {
     if(!grouped[item.name]) grouped[item.name] = { ...item, qty: 0 };
     grouped[item.name].qty++;
-    total += parseInt(item.price.replace(/[^\d]/g, ''));
+    const priceStr = String(item.price);
+    total += parseInt(priceStr.replace(/[^\d]/g, ''));
   });
   
   let msg = "Bonjour PhoneDr Shop 👋\nJe voudrais commander:\n";
   const orderItems = [];
   Object.values(grouped).forEach(item => {
-    msg += `- ${item.name} x${item.qty} → ${item.price}\n`;
+    msg += `- ${item.name} x${item.qty} → ${formatPrice(item.price)}\n`;
     orderItems.push(`- ${item.name} x${item.qty}`);
   });
   msg += `\nTOTAL: ${total.toLocaleString('fr-FR')} MAD\nMerci!`;
