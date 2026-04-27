@@ -1898,15 +1898,6 @@ body{background:#0a0a0a;color:#ffffff;font-family:'Inter',sans-serif;overflow-x:
 </nav>
 
 <script>
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  const dropdown = document.getElementById('profileDropdown');
-  const profileBtn = document.getElementById('profileBtn');
-  if (dropdown && dropdown.classList.contains('show') && !dropdown.contains(e.target) && !profileBtn.contains(e.target)) {
-    dropdown.classList.remove('show');
-  }
-});
-
 // ===== DATA & STATE MANAGEMENT =====
 const DEFAULT_PRODUCTS = [
   { id: 1, name: "iPhone 15 Pro", brand: "Apple", cat: "iphones", price: 12499, oldPrice: 13999, img: "https://m.media-amazon.com/images/I/81SigAnN7pL._AC_SL1500_.jpg", badge: "PREMIUM", badgeColor: "primary", desc: "Le titane arrive sur iPhone. Une puce A17 Pro révolutionnaire.", specs: { "Écran": "6.1\" Super Retina XDR", "Puce": "A17 Pro", "Caméra": "48MP Main", "Batterie": "23h lecture vidéo" } },
@@ -2786,7 +2777,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Create dropdown element
   const dropdown = document.createElement('div');
-  dropdown.id = 'profile-dropdown';
+  dropdown.id = 'profileDropdown';
+  dropdown.className = 'profile-dropdown-content';
   dropdown.style.cssText = `
     display: none;
     position: fixed;
@@ -2802,38 +2794,50 @@ document.addEventListener('DOMContentLoaded', function() {
     font-family: inherit;
   `;
 
-  const user = localStorage.getItem('phonedrshop_user');
+  window.renderProfileDropdown = function() {
+    const user = localStorage.getItem('phonedrshop_user');
+    if (!user) {
+      dropdown.innerHTML = `
+        <div id="btn-login" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'">
+          🔑 Se connecter
+        </div>
+        <div id="btn-register" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'">
+          ✨ S'inscrire
+        </div>
+      `;
+    } else {
+      const userData = JSON.parse(user);
+      dropdown.innerHTML = `
+        <div style="padding:12px 16px;color:#7bd0ff;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:4px;">
+          👋 ${userData.name || 'Mon Compte'}
+        </div>
+        <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.hash='favorites'">
+          👤 Mon Profil
+        </div>
+        <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.hash='orders'">
+          📦 Mes Commandes
+        </div>
+        <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:#00aaff;font-size:14px;border-top:1px solid rgba(255,255,255,0.05);margin-top:4px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.href='admin.html'">
+          ⚙️ Administration
+        </div>
+        <div id="btn-logout-new" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:#ff6b6b;font-size:14px;" onmouseover="this.style.background='rgba(255,100,100,0.1)'" onmouseout="this.style.background='transparent'">
+          🚪 Se déconnecter
+        </div>
+      `;
+    }
+    
+    // Re-attach listeners for dynamic content
+    setTimeout(() => {
+      const lBtn = document.getElementById('btn-login');
+      const rBtn = document.getElementById('btn-register');
+      const loBtn = document.getElementById('btn-logout-new');
+      if (lBtn) lBtn.onclick = () => { dropdown.style.display='none'; showModal('login'); };
+      if (rBtn) rBtn.onclick = () => { dropdown.style.display='none'; showModal('register'); };
+      if (loBtn) loBtn.onclick = () => { localStorage.removeItem('phonedrshop_user'); location.reload(); };
+    }, 0);
+  };
 
-  if (!user) {
-    dropdown.innerHTML = `
-      <div id="btn-login" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'">
-        🔑 Se connecter
-      </div>
-      <div id="btn-register" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'">
-        ✨ S'inscrire
-      </div>
-    `;
-  } else {
-    const userData = JSON.parse(user);
-    dropdown.innerHTML = `
-      <div style="padding:12px 16px;color:#7bd0ff;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:4px;">
-        👋 ${userData.name || 'Mon Compte'}
-      </div>
-      <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.hash='favorites'">
-        👤 Mon Profil
-      </div>
-      <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:white;font-size:14px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.hash='orders'">
-        📦 Mes Commandes
-      </div>
-      <div style="padding:12px 16px;cursor:pointer;border-radius:8px;color:#00aaff;font-size:14px;border-top:1px solid rgba(255,255,255,0.05);margin-top:4px;" onmouseover="this.style.background='rgba(0,170,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="window.location.href='admin.html'">
-        ⚙️ Administration
-      </div>
-      <div id="btn-logout" style="padding:12px 16px;cursor:pointer;border-radius:8px;color:#ff6b6b;font-size:14px;" onmouseover="this.style.background='rgba(255,100,100,0.1)'" onmouseout="this.style.background='transparent'">
-        🚪 Se déconnecter
-      </div>
-    `;
-  }
-
+  renderProfileDropdown();
   document.body.appendChild(dropdown);
 
   // Find profile icon and add click
@@ -2892,14 +2896,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.showRegister = () => showModal('register');
 
-  setTimeout(() => {
-    const loginBtn = document.getElementById('btn-login');
-    const registerBtn = document.getElementById('btn-register');
-    const logoutBtn = document.getElementById('btn-logout');
-    if (loginBtn) loginBtn.addEventListener('click', () => { dropdown.style.display='none'; showModal('login'); });
-    if (registerBtn) registerBtn.addEventListener('click', () => { dropdown.style.display='none'; showModal('register'); });
-    if (logoutBtn) logoutBtn.addEventListener('click', () => { localStorage.removeItem('phonedrshop_user'); location.reload(); });
-  }, 100);
+  // Initial auth check already handled by renderProfileDropdown
+});
 
 });
 // ===== HERO CANVAS ANIMATION =====
