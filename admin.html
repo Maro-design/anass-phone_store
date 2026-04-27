@@ -311,12 +311,7 @@
     const loginForm = document.getElementById('login-form');
     const loginPage = document.getElementById('login-page');
     const dashboardPage = document.getElementById('dashboard-page');
-    
-    // Check session
-    if (localStorage.getItem('admin_auth') === 'true') {
-        showDashboard();
-    }
-
+    // Check session will be done at the bottom of the script
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const pass = document.getElementById('admin-password').value;
@@ -626,6 +621,11 @@
     function switchTab(tab) {
         // Simple for now as we only have one tab
         document.getElementById('page-title').textContent = '📦 Liste des Produits';
+    }
+
+    // Check session (moved to bottom to ensure all variables are initialized)
+    if (localStorage.getItem('admin_auth') === 'true') {
+        showDashboard();
     }
 </script>
 
