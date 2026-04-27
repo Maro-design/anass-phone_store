@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         :root {
             --primary: #00aaff;
@@ -293,6 +296,17 @@
 </div>
 
 <script>
+    // --- FIREBASE CONFIG ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
+        authDomain: "tokenfast-26818.firebaseapp.com",
+        projectId: "tokenfast-26818",
+        databaseURL: "https://tokenfast-26818.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const productsRef = db.ref('phonedr_products');
+
     // --- AUTH LOGIC ---
     const loginForm = document.getElementById('login-form');
     const loginPage = document.getElementById('login-page');
@@ -338,17 +352,25 @@
     ];
 
     function loadProducts() {
-        const stored = localStorage.getItem('phonedrshop_products');
-        if (stored) {
-            products = JSON.parse(stored);
-        } else {
-            products = [...DEFAULT_PRODUCTS];
-            saveProducts();
-        }
+        productsRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Firebase Realtime DB might store as object or array
+                if (Array.isArray(data)) {
+                    products = data.filter(p => p !== null);
+                } else {
+                    products = Object.values(data);
+                }
+            } else {
+                products = [...DEFAULT_PRODUCTS];
+                saveProducts();
+            }
+            renderTable();
+        });
     }
 
     function saveProducts() {
-        localStorage.setItem('phonedrshop_products', JSON.stringify(products));
+        productsRef.set(products);
     }
 
     function renderTable() {

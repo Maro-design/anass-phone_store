@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed-dim":"#00aaff","surface-container-highest":"#141414","surface":"#0a0a0a","error-container":"#93000a","on-tertiary-fixed":"#111111","outline-variant":"#414755","on-secondary":"#00aaff","surface-container":"#111111","primary-fixed-dim":"#00aaff","secondary":"#00aaff","surface-dim":"#0a0a0a","on-tertiary-container":"#292836","secondary-container":"#00aaff","on-error":"#690005","on-surface-variant":"#a0a0a0","tertiary":"#c7c4d6","surface-container-high":"#111111","on-background":"#ffffff","inverse-surface":"#ffffff","on-surface":"#ffffff","surface-container-low":"#111111","surface-tint":"#00aaff","error":"#ffb4ab","primary":"#00aaff","inverse-primary":"#0077cc","on-primary":"#ffffff","primary-container":"#00aaff","on-primary-container":"#ffffff","on-error-container":"#ffdad6","secondary-fixed":"#00aaff","on-secondary-container":"#00aaff","primary-fixed":"#d8e2ff","surface-bright":"#383846","on-tertiary":"#2f2f3d","surface-variant":"#141414","outline":"#8b90a0","tertiary-container":"#918fa0","surface-container-lowest":"#000000","background":"#0a0a0a","tertiary-fixed":"#ffffff"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},fontFamily:{headline:["Manrope"],body:["Inter"],label:["Inter"]}}}}
 </script>
@@ -1908,18 +1910,48 @@ const DEFAULT_PRODUCTS = [
   { id: 6, name: "Chargeur MagSafe", brand: "Apple", cat: "accessoires", accCat: "chargeurs", price: 499, oldPrice: 599, img: "https://m.media-amazon.com/images/I/51H7Mv8C47L._AC_SL1000_.jpg", badge: "ESSENTIEL", badgeColor: "primary", desc: "Recharge sans fil rapide et alignement magnétique parfait.", specs: { "Puissance": "Jusqu'à 15W", "Connecteur": "USB-C", "Compatibilité": "iPhone 12 et +" } }
 ];
 
-let products = JSON.parse(localStorage.getItem('phonedrshop_products')) || DEFAULT_PRODUCTS;
+// ===== FIREBASE CONFIG =====
+const firebaseConfig = {
+    apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
+    authDomain: "tokenfast-26818.firebaseapp.com",
+    projectId: "tokenfast-26818",
+    databaseURL: "https://tokenfast-26818.firebaseio.com"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const productsRef = db.ref('phonedr_products');
+
+let products = [];
 let cart = JSON.parse(localStorage.getItem('phonedrshop_cart')) || [];
 let favorites = JSON.parse(localStorage.getItem('phonedrshop_favorites')) || [];
 let orders = JSON.parse(localStorage.getItem('phonedrshop_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('phonedrshop_user')) || null;
+
+// Real-time synchronization
+productsRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        if (Array.isArray(data)) {
+            products = data.filter(p => p !== null);
+        } else {
+            products = Object.values(data);
+        }
+    } else {
+        products = [...DEFAULT_PRODUCTS];
+    }
+    // Refresh all active views
+    renderFeatured();
+    renderProducts();
+    renderPromos();
+    renderAccessoires();
+    renderFavoritesPage();
+});
 
 function saveState() {
   localStorage.setItem('phonedrshop_cart', JSON.stringify(cart));
   localStorage.setItem('phonedrshop_favorites', JSON.stringify(favorites));
   localStorage.setItem('phonedrshop_orders', JSON.stringify(orders));
   localStorage.setItem('phonedrshop_user', JSON.stringify(currentUser));
-  localStorage.setItem('phonedrshop_products', JSON.stringify(products));
 }
 
 function formatPrice(p) {
