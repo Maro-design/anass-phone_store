@@ -2221,7 +2221,7 @@ function renderFeatured() {
         <span class="material-symbols-outlined">favorite</span>
       </div>
       <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
-        <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${p.img}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
+        <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
         ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor||'primary'}/20 text-${p.badgeColor||'primary'} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor||'primary'}/20">${p.badge}</span></div>`:''}
       </div>
       <div class="flex-1">
@@ -2263,7 +2263,7 @@ function renderProducts() {
         <span class="material-symbols-outlined">favorite</span>
       </div>
       <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
-        <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${p.img}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
+        <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
         ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor}/20 text-${p.badgeColor} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor}/20">${p.badge}</span></div>`:''}
       </div>
       <div class="flex-1">
@@ -2661,7 +2661,8 @@ function updateProductUI(idx) {
   document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
   document.getElementById('page-product').classList.add('active');
   // Populate
-  document.getElementById('detailMainImg').src=p.img;
+  const mainImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || '');
+  document.getElementById('detailMainImg').src=mainImg;
   document.getElementById('detailMainImg').onerror = function() { this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'; };
   document.getElementById('detailMainImg').alt=p.name;
   document.getElementById('detailBrand').textContent=p.brand;
@@ -2673,12 +2674,11 @@ function updateProductUI(idx) {
   document.getElementById('detailSpecs').innerHTML=Object.entries(p.specs).map(([k,v])=>
     `<div class="spec-row"><span class="text-on-surface-variant text-sm">${k}</span><span class="text-on-surface font-semibold text-sm">${v}</span></div>`
   ).join('');
-  // Thumbnails (3 views using same image with different transforms)
-  const thumbStyles=['','brightness(1.1) saturate(1.2)','brightness(0.9) contrast(1.1)'];
-  const thumbLabels=['Vue principale','Vue de côté','Vue arrière'];
-  document.getElementById('detailThumbs').innerHTML=thumbStyles.map((s,i)=>
+  // Thumbnails
+  const images = (p.images && p.images.length > 0) ? p.images : [p.img];
+  document.getElementById('detailThumbs').innerHTML=images.map((img,i)=>
     `<button onclick="setDetailThumb(${i})" class="thumb-btn rounded-xl bg-surface-container-lowest aspect-square overflow-hidden ${i===0?'active-thumb':''}">
-      <img src="${p.img}" alt="${thumbLabels[i]}" class="w-full h-full object-contain p-3 transition-transform duration-300" style="filter:${s};${i===1?'transform:scaleX(-1)':''}${i===2?'transform:scale(0.85)':''}"/>
+      <img src="${img}" alt="Vue ${i+1}" class="w-full h-full object-contain p-3 transition-transform duration-300"/>
     </button>`
   ).join('');
   // WhatsApp link
@@ -2695,8 +2695,7 @@ function setDetailThumb(i){
   thumbs.forEach(t=>t.classList.remove('active-thumb'));
   thumbs[i].classList.add('active-thumb');
   const img=thumbs[i].querySelector('img');
-  document.getElementById('detailMainImg').style.filter=img.style.filter;
-  document.getElementById('detailMainImg').style.transform=img.style.transform;
+  document.getElementById('detailMainImg').src=img.src;
 }
 
 function changeQty(d){
