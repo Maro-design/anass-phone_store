@@ -322,17 +322,17 @@
 <script>
     // --- FIREBASE CONFIG ---
     const firebaseConfig = {
-        apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
-        authDomain: "tokenfast-26818.firebaseapp.com",
-        projectId: "tokenfast-26818",
-        databaseURL: localStorage.getItem('phonedr_db_url') || "https://tokenfast-26818.firebaseio.com"
+        apiKey: "AIzaSyCDY3W5Nu4zqmufyYIVyAE2_ReDMHc1eww",
+        authDomain: "phonedr-83a27.firebaseapp.com",
+        projectId: "phonedr-83a27",
+        databaseURL: localStorage.getItem('phonedr_db_url') || "https://phonedr-83a27-default-rtdb.firebaseio.com"
     };
     
     function fixFirebaseConnection() {
         const variants = [
-            "https://tokenfast-26818.firebaseio.com",
-            "https://tokenfast-26818-default-rtdb.firebaseio.com",
-            "https://tokenfast-26818-default-rtdb.europe-west1.firebasedatabase.app"
+            "https://phonedr-83a27-default-rtdb.firebaseio.com",
+            "https://phonedr-83a27.firebaseio.com",
+            "https://phonedr-83a27-default-rtdb.europe-west1.firebasedatabase.app"
         ];
         let current = localStorage.getItem('phonedr_db_url') || variants[0];
         let nextIndex = (variants.indexOf(current) + 1) % variants.length;
