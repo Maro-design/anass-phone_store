@@ -111,9 +111,12 @@
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 id="page-title" class="text-3xl font-headline font-bold">📦 Liste des Produits</h1>
-                <div class="flex items-center gap-2 mt-1">
-                    <div id="conn-status" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
-                    <p id="conn-text" class="text-slate-400 text-xs">Connexion à Firebase...</p>
+                <div class="flex items-center gap-4 mt-1">
+                    <div class="flex items-center gap-2">
+                        <div id="conn-status" class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                        <p id="conn-text" class="text-slate-400 text-xs">Déconnecté</p>
+                    </div>
+                    <button onclick="fixFirebaseConnection()" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded hover:bg-blue-500/20 transition-all">🔧 RÉPARER LA CONNEXION</button>
                 </div>
             </div>
             <div class="flex gap-4">
@@ -319,8 +322,21 @@
         apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
         authDomain: "tokenfast-26818.firebaseapp.com",
         projectId: "tokenfast-26818",
-        databaseURL: "https://tokenfast-26818-default-rtdb.firebaseio.com"
+        databaseURL: localStorage.getItem('phonedr_db_url') || "https://tokenfast-26818.firebaseio.com"
     };
+    
+    function fixFirebaseConnection() {
+        const variants = [
+            "https://tokenfast-26818.firebaseio.com",
+            "https://tokenfast-26818-default-rtdb.firebaseio.com",
+            "https://tokenfast-26818-default-rtdb.europe-west1.firebasedatabase.app"
+        ];
+        let current = localStorage.getItem('phonedr_db_url') || variants[0];
+        let nextIndex = (variants.indexOf(current) + 1) % variants.length;
+        localStorage.setItem('phonedr_db_url', variants[nextIndex]);
+        alert("Tentative avec une nouvelle adresse... Le site va redémarrer.\nNouvelle adresse testée : " + variants[nextIndex]);
+        location.reload();
+    }
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const productsRef = db.ref('phonedr_products');

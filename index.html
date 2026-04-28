@@ -1915,7 +1915,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
     authDomain: "tokenfast-26818.firebaseapp.com",
     projectId: "tokenfast-26818",
-    databaseURL: "https://tokenfast-26818-default-rtdb.firebaseio.com"
+    databaseURL: localStorage.getItem('phonedr_db_url') || "https://tokenfast-26818.firebaseio.com"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
