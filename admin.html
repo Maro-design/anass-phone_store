@@ -111,7 +111,10 @@
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 id="page-title" class="text-3xl font-headline font-bold">📦 Liste des Produits</h1>
-                <p class="text-slate-400 text-sm mt-1">Gérez vos articles en temps réel</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <div id="conn-status" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+                    <p id="conn-text" class="text-slate-400 text-xs">Connexion à Firebase...</p>
+                </div>
             </div>
             <div class="flex gap-4">
                 <div class="relative">
@@ -251,11 +254,11 @@
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Afficher ce produit dans (Emplacements)</label>
                 <div class="flex flex-wrap gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
                     <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="loc-accueil" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <input type="checkbox" id="loc-accueil" checked class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
                         <span class="text-sm">Page d'accueil</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="loc-boutique" class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
+                        <input type="checkbox" id="loc-boutique" checked class="w-4 h-4 rounded bg-surface border-white/20 accent-blue-500">
                         <span class="text-sm">Boutique (Téléphones)</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
@@ -316,11 +319,28 @@
         apiKey: "AIzaSyBtPJM4hObR3aKV8Gb59VAsz9vAAWS6SNM",
         authDomain: "tokenfast-26818.firebaseapp.com",
         projectId: "tokenfast-26818",
-        databaseURL: "https://tokenfast-26818.firebaseio.com"
+        databaseURL: "https://tokenfast-26818-default-rtdb.firebaseio.com"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const productsRef = db.ref('phonedr_products');
+
+    // Connection Status Monitor
+    const statusDot = document.getElementById('conn-status');
+    const statusText = document.getElementById('conn-text');
+    if (statusDot && statusText) {
+        db.ref('.info/connected').on('value', (snap) => {
+            if (snap.val() === true) {
+                statusDot.className = 'w-2 h-2 rounded-full bg-green-500';
+                statusText.textContent = "Connecté à Firebase";
+                statusText.className = 'text-green-400 text-xs';
+            } else {
+                statusDot.className = 'w-2 h-2 rounded-full bg-red-500 animate-pulse';
+                statusText.textContent = "Déconnecté de Firebase";
+                statusText.className = 'text-red-400 text-xs';
+            }
+        });
+    }
 
     // --- AUTH LOGIC ---
     const loginForm = document.getElementById('login-form');
@@ -362,8 +382,10 @@
     ];
 
     function loadProducts() {
+        console.log("Tentative de chargement des produits depuis:", productsRef.toString());
         productsRef.on('value', (snapshot) => {
             const data = snapshot.val();
+            console.log("Données reçues de Firebase:", data);
             if (data) {
                 // Firebase Realtime DB might store as object or array
                 if (Array.isArray(data)) {
@@ -372,20 +394,24 @@
                     products = Object.values(data);
                 }
             } else {
+                console.log("Base de données vide, chargement des produits par défaut...");
                 products = [...DEFAULT_PRODUCTS];
                 saveProducts();
             }
             renderTable();
         }, (error) => {
-            console.error(error);
-            alert("Erreur de connexion à Firebase. Assurez-vous d'avoir modifié les règles 'Rules' en .read: true et .write: true dans votre console Firebase.");
+            console.error("Erreur de lecture Firebase:", error);
+            alert("Erreur de lecture : " + error.message);
         });
     }
 
     function saveProducts() {
-        productsRef.set(products).catch(error => {
-            console.error(error);
-            alert("Erreur lors de la sauvegarde : Firebase a bloqué l'opération. Avez-vous mis à jour les Règles (Rules) ?");
+        console.log("Sauvegarde des produits...", products);
+        productsRef.set(products).then(() => {
+            console.log("Sauvegarde réussie !");
+        }).catch(error => {
+            console.error("ERREUR DE SAUVEGARDE FIREBASE:", error);
+            alert("ERREUR DE SAUVEGARDE : " + error.message + "\n\nAssurez-vous que vos règles Firebase sont en .read: true et .write: true.");
         });
     }
 
@@ -645,7 +671,7 @@
                 badgeColor: document.getElementById('p-badge-color').value,
                 desc: document.getElementById('p-desc').value,
                 locations: locations,
-                specs: Object.keys(specs).length > 0 ? specs : { "N/A": "N/A" }
+                specs: Object.keys(specs).length > 0 ? specs : { "NA": "NA" }
             };
 
             if (type === 'accessoire') {
