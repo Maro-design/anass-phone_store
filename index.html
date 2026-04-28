@@ -2281,7 +2281,12 @@ function renderProducts() {
 
   const filtered = products.filter(p => {
     if (p.locations ? !p.locations.includes('boutique') : p.cat === 'accessoires') return false;
-    const matchesCat = catFilter === 'all' || p.cat === catFilter;
+    
+    let normalizedCat = p.cat;
+    if (['iphones', 'samsung', 'xiaomi', 'google'].includes(normalizedCat)) normalizedCat = 'smartphone';
+    if (normalizedCat === 'accessoires') normalizedCat = 'accessoire';
+    
+    const matchesCat = catFilter === 'all' || normalizedCat === catFilter;
     const matchesBrand = brandCheckboxes.length === 0 || brandCheckboxes.includes(p.brand);
     const numericPrice = typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : p.price;
     const matchesPrice = numericPrice <= maxPrice;

@@ -189,24 +189,22 @@
                         <input type="text" id="p-brand" required class="w-full px-5 py-3 rounded-xl" placeholder="ex: Apple">
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Catégorie</label>
-                        <select id="p-cat" required class="w-full px-5 py-3 rounded-xl appearance-none bg-surface">
-                            <option value="iphones">iPhone</option>
-                            <option value="samsung">Samsung</option>
-                            <option value="xiaomi">Xiaomi</option>
-                            <option value="google">Google</option>
-                            <option value="accessoires">Accessoires</option>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Type de produit</label>
+                        <select id="p-type" required class="w-full px-5 py-3 rounded-xl appearance-none bg-surface" onchange="toggleProductTypeFields()">
+                            <option value="smartphone">Téléphone</option>
+                            <option value="laptop">Ordinateur (PC)</option>
+                            <option value="accessoire">Accessoire</option>
                         </select>
                     </div>
                 </div>
 
                 <div id="acc-cat-container" class="hidden">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Type d'accessoire</label>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Catégorie d'accessoire</label>
                     <select id="p-acc-cat" class="w-full px-5 py-3 rounded-xl appearance-none bg-surface">
                         <option value="coques">Coques & Protections</option>
                         <option value="chargeurs">Chargeurs & Câbles</option>
-                        <option value="audio">Casques & Audio</option>
-                        <option value="montres">Montres Connectées</option>
+                        <option value="casques">Casques & Audio</option>
+                        <option value="ordinateurs">Accessoires PC</option>
                     </select>
                 </div>
 
@@ -274,11 +272,28 @@
             <!-- Specs -->
             <div class="md:col-span-2">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Détails techniques (Optionnels)</label>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <input type="text" id="spec-ecran" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Écran (ex: 6.1 OLED)">
-                    <input type="text" id="spec-puce" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Puce (ex: A17 Pro)">
-                    <input type="text" id="spec-camera" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Caméra (ex: 48MP)">
-                    <input type="text" id="spec-batterie" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Batterie (ex: 5000mAh)">
+                
+                <!-- Specs: Smartphone -->
+                <div id="specs-smartphone" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <input type="text" id="spec-ecran-phone" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Écran (ex: 6.1 OLED)">
+                    <input type="text" id="spec-puce-phone" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Puce (ex: A17 Pro)">
+                    <input type="text" id="spec-camera-phone" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Caméra (ex: 48MP)">
+                    <input type="text" id="spec-batterie-phone" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Batterie (ex: 5000mAh)">
+                </div>
+
+                <!-- Specs: PC -->
+                <div id="specs-laptop" class="grid grid-cols-2 md:grid-cols-5 gap-4 hidden">
+                    <input type="text" id="spec-ecran-pc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Écran (ex: 15.6 FHD)">
+                    <input type="text" id="spec-cpu-pc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="CPU (ex: i7 13th Gen)">
+                    <input type="text" id="spec-ram-pc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="RAM (ex: 16GB)">
+                    <input type="text" id="spec-stockage-pc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Stockage (ex: 512GB SSD)">
+                    <input type="text" id="spec-gpu-pc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="GPU (ex: RTX 4060)">
+                </div>
+
+                <!-- Specs: Accessoire -->
+                <div id="specs-accessoire" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
+                    <input type="text" id="spec-compat-acc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Compatibilité (ex: iPhone 15 / Galaxy S24)">
+                    <input type="text" id="spec-feature-acc" class="w-full px-4 py-2 rounded-xl text-sm" placeholder="Particularité (ex: Charge rapide 20W)">
                 </div>
             </div>
 
@@ -422,29 +437,42 @@
             </tr>
         `).join('');
 
-        updateStats();
+        updateDashboardStats();
     }
 
-    function updateStats() {
+    function updateDashboardStats() {
         document.getElementById('stat-total').textContent = products.length;
-        document.getElementById('stat-phones').textContent = products.filter(p => p.cat !== 'accessoires').length;
-        document.getElementById('stat-acc').textContent = products.filter(p => p.cat === 'accessoires').length;
-        document.getElementById('stat-promo').textContent = products.filter(p => p.badge === 'PROMO' || p.oldPrice).length;
+        document.getElementById('stat-phones').textContent = products.filter(p => p.cat === 'smartphone' || ['iphones', 'samsung', 'xiaomi', 'google'].includes(p.cat)).length;
+        document.getElementById('stat-acc').textContent = products.filter(p => p.cat === 'accessoires' || p.cat === 'accessoire').length;
+        document.getElementById('stat-promo').textContent = products.filter(p => p.oldPrice || p.badge === 'PROMO').length;
     }
 
     // --- MODAL LOGIC ---
     const modal = document.getElementById('product-modal');
     const form = document.getElementById('product-form');
-    const catSelect = document.getElementById('p-cat');
     const accCatContainer = document.getElementById('acc-cat-container');
 
-    catSelect.addEventListener('change', () => {
-        if (catSelect.value === 'accessoires') {
-            accCatContainer.classList.remove('hidden');
-        } else {
-            accCatContainer.classList.add('hidden');
+    function toggleProductTypeFields() {
+        const type = document.getElementById('p-type').value;
+        const accContainer = document.getElementById('acc-cat-container');
+        const specsPhone = document.getElementById('specs-smartphone');
+        const specsLaptop = document.getElementById('specs-laptop');
+        const specsAcc = document.getElementById('specs-accessoire');
+
+        accContainer.classList.add('hidden');
+        specsPhone.classList.add('hidden');
+        specsLaptop.classList.add('hidden');
+        specsAcc.classList.add('hidden');
+
+        if (type === 'smartphone') {
+            specsPhone.classList.remove('hidden');
+        } else if (type === 'laptop') {
+            specsLaptop.classList.remove('hidden');
+        } else if (type === 'accessoire') {
+            accContainer.classList.remove('hidden');
+            specsAcc.classList.remove('hidden');
         }
-    });
+    }
 
     let currentProductImages = [];
 
@@ -494,26 +522,25 @@
         renderImagePreviews();
     }
 
-    function openAddModal() {
-        form.reset();
-        currentProductImages = [];
+    function openModal() {
         document.getElementById('edit-id').value = '';
         document.getElementById('modal-title').textContent = 'Ajouter un produit';
         
-        // Reset specs
-        document.getElementById('spec-ecran').value = '';
-        document.getElementById('spec-puce').value = '';
-        document.getElementById('spec-camera').value = '';
-        document.getElementById('spec-batterie').value = '';
+        // Reset inputs
+        document.querySelectorAll('#product-form input, #product-form textarea, #product-form select').forEach(el => { if(el.id !== 'p-type') el.value = ''; });
+        document.querySelectorAll('#specs-smartphone input, #specs-laptop input, #specs-accessoire input').forEach(input => input.value = '');
 
-        // Reset locations to default category logic
+        // Reset locations
         document.getElementById('loc-accueil').checked = false;
         document.getElementById('loc-boutique').checked = true;
         document.getElementById('loc-promotions').checked = false;
         document.getElementById('loc-accessoires').checked = false;
 
+        document.getElementById('p-type').value = 'smartphone';
+        toggleProductTypeFields();
+
+        currentProductImages = [];
         renderImagePreviews();
-        accCatContainer.classList.add('hidden');
         modal.classList.remove('hidden');
     }
 
@@ -524,35 +551,48 @@
         document.getElementById('edit-id').value = p.id;
         document.getElementById('p-name').value = p.name;
         document.getElementById('p-brand').value = p.brand;
-        document.getElementById('p-cat').value = p.cat;
+        
+        let type = p.cat;
+        if (['iphones', 'samsung', 'xiaomi', 'google'].includes(type)) type = 'smartphone';
+        if (type === 'accessoires') type = 'accessoire';
+        document.getElementById('p-type').value = type;
+
         document.getElementById('p-price').value = p.price;
         document.getElementById('p-old-price').value = p.oldPrice || '';
         
-        // Handle images (legacy support for single img URL)
         currentProductImages = p.images ? [...p.images] : (p.img ? [p.img] : []);
         
         document.getElementById('p-badge').value = p.badge || '';
         document.getElementById('p-badge-color').value = p.badgeColor || 'primary';
         document.getElementById('p-desc').value = p.desc;
         
-        if (p.cat === 'accessoires') {
-            accCatContainer.classList.remove('hidden');
+        toggleProductTypeFields();
+        if (type === 'accessoire') {
             document.getElementById('p-acc-cat').value = p.accCat || 'coques';
-        } else {
-            accCatContainer.classList.add('hidden');
         }
 
-        // Specs
-        document.getElementById('spec-ecran').value = p.specs?.["Écran"] || '';
-        document.getElementById('spec-puce').value = p.specs?.["Puce"] || '';
-        document.getElementById('spec-camera').value = p.specs?.["Caméra"] || '';
-        document.getElementById('spec-batterie').value = p.specs?.["Batterie"] || '';
+        document.querySelectorAll('#specs-smartphone input, #specs-laptop input, #specs-accessoire input').forEach(input => input.value = '');
+        
+        if (type === 'smartphone') {
+            document.getElementById('spec-ecran-phone').value = p.specs?.["Écran"] || '';
+            document.getElementById('spec-puce-phone').value = p.specs?.["Puce"] || '';
+            document.getElementById('spec-camera-phone').value = p.specs?.["Caméra"] || '';
+            document.getElementById('spec-batterie-phone').value = p.specs?.["Batterie"] || '';
+        } else if (type === 'laptop') {
+            document.getElementById('spec-ecran-pc').value = p.specs?.["Écran"] || '';
+            document.getElementById('spec-cpu-pc').value = p.specs?.["Processeur"] || '';
+            document.getElementById('spec-ram-pc').value = p.specs?.["RAM"] || '';
+            document.getElementById('spec-stockage-pc').value = p.specs?.["Stockage"] || '';
+            document.getElementById('spec-gpu-pc').value = p.specs?.["Carte Graphique"] || '';
+        } else if (type === 'accessoire') {
+            document.getElementById('spec-compat-acc').value = p.specs?.["Compatibilité"] || '';
+            document.getElementById('spec-feature-acc').value = p.specs?.["Particularité"] || '';
+        }
 
-        // Locations
         document.getElementById('loc-accueil').checked = p.locations ? p.locations.includes('accueil') : (p.badge === 'NOUVEAU' || p.badge === 'PREMIUM');
         document.getElementById('loc-boutique').checked = p.locations ? p.locations.includes('boutique') : (p.cat !== 'accessoires');
         document.getElementById('loc-promotions').checked = p.locations ? p.locations.includes('promotions') : (p.badge === 'PROMO' || p.oldPrice > 0);
-        document.getElementById('loc-accessoires').checked = p.locations ? p.locations.includes('accessoires') : (p.cat === 'accessoires');
+        document.getElementById('loc-accessoires').checked = p.locations ? p.locations.includes('accessoires') : (p.cat === 'accessoires' || p.cat === 'accessoire');
 
         renderImagePreviews();
         document.getElementById('modal-title').textContent = 'Modifier le produit';
@@ -572,17 +612,30 @@
         if (document.getElementById('loc-promotions').checked) locations.push('promotions');
         if (document.getElementById('loc-accessoires').checked) locations.push('accessoires');
 
+        const type = document.getElementById('p-type').value;
+
         const specs = {};
-        if (document.getElementById('spec-ecran').value) specs["Écran"] = document.getElementById('spec-ecran').value;
-        if (document.getElementById('spec-puce').value) specs["Puce"] = document.getElementById('spec-puce').value;
-        if (document.getElementById('spec-camera').value) specs["Caméra"] = document.getElementById('spec-camera').value;
-        if (document.getElementById('spec-batterie').value) specs["Batterie"] = document.getElementById('spec-batterie').value;
+        if (type === 'smartphone') {
+            if (document.getElementById('spec-ecran-phone').value) specs["Écran"] = document.getElementById('spec-ecran-phone').value;
+            if (document.getElementById('spec-puce-phone').value) specs["Puce"] = document.getElementById('spec-puce-phone').value;
+            if (document.getElementById('spec-camera-phone').value) specs["Caméra"] = document.getElementById('spec-camera-phone').value;
+            if (document.getElementById('spec-batterie-phone').value) specs["Batterie"] = document.getElementById('spec-batterie-phone').value;
+        } else if (type === 'laptop') {
+            if (document.getElementById('spec-ecran-pc').value) specs["Écran"] = document.getElementById('spec-ecran-pc').value;
+            if (document.getElementById('spec-cpu-pc').value) specs["Processeur"] = document.getElementById('spec-cpu-pc').value;
+            if (document.getElementById('spec-ram-pc').value) specs["RAM"] = document.getElementById('spec-ram-pc').value;
+            if (document.getElementById('spec-stockage-pc').value) specs["Stockage"] = document.getElementById('spec-stockage-pc').value;
+            if (document.getElementById('spec-gpu-pc').value) specs["Carte Graphique"] = document.getElementById('spec-gpu-pc').value;
+        } else if (type === 'accessoire') {
+            if (document.getElementById('spec-compat-acc').value) specs["Compatibilité"] = document.getElementById('spec-compat-acc').value;
+            if (document.getElementById('spec-feature-acc').value) specs["Particularité"] = document.getElementById('spec-feature-acc').value;
+        }
 
         const productData = {
             id: id ? parseInt(id) : Date.now(),
             name: document.getElementById('p-name').value,
             brand: document.getElementById('p-brand').value,
-            cat: document.getElementById('p-cat').value,
+            cat: type,
             price: parseInt(document.getElementById('p-price').value),
             oldPrice: document.getElementById('p-old-price').value ? parseInt(document.getElementById('p-old-price').value) : null,
             images: currentProductImages,
@@ -591,10 +644,10 @@
             badgeColor: document.getElementById('p-badge-color').value,
             desc: document.getElementById('p-desc').value,
             locations: locations,
-            specs: Object.keys(specs).length > 0 ? specs : { "Écran": "N/A", "Puce": "N/A", "Caméra": "N/A", "Batterie": "N/A" }
+            specs: Object.keys(specs).length > 0 ? specs : { "N/A": "N/A" }
         };
 
-        if (productData.cat === 'accessoires') {
+        if (type === 'accessoire') {
             productData.accCat = document.getElementById('p-acc-cat').value;
         }
 
