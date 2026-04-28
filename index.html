@@ -1911,6 +1911,11 @@ const DEFAULT_PRODUCTS = [
 ];
 
 // ===== FIREBASE CONFIG =====
+// Force cleanup of old cached URLs from the previous project
+if (localStorage.getItem('phonedr_db_url') && localStorage.getItem('phonedr_db_url').includes('tokenfast')) {
+    localStorage.removeItem('phonedr_db_url');
+}
+
 const firebaseConfig = {
     apiKey: "AIzaSyCDY3W5Nu4zqmufyYIVyAE2_ReDMHc1eww",
     authDomain: "phonedr-83a27.firebaseapp.com",
