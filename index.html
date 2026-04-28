@@ -2206,7 +2206,7 @@ function renderAccessoires() {
   const grid = document.getElementById('accProductGrid');
   if (!grid) return;
   
-  const accItems = products.filter(p => (p.locations ? p.locations.includes('accessoires') : p.cat === 'accessoires') && (currentAccCat === 'all' || p.accCat === currentAccCat));
+  const accItems = products.filter(p => (p.locations ? p.locations.includes('accessoires') : p.cat === 'accessoires') && (currentAccCat === 'all' || p.accCat === currentAccCat)).reverse();
   
   grid.innerHTML = accItems.map(p => {
     const isFav = favorites.includes(p.name);
@@ -2244,7 +2244,7 @@ function renderAccessoires() {
 function renderFeatured() {
   const grid = document.getElementById('featuredGrid');
   if (!grid) return;
-  const featuredItems = products.filter(p => p.locations ? p.locations.includes('accueil') : (p.badge === 'NOUVEAU' || p.badge === 'PREMIUM')).slice(0, 3);
+  const featuredItems = products.filter(p => p.locations ? p.locations.includes('accueil') : (p.badge === 'NOUVEAU' || p.badge === 'PREMIUM')).reverse().slice(0, 6);
 
   grid.innerHTML = featuredItems.map((p, i) => {
     const idx = products.indexOf(p);
@@ -2291,7 +2291,7 @@ function renderProducts() {
     const numericPrice = typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : p.price;
     const matchesPrice = numericPrice <= maxPrice;
     return matchesCat && matchesBrand && matchesPrice;
-  });
+  }).reverse();
 
   grid.innerHTML = filtered.map((p, i) => {
     const idx = products.indexOf(p);
