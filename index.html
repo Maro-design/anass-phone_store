@@ -2219,8 +2219,8 @@ function renderAccessoires() {
       <div class="p-6 flex flex-col flex-1">
         <div class="flex justify-between items-start mb-2">
           <div>
-            <p class="text-xs text-slate-400 font-medium tracking-wider uppercase mb-1">${p.brand}</p>
-            <h3 class="text-lg font-bold text-white group-hover:text-[#00aaff] transition-colors">${p.name}</h3>
+            <p class="text-xs text-slate-400 font-medium tracking-wider uppercase mb-1">${p.brand || '—'}</p>
+            <h3 class="text-lg font-bold text-white group-hover:text-[#00aaff] transition-colors">${p.name || 'Sans nom'}</h3>
           </div>
           <div class="text-right">
             ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through block">${formatPrice(p.oldPrice)}</span>` : ''}
@@ -2249,8 +2249,10 @@ function renderFeatured() {
   grid.innerHTML = featuredItems.map((p, i) => {
     const idx = products.indexOf(p);
     const isFav = favorites.includes(p.name);
+    const brand = p.brand || 'Sans marque';
+    const category = p.cat || 'Autre';
     return `
-    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative" data-brand="${p.brand.toLowerCase()}" data-category="${p.cat.toLowerCase()}">
+    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative" data-brand="${brand.toLowerCase()}" data-category="${category.toLowerCase()}">
       <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
         <span class="material-symbols-outlined">favorite</span>
       </div>
@@ -2280,7 +2282,8 @@ function renderProducts() {
   const maxPrice = parseInt(document.getElementById('boutiquePriceFilter')?.value || '25000', 10);
 
   const filtered = products.filter(p => {
-    if (p.locations ? !p.locations.includes('boutique') : p.cat === 'accessoires') return false;
+    const isInBoutique = p.locations ? p.locations.includes('boutique') : (p.cat !== 'accessoires' && p.cat !== 'accessoire');
+    if (!isInBoutique) return false;
     
     let normalizedCat = p.cat;
     if (['iphones', 'samsung', 'xiaomi', 'google'].includes(normalizedCat)) normalizedCat = 'smartphone';
@@ -2293,11 +2296,14 @@ function renderProducts() {
     return matchesCat && matchesBrand && matchesPrice;
   }).reverse();
 
+  console.log("Rendering products:", filtered);
   grid.innerHTML = filtered.map((p, i) => {
     const idx = products.indexOf(p);
     const isFav = favorites.includes(p.name);
+    const brand = p.brand || 'Sans marque';
+    const category = p.cat || 'Autre';
     return `
-    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative" data-brand="${p.brand.toLowerCase()}" data-category="${p.cat.toLowerCase()}" data-price="${typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : p.price}">
+    <div class="levitation-card glass-card rounded-[2rem] p-6 transition-all duration-500 flex flex-col group h-full relative" data-brand="${brand.toLowerCase()}" data-category="${category.toLowerCase()}" data-price="${typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : (p.price || 0)}">
       <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
         <span class="material-symbols-outlined">favorite</span>
       </div>
@@ -2431,8 +2437,10 @@ function renderPromos(){
   const gradients=['from-primary to-secondary','from-secondary to-primary','from-primary/50 to-secondary/50','from-secondary/50 to-primary/50','from-primary to-primary-container'];
   const priceColors=['text-primary','text-secondary','text-primary','text-secondary','text-primary'];
   
-  g.innerHTML=promoItems.map((p,i)=>{
+  g.innerHTML=promoItems.reverse().map((p,i)=>{
     const isFav = favorites.includes(p.name);
+    const brand = p.brand || 'Sans marque';
+    const category = p.cat || 'Autre';
     const idx = products.indexOf(p);
     const discLabel = p.discount ? `-${p.discount}%` : (p.badge || 'PROMO');
     return `
