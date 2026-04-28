@@ -111,12 +111,15 @@
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 id="page-title" class="text-3xl font-headline font-bold">📦 Liste des Produits</h1>
-                <div class="flex items-center gap-4 mt-1">
-                    <div class="flex items-center gap-2">
-                        <div id="conn-status" class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                        <p id="conn-text" class="text-slate-400 text-xs">Déconnecté</p>
+                <div class="flex flex-col gap-1 mt-1">
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <div id="conn-status" class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                            <p id="conn-text" class="text-slate-400 text-xs">Déconnecté</p>
+                        </div>
+                        <button onclick="fixFirebaseConnection()" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded hover:bg-blue-500/20 transition-all">🔧 RÉPARER LA CONNEXION</button>
                     </div>
-                    <button onclick="fixFirebaseConnection()" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded hover:bg-blue-500/20 transition-all">🔧 RÉPARER LA CONNEXION</button>
+                    <p id="error-msg" class="text-[10px] text-red-500 font-mono hidden"></p>
                 </div>
             </div>
             <div class="flex gap-4">
@@ -344,19 +347,31 @@
     // Connection Status Monitor
     const statusDot = document.getElementById('conn-status');
     const statusText = document.getElementById('conn-text');
-    if (statusDot && statusText) {
-        db.ref('.info/connected').on('value', (snap) => {
-            if (snap.val() === true) {
-                statusDot.className = 'w-2 h-2 rounded-full bg-green-500';
-                statusText.textContent = "Connecté à Firebase";
-                statusText.className = 'text-green-400 text-xs';
-            } else {
-                statusDot.className = 'w-2 h-2 rounded-full bg-red-500 animate-pulse';
-                statusText.textContent = "Déconnecté de Firebase";
-                statusText.className = 'text-red-400 text-xs';
-            }
-        });
-    }
+    const errorMsg = document.getElementById('error-msg');
+    
+    db.ref('.info/connected').on('value', (snap) => {
+        if (snap.val() === true) {
+            statusDot.className = 'w-2 h-2 rounded-full bg-green-500';
+            statusText.textContent = "Connecté";
+            statusText.className = 'text-green-400 text-xs';
+            if (errorMsg) errorMsg.classList.add('hidden');
+        } else {
+            statusDot.className = 'w-2 h-2 rounded-full bg-red-500 animate-pulse';
+            statusText.textContent = "Déconnecté";
+            statusText.className = 'text-red-400 text-xs';
+        }
+    });
+
+    // Error Listener for Products
+    productsRef.on('value', (snap) => {
+        // Success handled by existing loadProducts logic
+    }, (error) => {
+        console.error("Erreur Firebase:", error);
+        if (errorMsg) {
+            errorMsg.textContent = "Erreur: " + error.message;
+            errorMsg.classList.remove('hidden');
+        }
+    });
 
     // --- AUTH LOGIC ---
     const loginForm = document.getElementById('login-form');
