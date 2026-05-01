@@ -477,21 +477,25 @@
     function toggleProductTypeFields() {
         const type = document.getElementById('p-type').value;
         const accContainer = document.getElementById('acc-cat-container');
+        
+        // Safety checks before toggling
+        if (accContainer) {
+            accContainer.classList.toggle('hidden', type !== 'accessoire');
+        }
+
         const specsPhone = document.getElementById('specs-smartphone');
         const specsLaptop = document.getElementById('specs-laptop');
         const specsAcc = document.getElementById('specs-accessoire');
 
-        accContainer.classList.add('hidden');
-        specsPhone.classList.add('hidden');
-        specsLaptop.classList.add('hidden');
-        specsAcc.classList.add('hidden');
+        if(specsPhone) specsPhone.classList.add('hidden');
+        if(specsLaptop) specsLaptop.classList.add('hidden');
+        if(specsAcc) specsAcc.classList.add('hidden');
 
-        if (type === 'smartphone') {
+        if (type === 'smartphone' && specsPhone) {
             specsPhone.classList.remove('hidden');
-        } else if (type === 'laptop') {
+        } else if (type === 'laptop' && specsLaptop) {
             specsLaptop.classList.remove('hidden');
-        } else if (type === 'accessoire') {
-            accContainer.classList.remove('hidden');
+        } else if (type === 'accessoire' && specsAcc) {
             specsAcc.classList.remove('hidden');
         }
     }
