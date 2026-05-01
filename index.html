@@ -1911,16 +1911,12 @@ const DEFAULT_PRODUCTS = [
 ];
 
 // ===== FIREBASE CONFIG =====
-// Force cleanup of old cached URLs from previous projects
-if (localStorage.getItem('phonedr_db_url') && (localStorage.getItem('phonedr_db_url').includes('tokenfast') || localStorage.getItem('phonedr_db_url').includes('phonedr-83a27'))) {
-    localStorage.removeItem('phonedr_db_url');
-}
-
+// ===== FIREBASE CONFIG =====
 const firebaseConfig = {
     apiKey: "AIzaSyBZr1TPeXcQnh3Bie1pkOx1PUH5u-mMvVw",
     authDomain: "phonedrshop-7924b.firebaseapp.com",
     projectId: "phonedrshop-7924b",
-    databaseURL: localStorage.getItem('phonedr_db_url') || "https://phonedrshop-7924b-default-rtdb.firebaseio.com"
+    databaseURL: "https://phonedrshop-7924b-default-rtdb.firebaseio.com"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
