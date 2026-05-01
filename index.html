@@ -2259,7 +2259,10 @@ function renderFeatured() {
       </div>
       <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
         <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
-        ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor||'primary'}/20 text-${p.badgeColor||'primary'} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor||'primary'}/20">${p.badge}</span></div>`:''}
+        <div class="absolute top-4 left-4 flex flex-col gap-2">
+            ${p.badge?`<span class="bg-${p.badgeColor||'primary'}/20 text-${p.badgeColor||'primary'} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor||'primary'}/20 inline-block w-fit">${p.badge}</span>`:''}
+            ${p.promoExpiry ? `<span class="bg-red-500/20 text-red-500 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-red-500/20 inline-flex items-center gap-1 product-timer" data-expiry="${p.promoExpiry}">⏳ 00:00:00</span>` : ''}
+        </div>
       </div>
       <div class="flex-1">
         <div class="mobile-brand hidden">${p.brand}</div>
@@ -2292,12 +2295,11 @@ function renderProducts() {
     
     const matchesCat = catFilter === 'all' || normalizedCat === catFilter;
     const matchesBrand = brandCheckboxes.length === 0 || brandCheckboxes.includes(p.brand);
-    const numericPrice = typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : p.price;
+    const numericPrice = typeof p.price === 'string' ? parseInt(p.price.replace(/[^0-9]/g, '')) : (p.price || 0);
     const matchesPrice = numericPrice <= maxPrice;
     return matchesCat && matchesBrand && matchesPrice;
   }).reverse();
 
-  console.log("Rendering products:", filtered);
   grid.innerHTML = filtered.map((p, i) => {
     const idx = products.indexOf(p);
     const isFav = favorites.includes(p.name);
@@ -2310,7 +2312,10 @@ function renderProducts() {
       </div>
       <div class="relative w-full aspect-square mb-8 image-glow overflow-hidden rounded-2xl bg-surface-container-lowest">
         <img class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl transition-transform duration-700" alt="${p.name}" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
-        ${p.badge?`<div class="absolute top-4 left-4"><span class="bg-${p.badgeColor}/20 text-${p.badgeColor} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor}/20">${p.badge}</span></div>`:''}
+        <div class="absolute top-4 left-4 flex flex-col gap-2">
+            ${p.badge?`<span class="bg-${p.badgeColor}/20 text-${p.badgeColor} text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-${p.badgeColor}/20 inline-block w-fit">${p.badge}</span>`:''}
+            ${p.promoExpiry ? `<span class="bg-red-500/20 text-red-500 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md border border-red-500/20 inline-flex items-center gap-1 product-timer" data-expiry="${p.promoExpiry}">⏳ 00:00:00</span>` : ''}
+        </div>
       </div>
       <div class="flex-1">
         <div class="mobile-brand hidden">${p.brand}</div>
@@ -2400,20 +2405,37 @@ function toggleMobileMenu(){
   document.getElementById('hamburger').classList.toggle('open');
 }
 
-// ===== COUNTDOWN TIMER (3 days) =====
-const countdownEnd=new Date().getTime()+3*24*60*60*1000;
 function updateCountdown(){
   const now=new Date().getTime();
+  
+  // 1. General Site Countdown (existing)
+  const countdownEnd=new Date().getTime()+3*24*60*60*1000; // Static 3 days for hero
   const diff=countdownEnd-now;
-  if(diff<=0)return;
-  const d=Math.floor(diff/(1000*60*60*24));
-  const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const m=Math.floor((diff%(1000*60*60))/(1000*60));
-  const s=Math.floor((diff%(1000*60))/1000);
-  document.getElementById('countdown-days').textContent=String(d).padStart(2,'0');
-  document.getElementById('countdown-hours').textContent=String(h).padStart(2,'0');
-  document.getElementById('countdown-mins').textContent=String(m).padStart(2,'0');
-  document.getElementById('countdown-secs').textContent=String(s).padStart(2,'0');
+  if(diff>0) {
+      const d=Math.floor(diff/(1000*60*60*24));
+      const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+      const m=Math.floor((diff%(1000*60*60))/(1000*60));
+      const s=Math.floor((diff%(1000*60))/1000);
+      if (document.getElementById('countdown-days')) document.getElementById('countdown-days').textContent=String(d).padStart(2,'0');
+      if (document.getElementById('countdown-hours')) document.getElementById('countdown-hours').textContent=String(h).padStart(2,'0');
+      if (document.getElementById('countdown-mins')) document.getElementById('countdown-mins').textContent=String(m).padStart(2,'0');
+      if (document.getElementById('countdown-secs')) document.getElementById('countdown-secs').textContent=String(s).padStart(2,'0');
+  }
+
+  // 2. Individual Product Countdowns
+  document.querySelectorAll('.product-timer').forEach(el => {
+      const expiry = new Date(el.dataset.expiry).getTime();
+      const pDiff = expiry - now;
+      if (pDiff <= 0) {
+          el.textContent = "PROMO TERMINÉE";
+          el.classList.replace('text-red-500', 'text-slate-500');
+          return;
+      }
+      const ph = Math.floor(pDiff / (1000 * 60 * 60));
+      const pm = Math.floor((pDiff % (1000 * 60 * 60)) / (1000 * 60));
+      const ps = Math.floor((pDiff % (1000 * 60)) / 1000);
+      el.textContent = `⏳ ${String(ph).padStart(2,'0')}:${String(pm).padStart(2,'0')}:${String(ps).padStart(2,'0')}`;
+  });
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
@@ -2451,7 +2473,10 @@ function renderPromos(){
       <div class="favorite-btn ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(event, '${p.name.replace(/'/g, "\\'")}')">
         <span class="material-symbols-outlined">favorite</span>
       </div>
-      <div class="absolute top-6 left-6 z-20 px-4 py-2 bg-error text-on-error font-black rounded-lg shadow-[0_0_20px_rgba(255,180,171,0.5)] pulse-badge">${discLabel}</div>
+      <div class="absolute top-6 left-6 z-20 flex flex-col gap-2">
+        <div class="px-4 py-2 bg-error text-on-error font-black rounded-lg shadow-[0_0_20px_rgba(255,180,171,0.5)] pulse-badge w-fit">${discLabel}</div>
+        ${p.promoExpiry ? `<div class="px-3 py-1.5 bg-black/60 backdrop-blur-md text-white font-black rounded-lg text-[10px] flex items-center gap-2 border border-white/10 product-timer" data-expiry="${p.promoExpiry}">⏳ 00:00:00</div>` : ''}
+      </div>
       <div class="aspect-square w-full mb-8 overflow-hidden rounded-2xl bg-surface-container-lowest flex items-center justify-center">
         <img alt="${p.name}" class="w-full h-full object-contain bg-[#0a0a0a] p-5 rounded-xl group-hover:scale-110 transition-transform duration-700" src="${(p.images && p.images[0]) ? p.images[0] : (p.img || '')}" onerror="this.src='https://via.placeholder.com/400x400/111111/00aaff?text=PhoneDr'"/>
       </div>
