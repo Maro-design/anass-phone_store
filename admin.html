@@ -295,6 +295,37 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Product Details (Specs) -->
+                <div class="space-y-4">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Détails techniques (Specs)</label>
+                    
+                    <!-- Smartphone Specs -->
+                    <div id="specs-smartphone" class="grid grid-cols-2 gap-3">
+                        <input type="text" id="spec-ecran-phone" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Écran (ex: 6.1 OLED)">
+                        <input type="text" id="spec-puce-phone" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Puce (ex: A17 Pro)">
+                        <input type="text" id="spec-camera-phone" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Caméra (ex: 48MP)">
+                        <input type="text" id="spec-batterie-phone" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Batterie (ex: 5000mAh)">
+                    </div>
+
+                    <!-- Laptop Specs -->
+                    <div id="specs-laptop" class="grid grid-cols-2 gap-3 hidden">
+                        <input type="text" id="spec-ecran-pc" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Écran (ex: 15.6 FHD)">
+                        <input type="text" id="spec-cpu-pc" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="CPU (ex: i7)">
+                        <input type="text" id="spec-ram-pc" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="RAM (ex: 16GB)">
+                        <input type="text" id="spec-stockage-pc" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="SSD (ex: 512GB)">
+                    </div>
+
+                    <!-- Accessoire Specs -->
+                    <div id="specs-accessoire" class="grid grid-cols-1 gap-3 hidden">
+                        <input type="text" id="spec-compat-acc" class="px-4 py-3 rounded-xl text-xs font-bold" placeholder="Compatibilité (ex: iPhone 15)">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Description courte</label>
+                    <textarea id="p-desc" rows="3" class="w-full px-5 py-4 rounded-xl font-bold resize-none" placeholder="Description attractive..."></textarea>
+                </div>
             </div>
 
             <div class="pt-4">
@@ -587,6 +618,7 @@
 
         document.getElementById('p-price').value = p.price || 0;
         document.getElementById('p-old-price').value = p.oldPrice || '';
+        document.getElementById('p-desc').value = p.desc || '';
         
         currentProductImages = p.images ? [...p.images] : (p.img ? [p.img] : []);
         
@@ -602,8 +634,23 @@
         document.getElementById('loc-accessoires').checked = locs.includes('accessoires');
         
         toggleProductTypeFields();
-        if (type === 'accessoire') {
-            document.getElementById('p-acc-cat').value = p.accCat || 'coques';
+        
+        // Load specs
+        if (p.specs) {
+            if (type === 'smartphone') {
+                document.getElementById('spec-ecran-phone').value = p.specs['Écran'] || '';
+                document.getElementById('spec-puce-phone').value = p.specs['Puce'] || '';
+                document.getElementById('spec-camera-phone').value = p.specs['Caméra'] || '';
+                document.getElementById('spec-batterie-phone').value = p.specs['Batterie'] || '';
+            } else if (type === 'laptop') {
+                document.getElementById('spec-ecran-pc').value = p.specs['Écran'] || '';
+                document.getElementById('spec-cpu-pc').value = p.specs['Puce'] || '';
+                document.getElementById('spec-ram-pc').value = p.specs['RAM'] || '';
+                document.getElementById('spec-stockage-pc').value = p.specs['Stockage'] || '';
+            } else if (type === 'accessoire') {
+                document.getElementById('spec-compat-acc').value = p.specs['Compatibilité'] || '';
+                document.getElementById('p-acc-cat').value = p.accCat || 'coques';
+            }
         }
 
         renderImagePreviews();
@@ -628,6 +675,22 @@
             if (document.getElementById('loc-promotions').checked) locations.push('promotions');
             if (document.getElementById('loc-accessoires').checked) locations.push('accessoires');
 
+            // Collect specs
+            const specs = {};
+            if (type === 'smartphone') {
+                specs['Écran'] = document.getElementById('spec-ecran-phone').value;
+                specs['Puce'] = document.getElementById('spec-puce-phone').value;
+                specs['Caméra'] = document.getElementById('spec-camera-phone').value;
+                specs['Batterie'] = document.getElementById('spec-batterie-phone').value;
+            } else if (type === 'laptop') {
+                specs['Écran'] = document.getElementById('spec-ecran-pc').value;
+                specs['Puce'] = document.getElementById('spec-cpu-pc').value;
+                specs['RAM'] = document.getElementById('spec-ram-pc').value;
+                specs['Stockage'] = document.getElementById('spec-stockage-pc').value;
+            } else if (type === 'accessoire') {
+                specs['Compatibilité'] = document.getElementById('spec-compat-acc').value;
+            }
+
             const productData = {
                 id: id ? parseInt(id) : Date.now(),
                 name: document.getElementById('p-name').value,
@@ -635,13 +698,14 @@
                 cat: type,
                 price: parseInt(document.getElementById('p-price').value),
                 oldPrice: document.getElementById('p-old-price').value ? parseInt(document.getElementById('p-old-price').value) : null,
+                desc: document.getElementById('p-desc').value,
                 promoExpiry: document.getElementById('p-promo-expiry').value || null,
                 images: currentProductImages,
                 img: currentProductImages[0] || '',
                 badge: document.getElementById('p-badge').value || null,
                 badgeColor: document.getElementById('p-badge-color').value,
                 locations: locations,
-                specs: { "NA": "NA" }
+                specs: specs
             };
 
             if (type === 'accessoire') {
